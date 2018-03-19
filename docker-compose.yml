@@ -1,0 +1,23 @@
+version: "2"
+services:
+  db:
+    image: mysql:latest
+    environment:
+      - MYSQL_ROOT_PASSWORD=p4$$W0rd
+      - MYSQL_DATABASE=epidemics
+      - MYSQL_USER=epidemics
+      - MYSQL_PASSWORD=epidemics
+    ports:
+      - 3306:3306
+  web:
+    image: epidemics/epidemics-web
+    depends_on:
+      - db
+    ports:
+      - 8080:8080
+    environment:
+      - DATABASE_HOST=db
+      - DATABASE_USER=epidemics
+      - DATABASE_PASSWORD=epidemics
+      - DATABASE_NAME=epidemics
+      - DATABASE_PORT=3306
