@@ -2,6 +2,8 @@ version: "2"
 services:
   db:
     image: mysql:latest
+    volumes:
+      - /home/atalati/Documents/Dockr/AsthmaControl:/docker-entrypoint-initdb.d
     environment:
       - MYSQL_ROOT_PASSWORD=p4$$W0rd
       - MYSQL_DATABASE=epidemics
