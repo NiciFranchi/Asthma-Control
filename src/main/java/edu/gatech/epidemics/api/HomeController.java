@@ -10,14 +10,19 @@ import java.net.UnknownHostException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * @author atalati
+ */
 @RestController
-public class HomeController {
+public class HomeController
+{
 
 	@Autowired
 	Environment environment;
 
 	@RequestMapping("/")
-	public String Hello() throws UnknownHostException {
+	public String Hello() throws UnknownHostException
+	{
 		String datePattern = "MM/dd/yyyy HH:mm:ss";
 		DateTimeFormatter df = DateTimeFormatter.ofPattern(datePattern);
 		LocalDateTime now = LocalDateTime.now();
