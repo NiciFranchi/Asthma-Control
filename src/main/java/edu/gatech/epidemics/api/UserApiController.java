@@ -14,13 +14,13 @@ import java.time.format.DateTimeFormatter;
  * @author atalati
  */
 @RestController
-public class HomeController
+public class UserApiController
 {
 
 	@Autowired
 	Environment environment;
 
-	@RequestMapping("/")
+	@RequestMapping("/api/user/hello")
 	public String Hello() throws UnknownHostException
 	{
 		String datePattern = "MM/dd/yyyy HH:mm:ss";
