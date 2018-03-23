@@ -9,6 +9,6 @@ public class UserController
 	@GetMapping("/user/list")
 	public String List()
 	{
-		return "index";
+		return "user/list";
 	}
 }

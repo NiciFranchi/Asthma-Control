@@ -1,3 +1,5 @@
+META-INF/spring-configuration-metadata.json
+edu/gatech/epidemics/controller/UserController.class
 edu/gatech/epidemics/EpidemicsApplication.class
-edu/gatech/epidemics/api/HomeController.class
+edu/gatech/epidemics/api/UserApiController.class
 edu/gatech/epidemics/AppConfigBean.class
