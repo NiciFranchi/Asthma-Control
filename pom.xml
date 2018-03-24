@@ -5,10 +5,10 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>edu.gatech</groupId>
-    <artifactId>epidemics-web</artifactId>
+    <artifactId>asthma-control</artifactId>
     <version>1.0</version>
-    <name>epidemics</name>
-    <description>Asthma control web app for CDC</description>
+    <name>Asthma Control</name>
+    <description>Asthma control web app for CDC by Team Epidemics</description>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
