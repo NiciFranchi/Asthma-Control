@@ -1,19 +1,24 @@
 package edu.gatech.epidemics.api;
 
+import edu.gatech.epidemics.model.User;
 import edu.gatech.epidemics.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Required;
+import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.springframework.core.env.Environment;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 /**
  * @author atalati
+ *
+ * /api/user
+ *
  */
 @RestController
 public class UserApiController
@@ -43,15 +48,15 @@ public class UserApiController
 		GET: /api/user/
 		Returns all users from the database
 	 */
-	@GetMapping("/api/user")
-	public String get()
+	@GetMapping(value = "/api/user")
+	public List<User> get()
 	{
-		return userService.findAll().toString();
+		return userService.findAll();
 	}
 
-	@GetMapping("/api/user/{id}")
-	public String get(int id)
+	@GetMapping(value = "/api/user/{id}")
+	public User get(@PathVariable int id)
 	{
-		return userService.findAll().toString();
+		return userService.findById(id);
 	}
 }
