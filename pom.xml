@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>edu.gatech</groupId>
-    <artifactId>asthma-control</artifactId>
+    <artifactId>epidemics-web</artifactId>
     <version>1.0</version>
     <name>Asthma Control</name>
     <description>Asthma control web app for CDC by Team Epidemics</description>
