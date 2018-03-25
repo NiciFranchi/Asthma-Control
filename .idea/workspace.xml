@@ -1,28 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="815d9116-8972-491f-8323-8f8c162bd66a" name="Default" comment="">
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml" />
-      <change beforePath="$PROJECT_DIR$/.idea/artifacts/epidemicsweb_war_exploded.xml" afterPath="$PROJECT_DIR$/.idea/artifacts/epidemicsweb_war_exploded.xml" />
+    <list default="true" id="815d9116-8972-491f-8323-8f8c162bd66a" name="Default" comment="got JSP working in docker! phew ...">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/docker-compose.yml" afterPath="$PROJECT_DIR$/docker-compose.yml" />
-      <change beforePath="$PROJECT_DIR$/epidemicsweb.iml" afterPath="$PROJECT_DIR$/epidemicsweb.iml" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" afterPath="$PROJECT_DIR$/pom.xml" />
-      <change beforePath="$PROJECT_DIR$/src/Docker/Dockerfile" afterPath="$PROJECT_DIR$/src/Docker/Dockerfile" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/gatech/epidemics/EpidemicsApplication.java" afterPath="$PROJECT_DIR$/src/main/java/edu/gatech/epidemics/EpidemicsApplication.java" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application-container.properties" afterPath="$PROJECT_DIR$/src/main/resources/application-container.properties" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application-local.properties" afterPath="$PROJECT_DIR$/src/main/resources/application-local.properties" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/wrapper.sh" afterPath="$PROJECT_DIR$/src/main/resources/wrapper.sh" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/index.jsp" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/user/list.jsp" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/target/classes/edu/gatech/epidemics/EpidemicsApplication.class" afterPath="$PROJECT_DIR$/target/classes/edu/gatech/epidemics/EpidemicsApplication.class" />
-      <change beforePath="$PROJECT_DIR$/target/classes/wrapper.sh" afterPath="$PROJECT_DIR$/target/classes/wrapper.sh" />
-      <change beforePath="$PROJECT_DIR$/target/docker/Dockerfile" afterPath="$PROJECT_DIR$/target/docker/Dockerfile" />
-      <change beforePath="$PROJECT_DIR$/target/docker/epidemics-web.jar" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/target/docker/wrapper.sh" afterPath="$PROJECT_DIR$/target/docker/wrapper.sh" />
-      <change beforePath="$PROJECT_DIR$/target/epidemics-web.jar" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/target/epidemics-web.jar.original" afterPath="" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -53,7 +33,7 @@
         <entry file="file://$PROJECT_DIR$/docker-compose.yml">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="540">
-              <caret line="30" column="26" lean-forward="false" selection-start-line="30" selection-start-column="26" selection-end-line="30" selection-end-column="26" />
+              <caret line="30" column="26" lean-forward="true" selection-start-line="30" selection-start-column="26" selection-end-line="30" selection-end-column="26" />
               <folding />
             </state>
           </provider>
@@ -486,7 +466,7 @@
       <workItem from="1521904202498" duration="1764000" />
       <workItem from="1521910675730" duration="881000" />
       <workItem from="1521924022203" duration="513000" />
-      <workItem from="1521938501686" duration="16592000" />
+      <workItem from="1521938501686" duration="16790000" />
     </task>
     <task id="LOCAL-00001" summary="Fix mvn build resource + connect to MySQL docker container">
       <created>1521515148188</created>
@@ -565,11 +545,25 @@
       <option name="project" value="LOCAL" />
       <updated>1521903102849</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="got JSP working in docker! phew ...">
+      <created>1521957929345</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1521957929345</updated>
+    </task>
+    <task id="LOCAL-00013" summary=".">
+      <created>1521958054616</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1521958054616</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="53954000" />
+    <option name="totallyTimeSpent" value="54152000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-1" y="24" width="1922" height="1153" extended-state="6" />
@@ -682,7 +676,9 @@
     <MESSAGE value="branding" />
     <MESSAGE value="load API data in UI using jQuery" />
     <MESSAGE value="fix maven build" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix maven build" />
+    <MESSAGE value="got JSP working in docker! phew ..." />
+    <MESSAGE value="." />
+    <option name="LAST_COMMIT_MESSAGE" value="." />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="XDebuggerManager">
@@ -978,7 +974,7 @@
     <entry file="file://$PROJECT_DIR$/docker-compose.yml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="540">
-          <caret line="30" column="26" lean-forward="false" selection-start-line="30" selection-start-column="26" selection-end-line="30" selection-end-column="26" />
+          <caret line="30" column="26" lean-forward="true" selection-start-line="30" selection-start-column="26" selection-end-line="30" selection-end-column="26" />
           <folding />
         </state>
       </provider>
