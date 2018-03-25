@@ -15,6 +15,10 @@ services:
       - 3306:3306
   web:
     image: epidemics/epidemics-web
+    volumes:
+      - type: bind
+        source: ./src/main/webapp
+        target: /usr/local/tomcat/webapps/webapp
     depends_on:
       - db
     ports:

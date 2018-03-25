@@ -6,6 +6,7 @@
 
     <groupId>edu.gatech</groupId>
     <artifactId>epidemics-web</artifactId>
+    <packaging>war</packaging>
     <version>1.0</version>
     <name>Asthma Control</name>
     <description>Asthma control web app for CDC by Team Epidemics</description>
@@ -39,17 +40,24 @@
             <artifactId>spring-boot-configuration-processor</artifactId>
             <optional>true</optional>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
+
         <!-- Tomcat embedded container-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-tomcat</artifactId>
             <scope>provided</scope>
         </dependency>
+
         <!-- JSTL for JSP -->
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>jstl</artifactId>
         </dependency>
+
         <!-- Need this to compile JSP -->
         <dependency>
             <groupId>org.apache.tomcat.embed</groupId>
@@ -68,10 +76,7 @@
             <artifactId>mysql-connector-java</artifactId>
             <scope>runtime</scope>
         </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-jpa</artifactId>
-        </dependency>
+
         <!--<dependency>-->
         <!--<groupId>org.springframework.boot</groupId>-->
         <!--<artifactId>spring-boot-starter-jdbc</artifactId>-->
@@ -81,6 +86,7 @@
         <!--<artifactId>h2</artifactId>-->
         <!--<scope>runtime</scope>-->
         <!--</dependency>-->
+
     </dependencies>
 
     <build>
@@ -101,7 +107,7 @@
                         <resource>
                             <targetPath>/</targetPath>
                             <directory>${project.build.directory}</directory>
-                            <include>${project.build.finalName}.jar</include>
+                            <include>${project.build.finalName}.war</include>
                         </resource>
                         <resource>
                             <targetPath>/</targetPath>
