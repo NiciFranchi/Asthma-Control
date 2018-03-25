@@ -1,8 +1,0 @@
-edu/gatech/epidemics/model/User.class
-META-INF/spring-configuration-metadata.json
-edu/gatech/epidemics/controller/UserController.class
-edu/gatech/epidemics/EpidemicsApplication.class
-edu/gatech/epidemics/service/UserService.class
-edu/gatech/epidemics/api/UserApiController.class
-edu/gatech/epidemics/dao/UserRepository.class
-edu/gatech/epidemics/AppConfigBean.class
