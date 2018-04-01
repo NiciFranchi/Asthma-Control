@@ -1,20 +1,133 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %><html>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<html>
 <head>
-    <link rel="stylesheet" type="text/css" href="../../static/css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../static/css/bootstrap_flatly.min.css" />
     <link rel="stylesheet" type="text/css" href="../../static/css/bootstrap-theme.min.css" />
     <style type="text/css">
         .unselectable {
-            -webkit-user-select: none; /* Safari */        
-            -moz-user-select: none; /* Firefox */
-            -ms-user-select: none; /* IE10+/Edge */
-            user-select: none; /* Standard */
+            -webkit-user-select: none;
+            /* Safari */
+            -moz-user-select: none;
+            /* Firefox */
+            -ms-user-select: none;
+            /* IE10+/Edge */
+            user-select: none;
+            /* Standard */
+        }
+
+        .navbar-default {
+            background-color: #eaaa00;
+            border-color: #e5e5e5;
+        }
+
+        .navbar-default .navbar-brand {
+            color: #545454;
+        }
+
+        .navbar-default .navbar-brand:hover,
+        .navbar-default .navbar-brand:focus {
+            color: #545454;
+        }
+
+        .navbar-default .navbar-text {
+            color: #545454;
+        }
+
+        .navbar-default .navbar-nav>li>a {
+            color: #545454;
+        }
+
+        .navbar-default .navbar-nav>li>a:hover,
+        .navbar-default .navbar-nav>li>a:focus {
+            color: #545454;
+        }
+
+        /* .navbar-default .navbar-nav>li>.dropdown-menu {
+            background-color: #eaaa00;
+        }
+
+        .navbar-default .navbar-nav>li>.dropdown-menu>li>a {
+            color: #545454;
+        }
+
+        .navbar-default .navbar-nav>li>.dropdown-menu>li>a:hover,
+        .navbar-default .navbar-nav>li>.dropdown-menu>li>a:focus {
+            color: #545454;
+            background-color: #e5e5e5;
+        }
+
+        .navbar-default .navbar-nav>li>.dropdown-menu>li.divider {
+            background-color: #e5e5e5;
+        }
+
+        .navbar-default .navbar-nav .open .dropdown-menu>.active>a,
+        .navbar-default .navbar-nav .open .dropdown-menu>.active>a:hover,
+        .navbar-default .navbar-nav .open .dropdown-menu>.active>a:focus {
+            color: #545454;
+            background-color: #e5e5e5;
+        } */
+
+        .navbar-default .navbar-nav>.active>a,
+        .navbar-default .navbar-nav>.active>a:hover,
+        .navbar-default .navbar-nav>.active>a:focus {
+            color: #545454;
+            background-color: #e5e5e5;
+        }
+
+        .navbar-default .navbar-nav>.open>a,
+        .navbar-default .navbar-nav>.open>a:hover,
+        .navbar-default .navbar-nav>.open>a:focus {
+            color: #545454;
+            background-color: #e5e5e5;
+        }
+
+        .navbar-default .navbar-toggle {
+            border-color: #e5e5e5;
+        }
+
+        .navbar-default .navbar-toggle:hover,
+        .navbar-default .navbar-toggle:focus {
+            background-color: #e5e5e5;
+        }
+
+        .navbar-default .navbar-toggle .icon-bar {
+            background-color: #545454;
+        }
+
+        .navbar-default .navbar-collapse,
+        .navbar-default .navbar-form {
+            border-color: #545454;
+        }
+
+        .navbar-default .navbar-link {
+            color: #545454;
+        }
+
+        .navbar-default .navbar-link:hover {
+            color: #545454;
+        }
+
+        @media (max-width: 767px) {
+            .navbar-default .navbar-nav .open .dropdown-menu>li>a {
+                color: #545454;
+            }
+            .navbar-default .navbar-nav .open .dropdown-menu>li>a:hover,
+            .navbar-default .navbar-nav .open .dropdown-menu>li>a:focus {
+                color: #545454;
+            }
+            .navbar-default .navbar-nav .open .dropdown-menu>.active>a,
+            .navbar-default .navbar-nav .open .dropdown-menu>.active>a:hover,
+            .navbar-default .navbar-nav .open .dropdown-menu>.active>a:focus {
+                color: #545454;
+                background-color: #e5e5e5;
+            }
         }
     </style>
 </head>
 
 <body>
-    <nav class="navbar navbar-inverse">
+    <nav class="navbar navbar-default">
         <div class="container-fluid">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
@@ -124,7 +237,7 @@
             var current = 1;
             var min = 1;
             var max = 1;
-            
+
             // load data
             $.getJSON(url, function (data) {
                 console.log('got json');
@@ -164,10 +277,10 @@
                 console.log('show #' + questionId);
                 $('#' + questionId).show();
                 $('#counter').text(current.toString() + '/' + max.toString());
-                if(current == min){
+                if (current == min) {
                     $("#btPreviousQuestion").hide();
                 }
-                if (current == max -1){
+                if (current == max - 1) {
                     $('#btNextQuestion').text('Next');
                     $('#btNextQuestion').addClass('btn-default');
                     $('#btNextQuestion').removeClass('btn-primary');
@@ -189,7 +302,7 @@
                     $('#btNextQuestion').removeClass('btn-default');
                     $('#btNextQuestion').addClass('btn-primary');
                 }
-                else if(current == min +1) {
+                else if (current == min + 1) {
                     $("#btPreviousQuestion").show();
                 }
                 $('#counter').text(current.toString() + '/' + max.toString());
@@ -197,5 +310,4 @@
         });   
     </script>
 </body>
-
 </html>
