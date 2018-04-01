@@ -2,6 +2,10 @@ package edu.gatech.epidemics.viewmodel;
 
 import java.util.List;
 
+/**
+ * @author atalati
+ * /api/user
+ */
 public class Question
 {
 	private int id;

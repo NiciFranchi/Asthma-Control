@@ -1,9 +1,8 @@
 package edu.gatech.epidemics.api;
 
+import edu.gatech.epidemics.viewmodel.Answers;
 import edu.gatech.epidemics.viewmodel.Question;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -11,7 +10,6 @@ import java.util.List;
 
 /**
  * @author atalati
- * <p>
  * /api/user
  */
 @RestController
@@ -20,7 +18,19 @@ public class QuestionnaireApiController
 	@GetMapping(value = "/api/questionnaire/{id}")
 	public List<Question> get(@PathVariable int id)
 	{
-		// infant, young, older
+		/**
+		 * This method takes an integer as an input. This intger represents an id for an age-group.
+		 * This end-point would retrun questionnaire with appropriate answer choices, depending on the age group.
+		 * 
+		 * -------------------
+		 * |Id |	Age Group|
+		 * -------------------
+		 * 	1		Infant
+		 * 	2		Young
+		 * 	3		Older
+		 */
+
+		// infant
 		Question infantQ1 = new Question(
 				1,
 				"Asthma symptoms in previous 2 – 4 weeks",
@@ -85,5 +95,11 @@ public class QuestionnaireApiController
 			questions = null;
 		}
 		return questions;
+	}
+
+	@PostMapping(value ="/api/questionnaire/{patientId}")
+	public void post(@RequestBody Answers answers)
+	{
+		return;
 	}
 }
