@@ -14,4 +14,4 @@ To run the project:
 
 Navigate to http://localhost:8080/
 
-![Image](https://i.imgur.com/3b4x3hj.png)
+![Image](https://i.imgur.com/5mklpjx.png)
