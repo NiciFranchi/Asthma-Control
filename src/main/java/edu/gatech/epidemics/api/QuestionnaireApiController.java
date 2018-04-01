@@ -25,29 +25,29 @@ public class QuestionnaireApiController
 				1,
 				"Asthma symptoms in previous 2 – 4 weeks",
 				"",
-				Arrays.asList("q1 a1", "q1 a2"));
+				Arrays.asList("<= days/week", ">2 days/week", "Throughout the day"));
 		Question infantQ2 = new Question(
 				2,
 				"Night time awakenings in previous 2- 4 weeks",
 				"",
-				Arrays.asList("q2 a1", "q2 a2", "q2 a3"));
+				Arrays.asList("<= 1x/month", "> 1x/month", ">= 1x/week"));
 		Question infantQ3 = new Question(
 				3,
 				"Interference with normal activity in previous 2-4 weeks",
 				"",
-				Arrays.asList("q3 a1", "q3 a2", "q3 a3"));
+				Arrays.asList("None", "Some Limitation", "Extremely Limited"));
 		Question infantQ4 = new Question(
 				4,
 				"Short-acting \n" +
 						"beta2-agonist use for symptom control in previous 2-4 weeks " +
 						"(not prevention of exercise-induced bronchospasm)\n",
 				"",
-				Arrays.asList("q4 a1", "q4 a2", "q4 a3"));
+				Arrays.asList("<= 2 days /week", ">2 days/week", "Several times per day"));
 		Question infantQ5 = new Question(
 				4,
 				"Exacerbations requiring oral systemic corticosteroids",
 				"",
-				Arrays.asList("q4 a1", "q4 a2", "q4 a3"));
+				Arrays.asList("0-1/year", "2-3/year", "> 3/year"));
 
 		Question youngQ1 = new Question(5, "First question for young", "", Arrays.asList("q1 a1", "q1 a2"));
 		Question youngQ2 = new Question(6, "Second question for young", "", Arrays.asList("q2 a1", "q2 a2", "q2 a3"));
