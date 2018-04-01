@@ -75,7 +75,14 @@ CREATE TABLE visit (
 `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
 `patientId` INT NOT NULL REFERENCES patient(id),
 `doctorId` INT NOT NULL REFERENCES doctor(id),
-`questionnaireId` INT NOT NULL REFERENCES questionnaire(id),
-`answerId` INT NOT NULL REFERENCES answerChoice(id),
 `visitDate` DATETIME NOT NULL
+)ENGINE=InnoDB;
+
+DROP TABLE IF EXISTS response;
+
+CREATE TABLE response (
+`id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+`visitId` INT NOT NULL REFERENCES visit(id),
+`questionnaireId` INT NOT NULL REFERENCES questionnaire(id),
+`answerId` INT NOT NULL REFERENCES answerChoice(id)
 )ENGINE=InnoDB;
