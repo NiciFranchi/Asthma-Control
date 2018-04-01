@@ -59,11 +59,4 @@ public class UserApiController
 	{
 		return userService.findById(id);
 	}
-
-	@GetMapping(value = "/api/user/login")
-	public List<User> get()
-	{
-		return userService.findAll();
-	}
-
 }
