@@ -212,25 +212,42 @@
     </nav>
 
     <div class="container">
-        <div id="counter"></div>
+        <div id ="topText" class = "topTextContainer unselectable"></div>
         <div id="questions" class="questionsContainer unselectable"></div>
-        <nav>
-            <ul class="pager">
-                <li>
-                    <button id="btPreviousQuestion" class="btn btn-default">Previous</button>
-                </li>
-                <li>
-                    <button id="btNextQuestion" class="btn btn-default">Next</button>
-                </li>
-            </ul>
-        </nav>
+
+        <div class = "row">
+            <div class = "col-md-4">
+                <div id="counter"></div>
+            </div>
+            <div class = "col-md-8">
+                <nav>
+                    <ul class="pager">
+                        <li>
+                            <button id="btPreviousQuestion" class="btn btn-default">Previous</button>
+                        </li>
+                        <li>
+                            <button id="btNextQuestion" class="btn btn-default">Next</button>
+                        </li>
+                   </ul>
+                </nav>
+            </div>
+        </div>
     </div>
     <script type="text/javascript" src="../../static/js/jquery-3.3.1.min.js"></script>
     <script type="text/javascript" src="../../static/js/bootstrap.min.js"></script>
     <script type="text/javascript">
         $(document).ready(function () {
-            // questionnaire
+            
+            // current hardcode that will come from api
             var ageGroupId = 1;
+            var ageGroupTxt = "0-4";
+            //
+
+            var header = "<h3 class='text-center'>" + ageGroupTxt + " Years Old Asthma Control Assessment" + "</h3>";
+            $('#topText').append(header);
+            //if (ageGroupId == 1) 
+              //{
+              //}
             var url = '/api/questionnaire/' + ageGroupId.toString();
             var questionHtml = '';
             // paging
