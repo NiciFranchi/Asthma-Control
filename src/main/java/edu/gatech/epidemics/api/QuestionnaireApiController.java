@@ -21,10 +21,33 @@ public class QuestionnaireApiController
 	public List<Question> get(@PathVariable int id)
 	{
 		// infant, young, older
-		Question infantQ1 = new Question(1, "First question for infant", "", Arrays.asList("q1 a1", "q1 a2"));
-		Question infantQ2 = new Question(2, "Second question for infant", "", Arrays.asList("q2 a1", "q2 a2", "q2 a3"));
-		Question infantQ3 = new Question(3, "Third question for infant", "", Arrays.asList("q3 a1", "q3 a2"));
-		Question infantQ4 = new Question(4, "Fourth question for infant", "", Arrays.asList("q4 a1", "q4 a2", "q4 a3", "q4 a4"));
+		Question infantQ1 = new Question(
+				1,
+				"Asthma symptoms in previous 2 – 4 weeks",
+				"",
+				Arrays.asList("q1 a1", "q1 a2"));
+		Question infantQ2 = new Question(
+				2,
+				"Night time awakenings in previous 2- 4 weeks",
+				"",
+				Arrays.asList("q2 a1", "q2 a2", "q2 a3"));
+		Question infantQ3 = new Question(
+				3,
+				"Interference with normal activity in previous 2-4 weeks",
+				"",
+				Arrays.asList("q3 a1", "q3 a2", "q3 a3"));
+		Question infantQ4 = new Question(
+				4,
+				"Short-acting \n" +
+						"beta2-agonist use for symptom control in previous 2-4 weeks " +
+						"(not prevention of exercise-induced bronchospasm)\n",
+				"",
+				Arrays.asList("q4 a1", "q4 a2", "q4 a3"));
+		Question infantQ5 = new Question(
+				4,
+				"Exacerbations requiring oral systemic corticosteroids",
+				"",
+				Arrays.asList("q4 a1", "q4 a2", "q4 a3"));
 
 		Question youngQ1 = new Question(5, "First question for young", "", Arrays.asList("q1 a1", "q1 a2"));
 		Question youngQ2 = new Question(6, "Second question for young", "", Arrays.asList("q2 a1", "q2 a2", "q2 a3"));
