@@ -11,29 +11,25 @@ import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
  * @author atalati
  */
 @SpringBootApplication
-public class EpidemicsApplication extends SpringBootServletInitializer implements CommandLineRunner
-{
-	@Autowired
-	AppConfigBean appConfigBean;
+public class EpidemicsApplication extends SpringBootServletInitializer implements CommandLineRunner {
+    @Autowired
+    AppConfigBean appConfigBean;
 
-	@Override
-	protected SpringApplicationBuilder configure(SpringApplicationBuilder builder)
-	{
-		return builder.sources(EpidemicsApplication.class);
-	}
+    /**
+     * @param args
+     */
+    public static void main(String[] args) {
+        SpringApplication app = new SpringApplication(EpidemicsApplication.class);
+        app.run();
+    }
 
-	/**
-	 * @param args
-	 */
-	public static void main(String[] args)
-	{
-		SpringApplication app = new SpringApplication(EpidemicsApplication.class);
-		app.run();
-	}
+    @Override
+    protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
+        return builder.sources(EpidemicsApplication.class);
+    }
 
-	@Override
-	public void run(String... args) throws Exception
-	{
-		System.out.println(appConfigBean.getDb_url());
-	}
+    @Override
+    public void run(String... args) throws Exception {
+        System.out.println(appConfigBean.getDb_url());
+    }
 }

@@ -4,46 +4,39 @@
 package edu.gatech.epidemics.service;
 
 import edu.gatech.epidemics.dao.UserRepository;
-import edu.gatech.epidemics.model.User;
-
-import javax.transaction.Transactional;
-
+import edu.gatech.epidemics.entities.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 /**
  * @author atalati
  */
 @Service
-public class UserService
-{
-	@Autowired
-	private final UserRepository userRepository;
+public class UserService {
+    @Autowired
+    private final UserRepository userRepository;
 
-	public UserService(UserRepository userRepository)
-	{
-		this.userRepository = userRepository;
-	}
+    public UserService(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
-	public List<User> findAll()
-	{
+    public List<User> findAll() {
 
-		List<User> users = new ArrayList<User>();
-		userRepository.findAll().forEach(users::add);
-		return users;
-	}
+        List<User> users = new ArrayList<User>();
+        userRepository.findAll().forEach(users::add);
+        return users;
+    }
 
-	public User findById(Integer id)
-	{
-		Optional<User> user = userRepository.findById(id);
-		if (user.isPresent())
-		{
-			return user.get();
-		} else
-		{
-			return null;
-		}
-	}
+    public User findById(Integer id) {
+        Optional<User> user = userRepository.findById(id);
+        if (user.isPresent()) {
+            return user.get();
+        } else {
+            return null;
+        }
+    }
 }
