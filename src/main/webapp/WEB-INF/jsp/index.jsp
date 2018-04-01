@@ -98,6 +98,9 @@
 
             <script type="text/javascript" src="../../static/js/jquery-3.3.1.min.js"></script>
             <script type="text/javascript" src="../../static/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+
+            </script>
             <script type="text/javascript">
                 $(document).ready(function () {
                     var ageGroupId = 1;
@@ -107,23 +110,31 @@
                         console.log('got json');
                         console.log(data);
                         $.each(data, function (key, val) {
+                            var hide = "";
+                            if (val.id > 1)
+                              {
+                                hide = "hidden";
+                              } 
                             questionHtml = 
-                            "<div id='" + val.id + "'>" + 
+                            "<div id= 'question" + val.id + "'" + hide + " class='question'>" + 
                                 "<h3 class='questionText'>" + val.questionText + "</h3>" + 
                                 "<div class='list-group'>";
                             for(var i = 0; i< val.answerChoices.length; i++){
-                                questionHtml += "<button type='button' class='list-group-item'>"+ val.answerChoices[i].toString() + "</button>";
+                                questionHtml += "<button type='button' id = 'answer" + val.id + "_" + i.toString() + "' class='list-group-item'>"+ val.answerChoices[i].toString() + "</button>";    
                             }
-                            questionHtml+="</div></div>";
+                            questionHtml+="</div>";
+                            questionHtml += "<button type='button' id ='prevbtn" + val.id + "' class='btn btn-secondary'> Prev </button>";
+                            questionHtml += "<button type='button' id ='nextbtn" + val.id + "' class='btn btn-primary'> Next </button>";
+                            questionHtml+="</div>";
                             $('#questions').append(questionHtml);
                         });
                         questionHtml = '';
                     }).fail(function () {
                         console.log('did not got json');
-                    });
-
-                });
+                      });            
+                });   
             </script>
+
         </body>
         <footer>
             By the way, I still speak whale. Go to
