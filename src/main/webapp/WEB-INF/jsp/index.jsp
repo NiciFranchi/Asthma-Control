@@ -240,18 +240,15 @@
     <script type="text/javascript">
         $(document).ready(function () {
 
-            // current hardcode that will come from api
+            // hardcoding some variables, these might come from API at some point
             var ageGroupId = 1;
             var ageGroupTxt = "0-4";
-            //
-
-            var header = "<h3 class='text-center'>" + ageGroupTxt + " Years Old Asthma Control Assessment" + "</h3>";
-            $('#topText').append(header);
-            //if (ageGroupId == 1)
-            //{
-            //}
             var url = '/api/questionnaire/' + ageGroupId.toString();
             var questionHtml = '';
+            var header = "<h3 class='text-center'>" + ageGroupTxt + " Years Old Asthma Control Assessment" + "</h3>";
+            $('#topText').append(header);
+
+
             // paging
             var current = 1;
             var min = 1;
@@ -267,7 +264,7 @@
                         "<h3 class='questionText'>" + val.questionText + "</h3>" +
                         "<div class='list-group answer-choices'>";
                     for (var i = 0; i < val.answerChoices.length; i++) {
-                        questionHtml += "<button type='button' id = 'answer" + val.id + "_" + i.toString() + "' class='list-group-item answer-choice'>" + val.answerChoices[i].toString() + "</button>";
+                        questionHtml += "<button type='button' id = 'answer" + val.id + "_" + i.toString() + "' class='list-group-item answer-choice' onClick=highlightAnswerChoice(this.id)>" + val.answerChoices[i].toString() + "</button>";
                     }
                     questionHtml += "</div>";
                     $('#questions').append(questionHtml);
@@ -326,11 +323,11 @@
             });
         });
 
-        $('.answer-choice').click(function () {
-            console.log('test');
-            $('button.answer-choice').removeClass('active');
-            $(this).addClass('active');
-        });
+        // sometimes, jQuery might not recognize dynamically created DOM objects, after page load
+        var highlightAnswerChoice = function(btnId){
+            $('.answer-choices button').removeClass('active');
+            $('#' + btnId).addClass('active');
+        };
     </script>
 </body>
 
