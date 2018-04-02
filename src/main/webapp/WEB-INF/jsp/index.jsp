@@ -94,6 +94,8 @@
             });
             $("#btNextQuestion").click(function () {
                 if ($('#btNextQuestion').text() == 'Submit'){
+                    // disable the button while the answers are being submitted
+                    // show success toastr on json success
                     toastr.success('Answers submitted');
                 }
                 if (current + 1 > max) {
