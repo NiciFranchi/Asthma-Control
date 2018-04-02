@@ -1,11 +1,9 @@
-version: "2.3"
+version: "2.1"
 services:
   db:
     image: mysql:latest
     volumes:
-      - type: bind
-        source: ./database
-        target: /docker-entrypoint-initdb.d
+      - ./database:/docker-entrypoint-initdb.d:rw
     environment:
       - MYSQL_ROOT_PASSWORD=p4$$W0rd
       - MYSQL_DATABASE=epidemics
@@ -13,14 +11,22 @@ services:
       - MYSQL_PASSWORD=epidemics
     ports:
       - 3306:3306
+    healthcheck:
+      test: "exit 0"
+  fhir:
+    image: djohnson325/hapi-fhir-jpaserver:stu3-ext-6-patient
+    ports: 
+      - 8081:8080
   web:
     image: epidemics/epidemics-web
     volumes:
-      - type: bind
-        source: ./src/main/webapp
-        target: /usr/local/tomcat/webapps/webapp
+      - ./src/main/webapp:/usr/local/tomcat/webapps/webapp:rw
+    build: .
     depends_on:
-      - db
+      db:
+        condition: service_healthy
+      fhir:
+        condition: service_started
     ports:
       - 8080:8080
     environment:
