@@ -9,9 +9,9 @@
 </jsp:attribute>
 
 <jsp:body>
-    <div class="container">
-        <div id="topText" class="topTextContainer unselectable"></div>
-        <div id="questions" class="questionsContainer unselectable"></div>
+    <div class="container unselectable">
+        <div id="topText" class="topTextContainer"></div>
+        <div id="questions" class="questionsContainer"></div>
         <div class="row">
             <div class="col-xs-1">
                 <div id="counter"></div>
@@ -32,16 +32,23 @@
         </div>
     </div>
     <script type="text/javascript">
+        var answersDictionary;
+        (function(){
+            // answersDictionary = {};
+            answersDictionary = '';
+        })();
+
         $(document).ready(function () {
 
             // hardcoding some variables, these might come from API at some point
             var ageGroupId = 1;
+            var patientId = 5;
             var ageGroupTxt = "0-4";
-            var url = '/api/questionnaire/' + ageGroupId.toString();
             var questionHtml = '';
+            var url = '/api/questionnaire/' + ageGroupId.toString();
             var header = "<h2 class='text-center'>" + ageGroupTxt + " Years Old Asthma Control Assessment" + "</h2>";
+            
             $('#topText').append(header);
-
 
             // paging
             var current = 1;
@@ -49,7 +56,7 @@
             var max = 1;
 
             // load data
-            $.getJSON(url, function (data) {
+            $.get(url, function (data) {
                 // for paging
                 max = data.length;
                 $.each(data, function (key, val) {
@@ -96,7 +103,30 @@
                 if ($('#btNextQuestion').text() == 'Submit'){
                     // disable the button while the answers are being submitted
                     // show success toastr on json success
-                    toastr.success('Answers submitted');
+                    
+                    var url = '/api/questionnaire/';
+                    var answers = new Object();
+                    answers.patientId = patientId;
+                    answers.answers = answersDictionary;
+                    $.ajax({
+                        type: 'POST',
+                        headers:{
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json'
+                        },
+                        url: url,
+                        data: JSON.stringify(answers),
+                        dataType:'json',
+                        success: function(){
+                            toastr.success('Answers submitted');
+                        },
+                        error: function(xhr, status, err){
+                            toastr.error('Couln\'t sumbit.');
+                            console.log(xhr);
+                            console.log(status);
+                            console.log(err);
+                        }
+                    })
                 }
                 if (current + 1 > max) {
                     return;
@@ -122,6 +152,9 @@
         var highlightAnswerChoice = function(btnId){
             $('.answer-choices button').removeClass('active');
             $('#' + btnId).addClass('active');
+            // ans = (btnId.replace('answer','')).split('_');
+            ans = btnId.replace('answer','');
+            answersDictionary += (ans+'|');
         };
     </script>
 </jsp:body>

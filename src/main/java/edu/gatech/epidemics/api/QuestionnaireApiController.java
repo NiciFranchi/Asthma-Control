@@ -83,8 +83,9 @@ public class QuestionnaireApiController {
         return questions;
     }
 
-    @PostMapping(value = "/api/questionnaire/{patientId}")
-    public void post(@RequestBody Answers answers) {
-        return;
+    @PostMapping(value = "/api/questionnaire/")
+    public int post(@RequestBody Answers answers) {
+        System.out.println("HTTP POST: \"/api/questionnaire/\" : " + answers.toString());
+        return 0;
     }
 }
