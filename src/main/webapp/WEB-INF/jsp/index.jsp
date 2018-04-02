@@ -34,8 +34,7 @@
     <script type="text/javascript">
         var answersDictionary;
         (function(){
-            // answersDictionary = {};
-            answersDictionary = '';
+            answersDictionary = {};
         })();
 
         $(document).ready(function () {
@@ -107,7 +106,10 @@
                     var url = '/api/questionnaire/';
                     var answers = new Object();
                     answers.patientId = patientId;
-                    answers.answers = answersDictionary;
+                    answers.answers = '';
+                    $.each(answersDictionary, function(k, v){
+                        answers.answers += k.toString() + '_' + v.toString() + '|';
+                    });
                     $.ajax({
                         type: 'POST',
                         headers:{
@@ -152,9 +154,8 @@
         var highlightAnswerChoice = function(btnId){
             $('.answer-choices button').removeClass('active');
             $('#' + btnId).addClass('active');
-            // ans = (btnId.replace('answer','')).split('_');
-            ans = btnId.replace('answer','');
-            answersDictionary += (ans+'|');
+            ans = (btnId.replace('answer','')).split('_');
+            answersDictionary[ans[0]] = ans[1];
         };
     </script>
 </jsp:body>
