@@ -31,8 +31,6 @@
             <div class="col-xs-1"></div>
         </div>
     </div>
-    <script type="text/javascript" src="../../static/js/jquery-3.3.1.min.js"></script>
-    <script type="text/javascript" src="../../static/js/bootstrap.min.js"></script>
     <script type="text/javascript">
         $(document).ready(function () {
 
@@ -80,11 +78,9 @@
                     return;
                 }
                 var questionId = 'question' + current.toString();
-                console.log('hide #' + questionId);
                 $('#' + questionId).hide();
                 current--;
                 questionId = 'question' + current.toString();
-                console.log('show #' + questionId);
                 $('#' + questionId).show();
                 $('#counter').text(current.toString() + '/' + max.toString());
                 if (current == min) {
@@ -101,11 +97,9 @@
                     return;
                 }
                 var questionId = 'question' + current.toString();
-                console.log('hide #' + questionId);
                 $('#' + questionId).hide();
                 current++;
                 questionId = 'question' + current.toString();
-                console.log('show #' + questionId);
                 $('#' + questionId).show();
                 if (current == max) {
                     $('#btNextQuestion').text('Submit');
