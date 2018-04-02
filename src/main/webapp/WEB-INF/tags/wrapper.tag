@@ -5,6 +5,7 @@
   <body>
     <div id="pageHeader">
       <link rel="stylesheet" type="text/css" href="../../static/css/bootstrap_flatly.min.css" />
+      <link rel="stylesheet" type="text/css" href="../../static/css/toastr.min.css" />
       <style type="text/css">
         .unselectable {
             -webkit-user-select: none;
@@ -215,6 +216,28 @@
     <div id="body">
         <script type="text/javascript" src="../../static/js/jquery-3.3.1.min.js"></script>
         <script type="text/javascript" src="../../static/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="../../static/js/toastr.min.js"></script>
+        <script>
+            $(function () {
+                toastr.options = {
+                    "closeButton": true,
+                    "debug": false,
+                    "newestOnTop": false,
+                    "progressBar": false,
+                    "positionClass": "toast-top-center",
+                    "preventDuplicates": false,
+                    "onclick": null,
+                    "showDuration": "300",
+                    "hideDuration": "1000",
+                    "timeOut": "5000",
+                    "extendedTimeOut": "1000",
+                    "showEasing": "swing",
+                    "hideEasing": "linear",
+                    "showMethod": "slideDown",
+                    "hideMethod": "slideUp"
+                };
+            })
+        </script>
         <jsp:doBody/>
     </div>
     <div id="pageFooter">

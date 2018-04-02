@@ -93,6 +93,9 @@
                 }
             });
             $("#btNextQuestion").click(function () {
+                if ($('#btNextQuestion').text() == 'Submit'){
+                    toastr.success('Answers submitted');
+                }
                 if (current + 1 > max) {
                     return;
                 }
