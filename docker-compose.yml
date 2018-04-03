@@ -14,7 +14,7 @@ services:
   fhir:
     image: djohnson325/hapi-fhir-jpaserver:stu3-ext-6-patient
     ports: 
-      - 8081:8080
+      - 8080:8080
   web:
     image: epidemics/epidemics-web
     volumes:
@@ -24,10 +24,12 @@ services:
       - db
       - fhir
     ports:
-      - 8080:8080
+      - 8081:8080
     environment:
       - DATABASE_HOST=db
       - DATABASE_USER=epidemics
       - DATABASE_PASSWORD=epidemics
       - DATABASE_NAME=epidemics
       - DATABASE_PORT=3306
+      - FHIR_HOST=fhir
+      - FHIR_PORT=8080
