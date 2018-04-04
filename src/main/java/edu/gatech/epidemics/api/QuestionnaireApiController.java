@@ -68,6 +68,7 @@ public class QuestionnaireApiController {
             questions.add(infantQ2);
             questions.add(infantQ3);
             questions.add(infantQ4);
+            questions.add(infantQ5);
         } else if (id == 2) {
             questions.add(youngQ1);
             questions.add(youngQ2);
