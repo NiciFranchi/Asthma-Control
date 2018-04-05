@@ -109,6 +109,7 @@
             $.get(url, function (data) {
                 // for paging
                 max = data.length;
+                console.log(max);
                 $.each(data, function (key, val) {
                     questionHtml =
                         "<div id= 'question" + val.id + "' class='question'>" +
@@ -153,7 +154,7 @@
             });
             $("#btNextQuestion").click(function () {
                 if ($('#btNextQuestion').text() == 'Submit'){
-                    $('#' + questionId).prop('disabled', true);
+                    $('#btNextQuestion').prop('disabled', true);
                     // show success toastr on json success
                     
                     var url = '/api/questionnaire/';

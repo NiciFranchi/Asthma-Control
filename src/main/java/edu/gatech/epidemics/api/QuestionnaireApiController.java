@@ -48,7 +48,7 @@ public class QuestionnaireApiController {
                         "(not prevention of exercise-induced bronchospasm)\n",
                 Arrays.asList("<= 2 days /week", ">2 days/week", "Several times per day"));
         Question infantQ5 = new Question(
-                4,
+                5,
                 "Exacerbations requiring oral systemic corticosteroids",
                 Arrays.asList("0-1/year", "2-3/year", "> 3/year"));
 
