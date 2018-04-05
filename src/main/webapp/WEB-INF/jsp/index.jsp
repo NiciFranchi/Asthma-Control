@@ -23,7 +23,7 @@
                             <button id="btPreviousQuestion" class="btn btn-default">Previous</button>
                         </li>
                         <li>
-                            <button id="btNextQuestion" class="btn btn-default">Next</button>
+                            <button id="btNextQuestion" class="btn btn-default" disabled>Next</button>
                         </li>
                     </ul>
                 </nav>
@@ -144,14 +144,16 @@
                     $("#btPreviousQuestion").hide();
                 }
                 if (current == max - 1) {
-                    $('#btNextQuestion').text('Next'); Automatic
+                    $('#btNextQuestion').text('Next'); 
                     $('#btNextQuestion').addClass('btn-default');
                     $('#btNextQuestion').removeClass('btn-primary');
                 }
+                // disable the button (undone when an answer is selected) - not needed, prevoius answer stays selected
+                // $('#btNextQuestion').prop('disabled', true);
             });
             $("#btNextQuestion").click(function () {
                 if ($('#btNextQuestion').text() == 'Submit'){
-                    // disable the button while the answers are being submitted
+                    $('#' + questionId).prop('disabled', true);
                     // show success toastr on json success
                     
                     var url = '/api/questionnaire/';
@@ -180,6 +182,8 @@
                             console.log(err);
                         }
                     })
+                    // if this fails, the button is disabled...
+
                     // temporarily here, hide questions and show results (will actually go to new page)
                     $("#questionsPage").hide();
                     $("#resultspage").show();
@@ -191,6 +195,8 @@
                 $('#' + questionId).hide();
                 current++;
                 questionId = 'question' + current.toString();
+                // button is disabled by default, until an answer is selected
+                $('#btNextQuestion').prop('disabled', true);
                 $('#' + questionId).show();
                 if (current == max) {
                     $('#btNextQuestion').text('Submit');
@@ -217,6 +223,7 @@
             $('#' + btnId).addClass('active');
             ans = (btnId.replace('answer','')).split('_');
             answersDictionary[ans[0]] = ans[1];
+            $('#btNextQuestion').prop('disabled', false);
         };
     </script>
 </jsp:body>
