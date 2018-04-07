@@ -15,7 +15,7 @@ CREATE TABLE person (
  `username` VARCHAR(25) NOT NULL,
  `password` VARCHAR(50),
  `active` BIT(1),
- `person_type` ENUM('PATIENT', 'DOCTOR') NOT NULL,
+ `person_type` VARCHAR(50) NOT NULL,
  `first_name` VARCHAR(50) NOT NULL,
  `middle_name` VARCHAR(50) NULL,
  `last_name` VARCHAR(50) NOT NULL,
