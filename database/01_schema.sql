@@ -3,88 +3,84 @@ SET default_storage_engine=InnoDB;
 
 USE epidemics;
 
+DROP TABLE IF EXISTS response;
+DROP TABLE IF EXISTS visit;
+DROP TABLE IF EXISTS answer_choice;
+DROP TABLE IF EXISTS question;
+DROP TABLE IF EXISTS age_group;
 DROP TABLE IF EXISTS person;
 
 CREATE TABLE person (
 `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-`username` VARCHAR(25) NOT NULL,
-`password` VARCHAR(50),
-`active` BIT(1),
-`personType` ENUM('PATIENT', 'DOCTOR') NOT NULL,
-`firstName` VARCHAR(50) NOT NULL,
-`middleName` VARCHAR(50) NULL,
-`lastName` VARCHAR(50) NOT NULL,
-`contactPhone` VARCHAR(50) NULL,
-`contactEmail` VARCHAR(50) NULL,
-`contactFax` VARCHAR(50) NULL,
-`addressLine1` VARCHAR(100) NULL,
-`addressLine2` VARCHAR(100) NULL,
-`city` VARCHAR(50) NULL,
-`state` VARCHAR(50) NULL,
-`zip` VARCHAR(10) NULL
+ `username` VARCHAR(25) NOT NULL,
+ `password` VARCHAR(50),
+ `active` BIT(1),
+ `person_type` ENUM('PATIENT', 'DOCTOR') NOT NULL,
+ `first_name` VARCHAR(50) NOT NULL,
+ `middle_name` VARCHAR(50) NULL,
+ `last_name` VARCHAR(50) NOT NULL,
+ `contact_phone` VARCHAR(50) NULL,
+ `contact_email` VARCHAR(50) NULL,
+ `contact_fax` VARCHAR(50) NULL,
+ `address_line1` VARCHAR(100) NULL,
+ `address_line2` VARCHAR(100) NULL,
+ `city` VARCHAR(50) NULL,
+ `state` VARCHAR(50) NULL,
+ `zip` VARCHAR(10) NULL
 )ENGINE=InnoDB;
 
-DROP TABLE IF EXISTS ageGroup;
-
-CREATE TABLE ageGroup (
+CREATE TABLE age_group (
 `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-`minAge` INT NOT NULL,
-`maxAge` INT NOT NULL,
+`min_age` INT NOT NULL,
+`max_age` INT NOT NULL,
 `description` VARCHAR(100) NOT NULL
 )ENGINE=InnoDB;
 
-DROP TABLE IF EXISTS question;
-
 CREATE TABLE question (
 `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-`ageGroupId` INT NOT NULL,
-`questionNumber` INT NOT NULL,
-`questionText` VARCHAR(2000) NOT NULL,
-`domainOfControl` ENUM('IMPAIRMENT', 'RISK') NOT NULL,
-FOREIGN KEY(ageGroupId)
-  REFERENCES ageGroup(id)
+`age_group_id` INT NOT NULL,
+`question_number` INT NOT NULL,
+`question_text` VARCHAR(2000) NOT NULL,
+`domain_of_control` ENUM('IMPAIRMENT', 'RISK') NOT NULL,
+FOREIGN KEY(age_group_id)
+  REFERENCES age_group(id)
   ON DELETE CASCADE
 )ENGINE=InnoDB;
 
-DROP TABLE IF EXISTS answerChoice;
-
-CREATE TABLE answerChoice (
+CREATE TABLE answer_choice (
 `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-`questionId` INT NOT NULL,
-`answerText` VARCHAR(1000) NOT NULL,
-FOREIGN KEY(questionId)
+`question_id` INT NOT NULL,
+`answer_text` VARCHAR(1000) NOT NULL,
+FOREIGN KEY(question_id)
   REFERENCES question(id)
   ON DELETE CASCADE
 )ENGINE=InnoDB;
 
-DROP TABLE IF EXISTS visit;
 CREATE TABLE visit (
 `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-`patientId` INT NOT NULL REFERENCES person(id),
-`authorId` INT NOT NULL REFERENCES person(id),
-`visitDate` DATETIME NOT NULL,
-FOREIGN KEY(patientId)
+`patient_id` INT NOT NULL,
+`author_id` INT NOT NULL,
+`visit_date` DATETIME NOT NULL,
+FOREIGN KEY(patient_id)
   REFERENCES person(id)
   ON DELETE CASCADE,
-FOREIGN KEY(authorId)
+FOREIGN KEY(author_id)
   REFERENCES person(id)
   ON DELETE CASCADE
 )ENGINE=InnoDB;
-
-DROP TABLE IF EXISTS response;
 
 CREATE TABLE response (
 `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-`visitId` INT NOT NULL REFERENCES visit(id),
-`questionId` INT NOT NULL REFERENCES question(id),
-`answerId` INT NOT NULL REFERENCES answerChoice(id),
-FOREIGN KEY(visitId)
+`visit_id` INT NOT NULL,
+`question_id` INT NOT NULL,
+`answer_id` INT NOT NULL,
+FOREIGN KEY(visit_id)
   REFERENCES visit(id)
   ON DELETE CASCADE,
-FOREIGN KEY(questionId)
+FOREIGN KEY(question_id)
   REFERENCES question(id)
   ON DELETE CASCADE,
-FOREIGN KEY(answerId)
-  REFERENCES answerChoice(id)
+FOREIGN KEY(answer_id)
+  REFERENCES answer_choice(id)
   ON DELETE CASCADE
 )ENGINE=InnoDB;
