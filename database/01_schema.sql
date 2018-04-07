@@ -4,11 +4,11 @@ SET default_storage_engine=InnoDB;
 USE epidemics;
 
 -- Created person type entity to allow multiple personas
-DROP TABLE IF EXISTS person_type;
+DROP TABLE IF EXISTS personType;
 
-CREATE TABLE person_type (
+CREATE TABLE personType (
 `id` INT NOT NULL PRIMARY KEY,
-`person_type_name` VARCHAR(100) NOT NULL
+`personTypeName` VARCHAR(100) NOT NULL
 )ENGINE=InnoDB;
 
 -- Unified all to person entity
@@ -19,7 +19,7 @@ CREATE TABLE person (
 `username` VARCHAR(25) NOT NULL,
 `password` VARCHAR(50),
 `active` BIT(1),
-`person_type_id` INT NOT NULL REFERENCES person_type(id),
+`personTypeId` INT NOT NULL REFERENCES personType(id),
 `firstName` VARCHAR(50) NOT NULL,
 `middleName` VARCHAR(50) NULL,
 `lastName` VARCHAR(50) NOT NULL,
@@ -33,15 +33,6 @@ CREATE TABLE person (
 `zip` VARCHAR(10) NULL
 )ENGINE=InnoDB;
 
--- entities question was created to bridge questionnaire and ageGroup. Eliminates question text duplication
-DROP TABLE IF EXISTS questions;
-
-CREATE TABLE questions (
-`id` INT NOT NULL PRIMARY KEY,
-`question_text` VARCHAR(2000) NOT NULL,
-`domainOfControl` ENUM('Impairment', 'Risk') NOT NULL
-)ENGINE=InnoDB;
-
 DROP TABLE IF EXISTS ageGroup;
 
 CREATE TABLE ageGroup (
@@ -51,21 +42,22 @@ CREATE TABLE ageGroup (
 `description` VARCHAR(100) NOT NULL
 )ENGINE=InnoDB;
 
+DROP TABLE IF EXISTS question;
 
-DROP TABLE IF EXISTS questionnaire;
-
-CREATE TABLE questionnaire (
+CREATE TABLE question (
 `id` INT NOT NULL PRIMARY KEY,
-`questionNumber` INT NOT NULL REFERENCES questions(id),
-`ageGroupId` INT NOT NULL REFERENCES ageGroup(id)
+`ageGroupId` INT NOT NULL REFERENCES ageGroup(id),
+`questionNumber` INT NOT NULL,
+`questionText` VARCHAR(2000) NOT NULL,
+`domainOfControl` ENUM('Impairment', 'Risk') NOT NULL
 )ENGINE=InnoDB;
 
 DROP TABLE IF EXISTS answerChoice;
 
 CREATE TABLE answerChoice (
 `id` INT NOT NULL PRIMARY KEY,
-`question_id` INT NOT NULL REFERENCES questions(id),
-`answer_desc` VARCHAR(1000) NOT NULL
+`questionId` INT NOT NULL REFERENCES question(id),
+`answerText` VARCHAR(1000) NOT NULL
 )ENGINE=InnoDB;
 
 DROP TABLE IF EXISTS visit;
@@ -82,7 +74,6 @@ DROP TABLE IF EXISTS response;
 CREATE TABLE response (
 `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
 `visitId` INT NOT NULL REFERENCES visit(id),
-`questionnaireId` INT NOT NULL REFERENCES questionnaire(id),
-`questionId` INT NOT NULL REFERENCES questions(id),
+`questionId` INT NOT NULL REFERENCES question(id),
 `answerId` INT NOT NULL REFERENCES answerChoice(id)
 )ENGINE=InnoDB;
