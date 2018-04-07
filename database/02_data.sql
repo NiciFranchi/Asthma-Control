@@ -26,9 +26,4 @@ select * from personType;
 +----+----------------+
 */
 
-DELETE FROM `person`;
-# This is a sample patient. I only filled in the necessary columns.
-# The other columns are nice, but won't affect the features of the final product.
-INSERT INTO `person` (`id`, `username`, `active`) VALUES (1, 'patient');
-
 SET SQL_SAFE_UPDATES = 1;
