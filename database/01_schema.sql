@@ -3,6 +3,7 @@ SET default_storage_engine=InnoDB;
 
 USE epidemics;
 
+-- Created person type entity to allow multiple personas
 DROP TABLE IF EXISTS person_type;
 
 CREATE TABLE person_type (
@@ -10,6 +11,7 @@ CREATE TABLE person_type (
 `person_type_name` VARCHAR(100) NOT NULL
 )ENGINE=InnoDB;
 
+-- Unified all to person entity
 DROP TABLE IF EXISTS person;
 
 CREATE TABLE person (
@@ -31,6 +33,7 @@ CREATE TABLE person (
 `zip` VARCHAR(10) NULL
 )ENGINE=InnoDB;
 
+-- entities question was created to bridge questionnaire and ageGroup. Eliminates question text duplication
 DROP TABLE IF EXISTS questions;
 
 CREATE TABLE questions (
