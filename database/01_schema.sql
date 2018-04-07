@@ -15,7 +15,7 @@ CREATE TABLE login (
 DROP TABLE IF EXISTS person;
 
 CREATE TABLE person (
-`id` INT NOT NULL PRIMARY KEY,
+`id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
 `firstName` VARCHAR(50) NOT NULL,
 `middleName` VARCHAR(50) NULL,
 `lastName` VARCHAR(50) NOT NULL,
@@ -26,47 +26,52 @@ CREATE TABLE person (
 `addressLine2` VARCHAR(100) NULL,
 `city` VARCHAR(50) NULL,
 `state` VARCHAR(50) NULL,
-`zip` VARCHAR(10) NULL
+`zip` VARCHAR(10) NULL,
+`birthday` DATE NOT NULL
 )ENGINE=InnoDB;
 
 DROP TABLE IF EXISTS patient;
 
 CREATE TABLE patient (
-`id` INT NOT NULL PRIMARY KEY,
+`id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
 `personId` INT NOT NULL REFERENCES person(id),
-`ssn` VARCHAR(25) NOT NULL,
-`birthday` DATE NOT NULL # This will store just a day without a time.
+`ssn` VARCHAR(25) NOT NULL
 )ENGINE=InnoDB;
 
 DROP TABLE IF EXISTS doctor;
 
 CREATE TABLE doctor (
-`id` INT NOT NULL PRIMARY KEY,
+`id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
 `personId` INT NOT NULL REFERENCES person(id),
-`employeeId` VARCHAR(25) NOT NULL,
-`specialty` VARCHAR(25) NOT NULL,
-`birthday` DATE NOT NULL
+`employeeId` VARCHAR(25) NOT NULL
 )ENGINE=InnoDB;
 
 DROP TABLE IF EXISTS questionnaire;
 
 CREATE TABLE questionnaire (
-`id` INT NOT NULL PRIMARY KEY,
-`ageGroup` ENUM('ZeroToFour', 'FiveToEleven', 'TwelvePlus') NOT NULL,
+`id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+`ageGroupId` INT NOT NULL REFERENCES ageGroup(id),
 `questionNumber` INT NOT NULL,
 `question` VARCHAR(100) NOT NULL,
-`answerList` INT NOT NULL REFERENCES answerChoice(listId),
 `domainOfControl` ENUM('Impairment', 'Risk') NOT NULL
+)ENGINE=InnoDB;
+
+DROP TABLE IF EXISTS ageGroup;
+
+CREATE TABLE ageGroup (
+`id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+`minAge` INT NOT NULL,
+`maxAge` INT NOT NULL,
+`description` VARCHAR(25) NOT NULL
 )ENGINE=InnoDB;
 
 DROP TABLE IF EXISTS answerChoice;
 
 CREATE TABLE answerChoice (
-`id` INT NOT NULL PRIMARY KEY,
-`listId` INT NOT NULL,
+`id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+`questionnaireId` INT NOT NULL REFERENCES questionnaire(id),
 `answerNumber` INT NOT NULL,
-`description` VARCHAR(100) NOT NULL,
-INDEX answerListChoice (listId, answerNumber)
+`description` VARCHAR(100) NOT NULL
 )ENGINE=InnoDB;
 
 DROP TABLE IF EXISTS visit;
