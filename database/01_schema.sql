@@ -3,15 +3,6 @@ SET default_storage_engine=InnoDB;
 
 USE epidemics;
 
--- Created person type entity to allow multiple personas
-DROP TABLE IF EXISTS personType;
-
-CREATE TABLE personType (
-`id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-`personTypeName` VARCHAR(100) NOT NULL
-)ENGINE=InnoDB;
-
--- Unified all to person entity
 DROP TABLE IF EXISTS person;
 
 CREATE TABLE person (
@@ -19,7 +10,7 @@ CREATE TABLE person (
 `username` VARCHAR(25) NOT NULL,
 `password` VARCHAR(50),
 `active` BIT(1),
-`personTypeId` INT NOT NULL REFERENCES personType(id),
+`personType` ENUM('PATIENT', 'DOCTOR') NOT NULL,
 `firstName` VARCHAR(50) NOT NULL,
 `middleName` VARCHAR(50) NULL,
 `lastName` VARCHAR(50) NOT NULL,
@@ -46,27 +37,38 @@ DROP TABLE IF EXISTS question;
 
 CREATE TABLE question (
 `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-`ageGroupId` INT NOT NULL REFERENCES ageGroup(id),
+`ageGroupId` INT NOT NULL,
 `questionNumber` INT NOT NULL,
 `questionText` VARCHAR(2000) NOT NULL,
-`domainOfControl` ENUM('Impairment', 'Risk') NOT NULL
+`domainOfControl` ENUM('IMPAIRMENT', 'RISK') NOT NULL,
+FOREIGN KEY(ageGroupId)
+  REFERENCES ageGroup(id)
+  ON DELETE CASCADE
 )ENGINE=InnoDB;
 
 DROP TABLE IF EXISTS answerChoice;
 
 CREATE TABLE answerChoice (
 `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-`questionId` INT NOT NULL REFERENCES question(id),
-`answerText` VARCHAR(1000) NOT NULL
+`questionId` INT NOT NULL,
+`answerText` VARCHAR(1000) NOT NULL,
+FOREIGN KEY(questionId)
+  REFERENCES question(id)
+  ON DELETE CASCADE
 )ENGINE=InnoDB;
 
 DROP TABLE IF EXISTS visit;
--- Here we are assuming that patient is not a doctor. Need to fix this deficinecy somepoint soon
 CREATE TABLE visit (
 `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
 `patientId` INT NOT NULL REFERENCES person(id),
-`doctorId` INT NOT NULL REFERENCES person(id),
-`visitDate` DATETIME NOT NULL
+`authorId` INT NOT NULL REFERENCES person(id),
+`visitDate` DATETIME NOT NULL,
+FOREIGN KEY(patientId)
+  REFERENCES person(id)
+  ON DELETE CASCADE,
+FOREIGN KEY(authorId)
+  REFERENCES person(id)
+  ON DELETE CASCADE
 )ENGINE=InnoDB;
 
 DROP TABLE IF EXISTS response;
@@ -75,5 +77,14 @@ CREATE TABLE response (
 `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
 `visitId` INT NOT NULL REFERENCES visit(id),
 `questionId` INT NOT NULL REFERENCES question(id),
-`answerId` INT NOT NULL REFERENCES answerChoice(id)
+`answerId` INT NOT NULL REFERENCES answerChoice(id),
+FOREIGN KEY(visitId)
+  REFERENCES visit(id)
+  ON DELETE CASCADE,
+FOREIGN KEY(questionId)
+  REFERENCES question(id)
+  ON DELETE CASCADE,
+FOREIGN KEY(answerId)
+  REFERENCES answerChoice(id)
+  ON DELETE CASCADE
 )ENGINE=InnoDB;
