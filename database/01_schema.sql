@@ -51,6 +51,7 @@ FOREIGN KEY(age_group_id)
 CREATE TABLE answer_choice (
 `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
 `question_id` INT NOT NULL,
+`answer_number` INT NOT NULL,
 `answer_text` VARCHAR(1000) NOT NULL,
 FOREIGN KEY(question_id)
   REFERENCES question(id)

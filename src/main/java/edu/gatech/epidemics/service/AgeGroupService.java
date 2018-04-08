@@ -38,6 +38,6 @@ public class AgeGroupService {
     }
     
     public void add(AgeGroup ageGroup) {
-        this.ageGroupRepository.save(ageGroup);
+        ageGroupRepository.save(ageGroup);
     }
 }

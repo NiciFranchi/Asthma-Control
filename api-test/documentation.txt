@@ -18,3 +18,9 @@ GET /api/questions : lists all questions
 GET /api/questions/id : lists a specific id
 GET /api/questions?age=18 : get the questions for the age group of a specific age
 POST /api/questions with a request body of Question (json) : upsert a question
+
+answer choice
+
+GET /api/answer-choices : lists all answer choices
+GET /api/answer-choices/id : lists a specific id
+POST /api/answer-choices with a request body of AnswerChoice (json) : upsert an answer choice

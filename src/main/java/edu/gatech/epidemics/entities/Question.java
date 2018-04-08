@@ -1,12 +1,15 @@
 package edu.gatech.epidemics.entities;
 
 import java.io.Serializable;
+import java.util.Set;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
@@ -27,6 +30,8 @@ public class Question implements Serializable {
     private String questionText;
     @NotNull
     private DomainOfControl domainOfControl;
+    @OneToMany(mappedBy = "questionId", cascade = CascadeType.ALL)
+    private Set<AnswerChoice> answerChoice;
 
     public Question() {
     }
@@ -79,8 +84,16 @@ public class Question implements Serializable {
         this.ageGroup = ageGroup;
     }
 
+    public Set<AnswerChoice> getAnswerChoice() {
+        return answerChoice;
+    }
+
+    public void setAnswerChoice(Set<AnswerChoice> answerChoice) {
+        this.answerChoice = answerChoice;
+    }
+
     @Override
     public String toString() {
-        return "Question{" + "id=" + id + ", ageGroup=" + ageGroup + ", questionNumber=" + questionNumber + ", questionText=" + questionText + ", domainOfControl=" + domainOfControl + '}';
+        return "Question{" + "id=" + id + ", ageGroup=" + ageGroup + ", questionNumber=" + questionNumber + ", questionText=" + questionText + ", domainOfControl=" + domainOfControl + ", answerChoice=" + answerChoice + '}';
     }
 }
