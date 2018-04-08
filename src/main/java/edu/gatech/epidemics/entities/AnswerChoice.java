@@ -24,14 +24,7 @@ public class AnswerChoice implements Serializable {
 
     public AnswerChoice() {
     }
-
-    public AnswerChoice(Integer id, Integer questionId, Integer answerNumber, String answerText) {
-        this.id = id;
-        this.questionId = questionId;
-        this.answerNumber = answerNumber;
-        this.answerText = answerText;
-    }
-
+    
     public Integer getId() {
         return id;
     }

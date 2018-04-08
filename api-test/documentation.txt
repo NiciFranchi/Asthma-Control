@@ -29,3 +29,8 @@ visit
 GET /api/visits : lists all visits
 GET /api/visits/id : lists a specific id
 POST /api/visits with a request body of Visit (json) : upsert a visit
+
+response
+GET /api/response : lists all responses
+GET /api/response/id : lists a specific id
+POST /api/response with a request body of Response (json) : upsert a response

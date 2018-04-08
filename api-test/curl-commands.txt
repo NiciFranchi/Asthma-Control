@@ -1,4 +1,3 @@
-
 # Person: add OR update if exists
 curl -i -X POST -H 'Content-Type: application/json' -d '{"id":1,"username":"john","password":"test","active":true,"personType":"PATIENT","firstName":"John","middleName":"M.","lastName":"Doe","contactPhone":"555-555-5555","contactEmail":"email@test.com","contactFax":"555-555-5556","addressLine1":"Address Line1","addressLine2":"Address Line2","city":"Georgia","state":null,"zip":"12345","birthday":"2000-04-01"}' http://localhost:8081/api/persons
 
@@ -25,3 +24,7 @@ curl -i -X POST -H 'Content-Type: application/json' -d '{"id":6,"questionId":6,"
 
 # Visit
 curl -i -X POST -H 'Content-Type: application/json' -d '{"id":1,"patientId":1,"visitDate":"2018-04-08"}' http://localhost:8081/api/visits
+
+# Response
+curl -i -X POST -H 'Content-Type: application/json' -d '{"id":1,"visitId":1,"question":{"id":5},"answer":{"id":3}}' http://localhost:8081/api/responses
+curl -i -X POST -H 'Content-Type: application/json' -d '{"id":1,"visitId":1,"question":{"id":6},"answer":{"id":5}}' http://localhost:8081/api/responses

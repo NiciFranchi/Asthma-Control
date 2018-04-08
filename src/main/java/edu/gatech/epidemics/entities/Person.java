@@ -52,30 +52,6 @@ public class Person implements Serializable {
     public Person() {
     }
 
-    public Person(Integer id, String username, String password, Boolean active, 
-        PersonType personType, String firstName, String middleName, String lastName, 
-        String contactPhone, String contactEmail, String contactFax, String addressLine1, 
-        String addressLine2, String city, String state, String zip, Date birthday) {
-        this.id = id;
-        this.username = username;
-        this.password = password;
-        this.active = active;
-        this.personType = personType;
-        this.firstName = firstName;
-        this.middleName = middleName;
-        this.lastName = lastName;
-        this.contactPhone = contactPhone;
-        this.contactEmail = contactEmail;
-        this.contactFax = contactFax;
-        this.addressLine1 = addressLine1;
-        this.addressLine2 = addressLine2;
-        this.city = city;
-        this.state = state;
-        this.zip = zip;
-        this.birthday = birthday;
-        setAge();
-    }
-
     @Override
     public String toString() {
         return "Person{" + "id=" + id + ", username=" + username + ", password=" + password + ", active=" + active + ", personType=" + personType + ", firstName=" + firstName + ", middleName=" + middleName + ", lastName=" + lastName + ", contactPhone=" + contactPhone + ", contactEmail=" + contactEmail + ", contactFax=" + contactFax + ", addressLine1=" + addressLine1 + ", addressLine2=" + addressLine2 + ", city=" + city + ", state=" + state + ", zip=" + zip + ", birthday=" + birthday + ", age=" + age + ", visits=" + visits + '}';
