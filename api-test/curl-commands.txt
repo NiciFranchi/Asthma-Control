@@ -3,6 +3,6 @@
 curl -i -X POST -H 'Content-Type: application/json' -d '{"id":1,"username":"john","password":"test","active":true,"personType":"PATIENT","firstName":"John","middleName":"M.","lastName":"Doe","contactPhone":"555-555-5555","contactEmail":"email@test.com","contactFax":"555-555-5556","addressLine1":"Address Line1","addressLine2":"Address Line2","city":"Georgia","state":null,"zip":"12345","birthday":"2000-04-01"}' http://localhost:8081/api/persons
 
 # AgeGroup: add OR update if exists
-curl -i -X POST -H 'Content-Type: application/json' -d '{"id":1,"min_age":0,"max_age":3,"description":"0-3"}' http://localhost:8081/api/age-groups
-curl -i -X POST -H 'Content-Type: application/json' -d '{"id":2,"min_age":4,"max_age":8,"description":"0-3"}' http://localhost:8081/api/age-groups
-curl -i -X POST -H 'Content-Type: application/json' -d '{"id":3,"min_age":9,"max_age":9999,"description":"0-3"}' http://localhost:8081/api/age-groups
+curl -i -X POST -H 'Content-Type: application/json' -d '{"id":1,"minAge":0,"maxAge":3,"description":"0-3"}' http://localhost:8081/api/age-groups
+curl -i -X POST -H 'Content-Type: application/json' -d '{"id":2,"minAge":4,"maxAge":9,"description":"4-9"}' http://localhost:8081/api/age-groups
+curl -i -X POST -H 'Content-Type: application/json' -d '{"id":3,"minAge":10,"maxAge":9999,"description":"10+"}' http://localhost:8081/api/age-groups
