@@ -34,7 +34,7 @@ public class AgeGroupApiController {
     }
     
     @RequestMapping(value = "/api/age-groups", params = "age")
-    public List<AgeGroup> findByAge(@RequestParam("age") Integer age) {
+    public AgeGroup findByAge(@RequestParam("age") Integer age) {
         return ageGroupService.findByAge(age);
     }
     
