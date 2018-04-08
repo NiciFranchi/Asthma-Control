@@ -61,12 +61,8 @@ FOREIGN KEY(question_id)
 CREATE TABLE visit (
 `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
 `patient_id` INT NOT NULL,
-`author_id` INT NOT NULL,
 `visit_date` DATETIME NOT NULL,
 FOREIGN KEY(patient_id)
-  REFERENCES person(id)
-  ON DELETE CASCADE,
-FOREIGN KEY(author_id)
   REFERENCES person(id)
   ON DELETE CASCADE
 )ENGINE=InnoDB;
