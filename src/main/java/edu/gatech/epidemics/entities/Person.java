@@ -1,11 +1,16 @@
 package edu.gatech.epidemics.entities;
 
 import java.io.Serializable;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.PostLoad;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
 @Entity
@@ -34,6 +39,10 @@ public class Person implements Serializable {
     private String city;
     private String state;
     private String zip;
+    @NotNull
+    private Date birthday;
+    @Transient
+    private Integer age;
 
     public Person() {
     }
@@ -41,7 +50,7 @@ public class Person implements Serializable {
     public Person(Integer id, String username, String password, Boolean active, 
         PersonType personType, String firstName, String middleName, String lastName, 
         String contactPhone, String contactEmail, String contactFax, String addressLine1, 
-        String addressLine2, String city, String state, String zip) {
+        String addressLine2, String city, String state, String zip, Date birthday) {
         this.id = id;
         this.username = username;
         this.password = password;
@@ -58,11 +67,13 @@ public class Person implements Serializable {
         this.city = city;
         this.state = state;
         this.zip = zip;
+        this.birthday = birthday;
+        setAge();
     }
 
     @Override
     public String toString() {
-        return "Person{" + "id=" + id + ", username=" + username + ", password=" + password + ", active=" + active + ", personType=" + personType + ", firstName=" + firstName + ", middleName=" + middleName + ", lastName=" + lastName + ", contactPhone=" + contactPhone + ", contactEmail=" + contactEmail + ", contactFax=" + contactFax + ", addressLine1=" + addressLine1 + ", addressLine2=" + addressLine2 + ", city=" + city + ", state=" + state + ", zip=" + zip + '}';
+        return "Person{" + "id=" + id + ", username=" + username + ", password=" + password + ", active=" + active + ", personType=" + personType + ", firstName=" + firstName + ", middleName=" + middleName + ", lastName=" + lastName + ", contactPhone=" + contactPhone + ", contactEmail=" + contactEmail + ", contactFax=" + contactFax + ", addressLine1=" + addressLine1 + ", addressLine2=" + addressLine2 + ", city=" + city + ", state=" + state + ", zip=" + zip + ", birthday=" + birthday + ", age=" + age + '}';
     }
     
     public Integer getId() {
@@ -191,5 +202,46 @@ public class Person implements Serializable {
 
     public void setZip(String zip) {
         this.zip = zip;
+    }
+
+    public Date getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(Date birthday) {
+        this.birthday = birthday;
+        setAge();
+    }
+    
+    public Integer getAge() {
+        int age = yearFromDate(new Date()) - yearFromDate(birthday);
+        if (birthdayHasNotPassedThisYear()) {
+            age -= 1;
+        }
+        return age;
+    }
+    
+    private void setAge() {
+        this.age = getAge();
+    }
+    
+    private int yearFromDate(Date date) {
+        Calendar calendar = new GregorianCalendar();
+        calendar.setTime(date);
+        return calendar.get(Calendar.YEAR);
+    }
+    
+    private boolean birthdayHasNotPassedThisYear() {
+        Calendar today = new GregorianCalendar();
+        today.setTime(new Date());
+        Calendar bday = new GregorianCalendar();
+        bday.setTime(birthday);
+        return bday.get(Calendar.MONTH) >= today.get(Calendar.MONTH) &&
+            bday.get(Calendar.DAY_OF_MONTH) >= today.get(Calendar.DAY_OF_MONTH);
+    }
+    
+    @PostLoad
+    private void onLoad() {
+        setAge();
     }
 }

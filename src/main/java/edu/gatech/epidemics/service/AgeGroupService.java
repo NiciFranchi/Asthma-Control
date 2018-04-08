@@ -2,6 +2,7 @@ package edu.gatech.epidemics.service;
 
 import edu.gatech.epidemics.dao.AgeGroupRepository;
 import edu.gatech.epidemics.entities.AgeGroup;
+import edu.gatech.epidemics.entities.Question;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -42,7 +43,7 @@ public class AgeGroupService {
         this.ageGroupRepository.save(ageGroup);
     }
     
-    public Set<Questions> getQuestions(Integer id) {
+    public Set<Question> getQuestions(Integer id) {
         Optional<AgeGroup> ageGroup = findById(id);
         return ageGroup.get().getQuestions();
     }

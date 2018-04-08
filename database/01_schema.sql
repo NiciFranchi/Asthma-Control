@@ -26,7 +26,8 @@ CREATE TABLE person (
 `address_line2` VARCHAR(100) NULL,
 `city` VARCHAR(50) NULL,
 `state` VARCHAR(50) NULL,
-`zip` VARCHAR(10) NULL
+`zip` VARCHAR(10) NULL,
+`birthday` DATE NOT NULL
 )ENGINE=InnoDB;
 
 CREATE TABLE age_group (
