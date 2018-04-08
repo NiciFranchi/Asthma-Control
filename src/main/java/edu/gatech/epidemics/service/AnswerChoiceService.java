@@ -28,7 +28,7 @@ public class AnswerChoiceService {
         return answerChoiceRepository.findById(id);
     }
     
-    public void add(AnswerChoice question) {
-        answerChoiceRepository.save(question);
+    public void add(AnswerChoice answerChoice) {
+        answerChoiceRepository.save(answerChoice);
     }
 }

@@ -24,3 +24,8 @@ answer choice
 GET /api/answer-choices : lists all answer choices
 GET /api/answer-choices/id : lists a specific id
 POST /api/answer-choices with a request body of AnswerChoice (json) : upsert an answer choice
+
+visit
+GET /api/visits : lists all visits
+GET /api/visits/id : lists a specific id
+POST /api/visits with a request body of Visit (json) : upsert a visit

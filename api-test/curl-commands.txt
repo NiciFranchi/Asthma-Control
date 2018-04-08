@@ -22,3 +22,6 @@ curl -i -X POST -H 'Content-Type: application/json' -d '{"id":3,"questionId":5,"
 curl -i -X POST -H 'Content-Type: application/json' -d '{"id":4,"questionId":6,"answerNumber":1,"answerText":"Q2-A1"}' http://localhost:8081/api/answer-choices
 curl -i -X POST -H 'Content-Type: application/json' -d '{"id":5,"questionId":6,"answerNumber":2,"answerText":"Q2-A2"}' http://localhost:8081/api/answer-choices
 curl -i -X POST -H 'Content-Type: application/json' -d '{"id":6,"questionId":6,"answerNumber":3,"answerText":"Q2-A3"}' http://localhost:8081/api/answer-choices
+
+# Visit
+curl -i -X POST -H 'Content-Type: application/json' -d '{"id":1,"patientId":1,"visitDate":"2018-04-08"}' http://localhost:8081/api/visits

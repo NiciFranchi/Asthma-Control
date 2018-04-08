@@ -31,7 +31,7 @@ public class Question implements Serializable {
     @NotNull
     private DomainOfControl domainOfControl;
     @OneToMany(mappedBy = "questionId", cascade = CascadeType.ALL)
-    private Set<AnswerChoice> answerChoice;
+    private Set<AnswerChoice> answerChoices;
 
     public Question() {
     }
@@ -84,16 +84,16 @@ public class Question implements Serializable {
         this.ageGroup = ageGroup;
     }
 
-    public Set<AnswerChoice> getAnswerChoice() {
-        return answerChoice;
+    public Set<AnswerChoice> getAnswerChoices() {
+        return answerChoices;
     }
 
-    public void setAnswerChoice(Set<AnswerChoice> answerChoice) {
-        this.answerChoice = answerChoice;
+    public void setAnswerChoices(Set<AnswerChoice> answerChoices) {
+        this.answerChoices = answerChoices;
     }
 
     @Override
     public String toString() {
-        return "Question{" + "id=" + id + ", ageGroup=" + ageGroup + ", questionNumber=" + questionNumber + ", questionText=" + questionText + ", domainOfControl=" + domainOfControl + ", answerChoice=" + answerChoice + '}';
+        return "Question{" + "id=" + id + ", ageGroup=" + ageGroup + ", questionNumber=" + questionNumber + ", questionText=" + questionText + ", domainOfControl=" + domainOfControl + ", answerChoices=" + answerChoices + '}';
     }
 }
