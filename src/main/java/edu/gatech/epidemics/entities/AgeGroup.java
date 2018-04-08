@@ -1,10 +1,13 @@
 package edu.gatech.epidemics.entities;
 
 import java.io.Serializable;
+import java.util.Set;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
@@ -21,6 +24,8 @@ public class AgeGroup implements Serializable {
     private Integer maxAge;
     @NotNull
     private String description;
+    @OneToMany(mappedBy = "ageGroup", cascade = CascadeType.ALL)
+    private Set<Question> questions;
     
     public AgeGroup() {
     }
@@ -67,5 +72,9 @@ public class AgeGroup implements Serializable {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Set<Question> getQuestions() {
+        return questions;
     }
 }

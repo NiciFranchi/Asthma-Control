@@ -5,6 +5,7 @@ import edu.gatech.epidemics.entities.AgeGroup;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -39,5 +40,10 @@ public class AgeGroupService {
     
     public void add(AgeGroup ageGroup) {
         this.ageGroupRepository.save(ageGroup);
+    }
+    
+    public Set<Questions> getQuestions(Integer id) {
+        Optional<AgeGroup> ageGroup = findById(id);
+        return ageGroup.get().getQuestions();
     }
 }
