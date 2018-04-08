@@ -1,0 +1,20 @@
+person
+
+GET /api/persons : lists all persons
+GET /api/persons/id : lists a specific id
+GET /api/persons?username=user : get a list of persons matching a specific username
+POST /api/persons with a request body of Person (json) : upsert a person
+
+age group
+
+GET /api/age-groups : lists all age groups
+GET /api/age-groups/id : lists a specific id
+GET /api/age-groups?age=18 : get the age group of a specific age
+POST /api/age-groups with a request body of AgeGroup (json) : upsert an age group
+
+question
+
+GET /api/questions : lists all questions
+GET /api/questions/id : lists a specific id
+GET /api/questions?age=18 : get the questions for the age group of a specific age
+POST /api/questions with a request body of Question (json) : upsert a question
