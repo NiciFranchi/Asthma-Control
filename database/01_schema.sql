@@ -12,21 +12,22 @@ DROP TABLE IF EXISTS person;
 
 CREATE TABLE person (
 `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
- `username` VARCHAR(25) NOT NULL,
- `password` VARCHAR(50),
- `active` BIT(1),
- `person_type` ENUM('PATIENT', 'DOCTOR') NOT NULL,
- `first_name` VARCHAR(50) NOT NULL,
- `middle_name` VARCHAR(50) NULL,
- `last_name` VARCHAR(50) NOT NULL,
- `contact_phone` VARCHAR(50) NULL,
- `contact_email` VARCHAR(50) NULL,
- `contact_fax` VARCHAR(50) NULL,
- `address_line1` VARCHAR(100) NULL,
- `address_line2` VARCHAR(100) NULL,
- `city` VARCHAR(50) NULL,
- `state` VARCHAR(50) NULL,
- `zip` VARCHAR(10) NULL
+`username` VARCHAR(25) NOT NULL,
+`password` VARCHAR(50),
+`active` BIT(1),
+`person_type` VARCHAR(50) NOT NULL,
+`first_name` VARCHAR(50) NOT NULL,
+`middle_name` VARCHAR(50) NULL,
+`last_name` VARCHAR(50) NOT NULL,
+`contact_phone` VARCHAR(50) NULL,
+`contact_email` VARCHAR(50) NULL,
+`contact_fax` VARCHAR(50) NULL,
+`address_line1` VARCHAR(100) NULL,
+`address_line2` VARCHAR(100) NULL,
+`city` VARCHAR(50) NULL,
+`state` VARCHAR(50) NULL,
+`zip` VARCHAR(10) NULL,
+`birthday` DATE NOT NULL
 )ENGINE=InnoDB;
 
 CREATE TABLE age_group (
@@ -41,7 +42,7 @@ CREATE TABLE question (
 `age_group_id` INT NOT NULL,
 `question_number` INT NOT NULL,
 `question_text` VARCHAR(2000) NOT NULL,
-`domain_of_control` ENUM('IMPAIRMENT', 'RISK') NOT NULL,
+`domain_of_control` VARCHAR(50) NOT NULL,
 FOREIGN KEY(age_group_id)
   REFERENCES age_group(id)
   ON DELETE CASCADE
