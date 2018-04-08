@@ -14,3 +14,11 @@ curl -i -X POST -H 'Content-Type: application/json' -d '{"id":3,"ageGroup":{"id"
 curl -i -X POST -H 'Content-Type: application/json' -d '{"id":4,"ageGroup":{"id":2},"questionNumber":2,"questionText":"AG-2 This is question 2.","domainOfControl":"RISK"}' http://localhost:8081/api/questions
 curl -i -X POST -H 'Content-Type: application/json' -d '{"id":5,"ageGroup":{"id":3},"questionNumber":1,"questionText":"AG-3 This is question 1.","domainOfControl":"IMPAIRMENT"}' http://localhost:8081/api/questions
 curl -i -X POST -H 'Content-Type: application/json' -d '{"id":6,"ageGroup":{"id":3},"questionNumber":2,"questionText":"AG-3 This is question 2.","domainOfControl":"RISK"}' http://localhost:8081/api/questions
+
+# AnswerChoice: add OR update if exists
+curl -i -X POST -H 'Content-Type: application/json' -d '{"id":1,"questionId":5,"answerNumber":1,"answerText":"Q1-A1"}' http://localhost:8081/api/answer-choices
+curl -i -X POST -H 'Content-Type: application/json' -d '{"id":2,"questionId":5,"answerNumber":2,"answerText":"Q1-A2"}' http://localhost:8081/api/answer-choices
+curl -i -X POST -H 'Content-Type: application/json' -d '{"id":3,"questionId":5,"answerNumber":3,"answerText":"Q1-A3"}' http://localhost:8081/api/answer-choices
+curl -i -X POST -H 'Content-Type: application/json' -d '{"id":4,"questionId":6,"answerNumber":1,"answerText":"Q2-A1"}' http://localhost:8081/api/answer-choices
+curl -i -X POST -H 'Content-Type: application/json' -d '{"id":5,"questionId":6,"answerNumber":2,"answerText":"Q2-A2"}' http://localhost:8081/api/answer-choices
+curl -i -X POST -H 'Content-Type: application/json' -d '{"id":6,"questionId":6,"answerNumber":3,"answerText":"Q2-A3"}' http://localhost:8081/api/answer-choices

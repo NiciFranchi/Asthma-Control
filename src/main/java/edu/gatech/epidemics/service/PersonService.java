@@ -33,6 +33,6 @@ public class PersonService {
     }
     
     public void add(Person person) {
-        this.personRepository.save(person);
+        personRepository.save(person);
     }
 }
