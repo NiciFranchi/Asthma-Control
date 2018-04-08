@@ -24,14 +24,7 @@ public class AgeGroup implements Serializable {
     
     public AgeGroup() {
     }
-
-    public AgeGroup(Integer id, Integer minAge, Integer maxAge, String description) {
-        this.id = id;
-        this.minAge = minAge;
-        this.maxAge = maxAge;
-        this.description = description;
-    }
-
+    
     @Override
     public String toString() {
         return "AgeGroup{" + "id=" + id + ", minAge=" + minAge + ", maxAge=" + maxAge + ", description=" + description + '}';

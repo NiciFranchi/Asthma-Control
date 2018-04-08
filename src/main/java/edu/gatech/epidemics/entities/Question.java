@@ -35,15 +35,7 @@ public class Question implements Serializable {
 
     public Question() {
     }
-
-    public Question(Integer id, AgeGroup ageGroup, Integer questionNumber, String questionText, DomainOfControl domainOfControl) {
-        this.id = id;
-        this.ageGroup = ageGroup;
-        this.questionNumber = questionNumber;
-        this.questionText = questionText;
-        this.domainOfControl = domainOfControl;
-    }
-
+    
     public Integer getId() {
         return id;
     }
