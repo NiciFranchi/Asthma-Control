@@ -24,14 +24,7 @@ hs_err_pid*
 /target/
 /bin/
 /nbproject/private/
-.idea/.name
-.idea/compiler.xml
-.idea/dbnavigator.xml
-.idea/misc.xml
-.idea/modules.xml
-.idea/uiDesigner.xml
-.idea/workspace.xml
-.idea/libraries
+.idea/*
 
 epidemics-web.iml
 /nbproject/
