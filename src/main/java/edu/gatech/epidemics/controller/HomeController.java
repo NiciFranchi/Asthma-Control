@@ -10,9 +10,9 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 public class HomeController {
     @PostMapping(value = "/")
-    public final String post(@RequestBody Login loginInput) {
+    public final String post(Login loginInput) {
         System.out.println("HTTP POST: \"/api/login/\" : " + loginInput.toString());
-        if (loginInput.getUsername() == "aarsh" && loginInput.getPassword() == "test") {
+        if (loginInput.getUsername().equals("aarsh") && loginInput.getPassword().equals("test")) {
             return "redirect:/home";
         } else {
             return "redirect:/";
