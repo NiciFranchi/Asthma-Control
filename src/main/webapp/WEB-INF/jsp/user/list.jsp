@@ -6,7 +6,7 @@
 <body>
 <div>User list:</div>
 
-<ul id="ulUsers" class="list-group">
+<ul username="ulUsers" class="list-group">
 
 </ul>
 
@@ -18,7 +18,7 @@
         $.getJSON('/api/user', function (data) {
             var users_html = [];
             $.each(data, function (key, val) {
-                users_html.push("<li class=\"list-group-item\" id='" + key + "'>" + val.username + "</li>");
+                users_html.push("<li class=\"list-group-item\" username='" + key + "'>" + val.username + "</li>");
             });
             $('#ulUsers').append(users_html);
         });

@@ -5,49 +5,79 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Set;
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.PostLoad;
-import javax.persistence.Table;
-import javax.persistence.Transient;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "person")
 public class Person implements Serializable {
+
     private static final long serialVersionUID = 1L;
+
     @Id
+    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    @NotNull
+
+    @Column(nullable = false, unique = true)
     private String username;
+
+    @Column(name = "password")
     private String password;
+
+    @Column(name = "active")
     private Boolean active;
+
     @NotNull
     PersonType personType;
+
     @NotNull
+    @Column(name = "first_name")
     private String firstName;
+
+    @Column(name = "middle_name")
     private String middleName;
+
     @NotNull
+    @Column(name = "last_name")
     private String lastName;
+
+    @Column(name = "contact_phone")
     private String contactPhone;
+
+    @Column(name = "contact_email")
     private String contactEmail;
+
+    @Column(name = "contact_fax")
     private String contactFax;
+
+    @Column(name = "address_line1")
     private String addressLine1;
+
+    @Column(name = "address_line2")
     private String addressLine2;
+
+    @Column(name = "city")
     private String city;
+
+    @Column(name = "state")
     private String state;
+
+    @Column(name = "zip")
     private String zip;
+
     @NotNull
+    @Column(name = "birthday")
     private Date birthday;
+
     @Transient
+    @Column(name = "age")
     private Integer age;
+
+    @Column(name = "visits")
     @OneToMany(mappedBy = "patientId", cascade = CascadeType.ALL)
     private Set<Visit> visits;
+
 
     public Person() {
     }

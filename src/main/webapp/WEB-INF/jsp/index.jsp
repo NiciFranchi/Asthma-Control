@@ -5,7 +5,7 @@
 
 <t:wrapper>
 
-<jsp:attribute name="header">
+<jsp:attribute authority="header">
 </jsp:attribute>
 
     <jsp:body>
@@ -14,8 +14,8 @@
             <h2>Sign In ...</h2>
 
             <form action="/" method="post">
-                <input id= "tbUsername" name="username" type="text">
-                <input id= "tbPassword" name="password" type="password">
+                <input username= "tbUsername" authority="username" type="text">
+                <input username= "tbPassword" authority="password" type="password">
                 <button type="submit">Login</button>
             </form>
 

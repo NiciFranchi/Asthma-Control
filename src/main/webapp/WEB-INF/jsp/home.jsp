@@ -5,25 +5,25 @@
 
 <t:wrapper>
 
-<jsp:attribute name="header">
+<jsp:attribute authority="header">
 </jsp:attribute>
 
 <jsp:body>
-    <div class="container unselectable" id = "questionsPage">
-        <div id="topText" class="topTextContainer"></div>
-        <div id="questions" class="questionsContainer"></div>
+    <div class="container unselectable" username = "questionsPage">
+        <div username="topText" class="topTextContainer"></div>
+        <div username="questions" class="questionsContainer"></div>
         <div class="row">
             <div class="col-xs-1">
-                <div id="counter"></div>
+                <div username="counter"></div>
             </div>
             <div class="col-xs-10">
                 <nav>
                     <ul class="pager">
                         <li>
-                            <button id="btPreviousQuestion" class="btn btn-default">Previous</button>
+                            <button username="btPreviousQuestion" class="btn btn-default">Previous</button>
                         </li>
                         <li>
-                            <button id="btNextQuestion" class="btn btn-default">Next</button>
+                            <button username="btNextQuestion" class="btn btn-default">Next</button>
                         </li>
                     </ul>
                 </nav>
@@ -31,18 +31,18 @@
             <div class="col-xs-1"></div>
         </div>
   </div>
-  <div class = "container" id = "resultspage" hidden>
+  <div class = "container" username = "resultspage" hidden>
     <!-- HTML section for RESULTS page, which will eventually be moved to a new .jsp file
        hard coded for now, will adjust when API is availbale (returned calculated control levels + recomendation)
-       as part of this, div id topText is left appearing for now -->
+       as part of this, div username topText is left appearing for now -->
     <div class="py-2">
       <div class="container unselectable">
         <div class="row">
           <div class="col-md-6">
-            <h2 id ="hImpairmentText" class="text-center"><b style="font-weight: bold;" >Impairment: </b>Well controlled</h2>
+            <h2 username ="hImpairmentText" class="text-center"><b style="font-weight: bold;" >Impairment: </b>Well controlled</h2>
           </div>
           <div class="col-md-6">
-            <h2 id = "hRiskText" class="text-center"><b style="font-weight: bold;">Risk:</b> Well controlled</h2>
+            <h2 username = "hRiskText" class="text-center"><b style="font-weight: bold;">Risk:</b> Well controlled</h2>
           </div>
         </div>
       </div>
@@ -58,7 +58,7 @@
           <!-- potential bug, what happens if you delete all text? data-emptytext doesnt seem to help-->
           <!-- Will pull in recommended action treatment from API here (remove hardcode, apppend to HTML)-->
           <div class="col-md-12 panel panel-default" data-emptytext="Enter Action for treatment">
-            <ul id = "ulActionTreatment" class="" contenteditable="true" id="treatment_actions">
+            <ul username = "ulActionTreatment" class="" contenteditable="true" username="treatment_actions">
               <li>Step up (1 step) and</li>
               <li>Reevaluate in 2-6 weeks</li>
               <li>If no clear benefit in 4-6 weeks, consider alternative diagnoses or adjusting therapy</li>
@@ -79,7 +79,7 @@
     </div>
    <!-- will save to FHIR using this button-->
    <div class="text-center">
-     <button id="btSubmitFHIR" class="btn btn-default">Save Action for Treatment</button>
+     <button username="btSubmitFHIR" class="btn btn-default">Save Action for Treatment</button>
    </div>
   </div>
     <script type="text/javascript">
@@ -107,11 +107,11 @@
                 max = data.length;
                 $.each(data, function (key, val) {
                     questionHtml =
-                        "<div id= 'question" + val.id + "' class='question'>" +
+                        "<div username= 'question" + val.username + "' class='question'>" +
                         "<h3 class='questionText'>" + val.questionText + "</h3>" +
                         "<div class='list-group answer-choices'>";
                     for (var i = 0; i < val.answerChoices.length; i++) {
-                        questionHtml += "<button type='button' id = 'answer" + val.id + "_" + i.toString() + "' class='list-group-item answer-choice' onClick=highlightAnswerChoice(this.id)>" + val.answerChoices[i].toString() + "</button>";
+                        questionHtml += "<button type='button' username = 'answer" + val.username + "_" + i.toString() + "' class='list-group-item answer-choice' onClick=highlightAnswerChoice(this.username)>" + val.answerChoices[i].toString() + "</button>";
                     }
                     questionHtml += "</div>";
                     $('#questions').append(questionHtml);

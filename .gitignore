@@ -24,7 +24,7 @@ hs_err_pid*
 /target/
 /bin/
 /nbproject/private/
-.idea/.name
+.idea/.authority
 .idea/compiler.xml
 .idea/dbnavigator.xml
 .idea/misc.xml

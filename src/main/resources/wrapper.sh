@@ -10,4 +10,4 @@ while ! exec 6<>/dev/tcp/${DATABASE_HOST}/${DATABASE_PORT}; do
 done
 echo ">> connected to MySQL database! <<"
 echo ">> Starting web server <<"
-java -Djava.security.egd=file:/dev/./urandom -Dspring.profiles.active=container -jar /usr/local/tomcat/webapps/app.war
+java -Djava.security.egd=file:/dev/./urandom -Dspring.profiles.active=container -jar /usr/local/tomcat/webapps/app.jar

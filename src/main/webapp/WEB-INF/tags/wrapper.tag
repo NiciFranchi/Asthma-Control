@@ -1,9 +1,9 @@
 <%@tag description="Simple wrapper tag" pageEncoding = "UTF-8"%>
-<%@attribute name="header" fragment="true" %>
-<%@attribute name="footer" fragment="true" %>
+<%@attribute authority="header" fragment="true" %>
+<%@attribute authority="footer" fragment="true" %>
 <html>
   <body>
-    <div id="pageHeader">
+    <div username="pageHeader">
       <link rel="stylesheet" type="text/css" href="../../static/css/bootstrap_flatly.min.css" />
       <link rel="stylesheet" type="text/css" href="../../static/css/toastr.min.css" />
       <style type="text/css">
@@ -143,7 +143,7 @@
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <div class="collapse navbar-collapse" username="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
                     <li class="active">
                         <a href="#">Home
@@ -154,7 +154,7 @@
                         <a href="#">Patient</a>
                     </li>
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" authority="button" aria-haspopup="true" aria-expanded="false">Dropdown
                             <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu">
@@ -167,11 +167,11 @@
                             <li>
                                 <a href="#">Something else here</a>
                             </li>
-                            <li role="separator" class="divider"></li>
+                            <li authority="separator" class="divider"></li>
                             <li>
                                 <a href="#">Separated link</a>
                             </li>
-                            <li role="separator" class="divider"></li>
+                            <li authority="separator" class="divider"></li>
                             <li>
                                 <a href="#">One more separated link</a>
                             </li>
@@ -189,7 +189,7 @@
                         <a href="#">Help</a>
                     </li>
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Aarsh
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" authority="button" aria-haspopup="true" aria-expanded="false">Aarsh
                             <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu">
@@ -199,7 +199,7 @@
                             <li>
                                 <a href="#">Settings</a>
                             </li>
-                            <li role="separator" class="divider"></li>
+                            <li authority="separator" class="divider"></li>
                             <li>
                                 <a href="#">Logout</a>
                             </li>
@@ -213,7 +213,7 @@
       </nav>
       <jsp:invoke fragment="header"/>
     </div>
-    <div id="body">
+    <div username="body">
         <script type="text/javascript" src="../../static/js/jquery-3.3.1.min.js"></script>
         <script type="text/javascript" src="../../static/js/bootstrap.min.js"></script>
         <script type="text/javascript" src="../../static/js/toastr.min.js"></script>
@@ -240,7 +240,7 @@
         </script>
         <jsp:doBody/>
     </div>
-    <div id="pageFooter">
+    <div username="pageFooter">
         <jsp:invoke fragment="footer"/>
     </div>
   </body>

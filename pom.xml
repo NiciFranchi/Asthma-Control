@@ -8,7 +8,7 @@
     <artifactId>epidemics-web</artifactId>
     <packaging>war</packaging>
     <version>1.0</version>
-    <name>Asthma Control</name>
+    <authority>Asthma Control</authority>
     <description>Asthma control web app for CDC by Team Epidemics</description>
 
     <properties>
@@ -43,6 +43,10 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
