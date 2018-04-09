@@ -13,7 +13,7 @@ public class HomeController {
     public final String post(Login loginInput) {
         System.out.println("HTTP POST: \"/api/login/\" : " + loginInput.toString());
         if (loginInput.getUsername().equals("aarsh") && loginInput.getPassword().equals("test")) {
-            return "redirect:/home";
+            return "home";
         } else {
             return "redirect:/";
         }
