@@ -91,27 +91,33 @@
             // hardcoding some variables, these might come from API at some point
             var ageGroupId = 1;
             var patientId = 5;
-            var ageGroupTxt = "0-4";
-            var questionHtml = '';
-            var url = '/api/questionnaire/' + ageGroupId.toString();
-            var header = "<h2 class='text-center'>" + ageGroupTxt + " Years Old Asthma Control Assessment" + "</h2>";
+            var age = 18;
+            var ageGroupTxt = "12+";
 
+            var header = "<h2 class='text-center'>" + ageGroupTxt + " Years Old Asthma Control Assessment" + "</h2>";
             $('#topText').append(header);
-            // paging
+
+            // paging. these two variables stay hardcoded
             var current = 1;
             var min = 1;
+            // hardcoded for now, set to # of questions possible for this age group below
             var max = 1;
-            // load data
-            $.get(url, function (data) {
+
+            var questionHtml = '';
+
+            // get the questions for this person, knowing their age 
+               var url = "/api/questions?age=" + age.toString();
+               $.get(url, function(data) {
+
                 // for paging
                 max = data.length;
                 $.each(data, function (key, val) {
                     questionHtml =
-                        "<div id= 'question" + val.id + "' class='question'>" +
+                        "<div id= 'question" + val.questionNumber.toString() + "' class='question'>" +
                         "<h3 class='questionText'>" + val.questionText + "</h3>" +
                         "<div class='list-group answer-choices'>";
                     for (var i = 0; i < val.answerChoices.length; i++) {
-                        questionHtml += "<button type='button' id = 'answer" + val.id + "_" + i.toString() + "' class='list-group-item answer-choice' onClick=highlightAnswerChoice(this.id)>" + val.answerChoices[i].toString() + "</button>";
+                        questionHtml += "<button type='button' id = 'answer" + val.answerChoices[i].id.toString() + "' class='list-group-item answer-choice' onClick=highlightAnswerChoice(this.id)>" + val.answerChoices[i].answerText.toString() + "</button>";
                     }
                     questionHtml += "</div>";
                     $('#questions').append(questionHtml);
@@ -122,9 +128,10 @@
                 $("#btPreviousQuestion").hide();
                 $('#question1').show();
                 $('#counter').text(current.toString() + '/' + max.toString());
-            }).fail(function () {
-                console.log('did not got json');
-            });
+
+            }).fail(function () { console.log ('did not got json');
+});
+
             // pagination
             $("#btPreviousQuestion").click(function () {
                 if (current - 1 < min) {
@@ -140,7 +147,7 @@
                     $("#btPreviousQuestion").hide();
                 }
                 if (current == max - 1) {
-                    $('#btNextQuestion').text('Next'); Automatic
+                    $('#btNextQuestion').text('Next'); 
                     $('#btNextQuestion').addClass('btn-default');
                     $('#btNextQuestion').removeClass('btn-primary');
                 }
@@ -193,9 +200,9 @@
                     $('#btNextQuestion').removeClass('btn-default');
                     $('#btNextQuestion').addClass('btn-primary');
                 }
-                else if (current == min + 1) {
-                    $("#btPreviousQuestion").show();
-                }
+                // doesn't need to be in an if block really. any time you've hit next you are beyond the first question... 
+
+                $("#btPreviousQuestion").show();
                 $('#counter').text(current.toString() + '/' + max.toString());
             });
             // this code will move to RESULTS.jsp, call FHIR API to save there.
