@@ -1,0 +1,32 @@
+version: "2"
+services:
+  epidemics-db:
+    build:
+      context: database
+      dockerfile: Dockerfile-jenkins
+    environment:
+      - MYSQL_ROOT_PASSWORD=p4$$W0rd
+      - MYSQL_DATABASE=epidemics
+      - MYSQL_USER=epidemics
+      - MYSQL_PASSWORD=epidemics
+  epidemics-fhir:
+    build:
+      context: fhir
+      dockerfile: Dockerfile-jenkins
+  epidemics-web:
+    build: 
+      context: .
+      dockerfile: Dockerfile-jenkins
+    depends_on:
+      - epidemics-db
+      - epidemics-fhir
+    ports:
+      - 8081:8080
+    environment:
+      - DATABASE_HOST=epidemics-db
+      - DATABASE_USER=epidemics
+      - DATABASE_PASSWORD=epidemics
+      - DATABASE_NAME=epidemics
+      - DATABASE_PORT=3306
+      - FHIR_HOST=epidemics-fhir
+      - FHIR_PORT=8080

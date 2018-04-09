@@ -1,0 +1,21 @@
+#FROM maven:3.5.3-jdk-8 as builder
+FROM maven as builder
+
+COPY . /usr/src/app
+
+WORKDIR /usr/src/app
+
+RUN mvn clean package
+
+FROM tomcat:8-jre8-slim
+#FROM openjdk:8
+#FROM tomcat:8.0.20-jre8
+#ADD epidemics-web.war /usr/local/tomcat/webapps/app.war
+COPY --from=builder /usr/src/app/target/epidemics-web.war /usr/local/tomcat/webapps/app.war
+COPY target/* /
+COPY ./src/main/webapp/* /usr/local/tomcat/webapps/webapp/
+
+RUN bash -c 'touch /app.war'
+RUN bash -c 'chmod +x /wrapper.sh'
+CMD ["catalina.sh", "run"]
+ENTRYPOINT ["/bin/bash", "/wrapper.sh"]
