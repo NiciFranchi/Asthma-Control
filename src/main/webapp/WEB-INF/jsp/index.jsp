@@ -9,7 +9,7 @@
 </jsp:attribute>
 
     <jsp:body>
-        <div class=“col-md-6”>
+        <div class="col-md-6">
 
             <h2>Sign In ...</h2>
 
