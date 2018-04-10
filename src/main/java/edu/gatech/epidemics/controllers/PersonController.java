@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
  * @author atalati
  */
 @Controller
-public class HomeController {
+public class PersonController {
 //    @PostMapping(value = "/")
 //    public final String post(Login loginInput) {
 //        System.out.println("HTTP POST: \"/api/login/\" : " + loginInput.toString());
@@ -18,9 +18,9 @@ public class HomeController {
 //        }
 //    }
 
-    @GetMapping(value = "/")
-    public String get() {
-        System.out.println("index");
-        return "index";
+    @GetMapping(value = {"/", "/person/list"})
+    public String patient() {
+        System.out.println("List all patients");
+        return "person/list";
     }
 }

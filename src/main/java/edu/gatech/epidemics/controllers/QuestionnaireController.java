@@ -7,9 +7,10 @@ import org.springframework.web.bind.annotation.GetMapping;
  * @author atalati
  */
 @Controller
-public class UserController {
-    @GetMapping("/user/list")
-    public String List() {
-        return "user/list";
+public class QuestionnaireController {
+    @GetMapping(value = "questionnaire/list")
+    public String index(){
+        System.out.println("Load questionnaire");
+        return "questionnaire/list";
     }
 }
