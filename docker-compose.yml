@@ -18,7 +18,7 @@ services:
   web:
     image: epidemics/epidemics-web
     volumes:
-      - ./src/main/webapp:/usr/local/tomcat/webapps/webapp:rw
+      - ./src/main/java/resources:/usr/local/tomcat/webapps/webapp:rw
     build: .
     depends_on:
       - db
