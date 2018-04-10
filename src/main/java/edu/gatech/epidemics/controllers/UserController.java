@@ -1,4 +1,4 @@
-package edu.gatech.epidemics.controller;
+package edu.gatech.epidemics.controllers;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
