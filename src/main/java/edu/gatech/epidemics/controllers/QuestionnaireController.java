@@ -18,6 +18,6 @@ public class QuestionnaireController {
     @GetMapping(value = "questionnaire/result")
     public String result(){
         System.out.println("Load questionnaire");
-        return "questionnaire/list";
+        return "questionnaire/result";
     }
 }

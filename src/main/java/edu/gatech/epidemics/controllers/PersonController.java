@@ -23,4 +23,16 @@ public class PersonController {
         System.out.println("List all patients");
         return "person/list";
     }
+
+    @GetMapping(value = "/person/edit")
+    public String edit() {
+        System.out.println("Edit patient");
+        return "person/edit";
+    }
+
+    @GetMapping(value = "/person/view")
+    public String view() {
+        System.out.println("View patient");
+        return "person/view";
+    }
 }
