@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<!--header-->
+<div th:replace="fragments/header :: header">
+    master header goes here
+</div>
+
+<!--partial view-->
+<div class="container">
+    <div layout:fragment="content">
+        <p>content goes here</p>
+    </div>
+</div>
+
+<footer>
+    <div th:replace="fragments/footer :: footer">
+        &copy; 2017 Georgia Institute of Technology
+    </div>
+</footer>
+
+</body>
+</html>
+
