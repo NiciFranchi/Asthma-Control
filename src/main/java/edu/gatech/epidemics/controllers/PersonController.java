@@ -19,7 +19,7 @@ public class PersonController {
 //    }
 
     @GetMapping(value = {"/", "/person/list"})
-    public String patient() {
+    public String list() {
         System.out.println("List all patients");
         return "person/list";
     }
