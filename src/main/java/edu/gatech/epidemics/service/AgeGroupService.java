@@ -30,11 +30,12 @@ public class AgeGroupService {
     }
     
     public AgeGroup findByAge(Integer age) {
-        
-        List<AgeGroup> ageGroups = findAll().stream()
+
+        AgeGroup ageGroup = findAll().stream()
             .filter(g -> age >= g.getMinAge() && age <= g.getMaxAge())
-            .collect(Collectors.toList());
-        return ageGroups.get(0);
+            .findFirst()
+            .orElseGet(() -> null);
+        return ageGroup;
     }
     
     public void add(AgeGroup ageGroup) {
