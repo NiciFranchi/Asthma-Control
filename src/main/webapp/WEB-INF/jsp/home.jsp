@@ -88,19 +88,31 @@
             answersDictionary = {};
         })();
         $(document).ready(function () {
-            // hardcoding some variables, these might come from API at some point
-            var ageGroupId = 1;
+            // hardcoding some variables for now. I think we have to assume 1+ of these will come to us with launch of page
+            // these might come from API at some point
             var patientId = 5;
-            var age = 18;
-            var ageGroupTxt = "12+";
+            var userName = "aarsh";
 
-            var header = "<h2 class='text-center'>" + ageGroupTxt + " Years Old Asthma Control Assessment" + "</h2>";
-            $('#topText').append(header);
+            var age = 18;
+            // /api call below, but does not work as written
+            // var ageUrl = "/api/persons?username=" + userName;
+            // console.log("get age with this url: " + ageUrl);
+            // $.get(ageUrl, function(data) {
+            //    age = data.age;
+            //    console.log("age is: " + age.toString());
+            // });
+
+            // update header with age group
+            var ageGroupUrl = "/api/age-groups?age=" + age.toString();
+            $.get(ageGroupUrl, function(data) {
+                var header = "<h2 class='text-center'>" + data.description + " Years Old Asthma Control Assessment" + "</h2>";
+                $('#topText').append(header);
+            });
 
             // paging. these two variables stay hardcoded
             var current = 1;
             var min = 1;
-            // hardcoded for now, set to # of questions possible for this age group below
+            // fine to stay as-is set to # of questions possible for this age group below
             var max = 1;
 
             var questionHtml = '';
@@ -157,6 +169,7 @@
                     // disable the button while the answers are being submitted
                     // show success toastr on json success
 
+                    /* commented out for now, need to pass properly formatted JSON
                     var url = '/api/questionnaire/';
                     var answers = new Object();
                     answers.patientId = patientId;
@@ -181,8 +194,9 @@
                             console.log(xhr);
                             console.log(status);
                             console.log(err);
-                        }
-                    });
+  
+                      }
+                    });*/
                     // temporarily here, hide questions and show results (will actually go to new page)
                     $("#questionsPage").hide();
                     $("#resultspage").show();
