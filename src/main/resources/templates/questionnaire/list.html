@@ -102,19 +102,11 @@
                 answersDictionary = {};
             })();
             $(document).ready(function () {
-                // hardcoding some variables for now. I think we have to assume 1+ of these will come to us with launch of page
-                // these might come from API at some point
+
                 var patientId = 5;
                 var userName = "aarsh";
 
                 var age = 18;
-                // /api call below, but does not work as written
-                // var ageUrl = "/api/persons?username=" + userName;
-                // console.log("get age with this url: " + ageUrl);
-                // $.get(ageUrl, function(data) {
-                //    age = data.age;
-                //    console.log("age is: " + age.toString());
-                // });
 
                 // update header with age group
                 var ageGroupUrl = "/api/age-groups?age=" + age.toString();
@@ -123,16 +115,14 @@
                     $('#topText').append(header);
                 });
 
-                // paging. these two variables stay hardcoded
+                // questionnaire paging
                 var current = 1;
                 var min = 1;
-                // fine to stay as-is set to # of questions possible for this age group below
                 var max = 1;
 
                 var questionHtml = '';
 
-                // get the questions for this person, knowing their age
-                var url = "/api/questions?age=" + age.toString();
+                var url = '/api/questionnaire/' + patientId.toString();
                 $.get(url, function (data) {
 
                     // for paging
