@@ -30,7 +30,7 @@ public class QuestionService {
     }
     
     public List<Question> findByAge(Integer age) {
-        
+        // returns the questionnaire, a list of questions for that age group
         return findAll().stream()
             .filter(q -> age >= q.getAgeGroup().getMinAge() && age <= q.getAgeGroup().getMaxAge())
             .collect(Collectors.toList());
