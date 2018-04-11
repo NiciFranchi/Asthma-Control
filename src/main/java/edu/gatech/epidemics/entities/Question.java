@@ -29,7 +29,7 @@ public class Question implements Serializable {
     @NotNull
     private String questionText;
     @NotNull
-    private DomainOfControl domainOfControl;
+    private String domainOfControl;
     @OneToMany(mappedBy = "questionId", cascade = CascadeType.ALL)
     private Set<AnswerChoice> answerChoices;
 
@@ -60,11 +60,11 @@ public class Question implements Serializable {
         this.questionText = questionText;
     }
 
-    public DomainOfControl getDomainOfControl() {
+    public String getDomainOfControl() {
         return domainOfControl;
     }
 
-    public void setDomainOfControl(DomainOfControl domainOfControl) {
+    public void setDomainOfControl(String domainOfControl) {
         this.domainOfControl = domainOfControl;
     }
 
