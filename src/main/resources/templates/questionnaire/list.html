@@ -103,17 +103,22 @@
             })();
             $(document).ready(function () {
 
-                var patientId = 5;
+                var urlParams = new URLSearchParams(location.search);
+                var person_id = urlParams.get('person');
+                var patientId = parseInt(person_id,10);
+                alert(patientId);
                 var userName = "aarsh";
 
                 var age = 18;
 
                 // update header with age group
-                var ageGroupUrl = "/api/age-groups?age=" + age.toString();
-                $.get(ageGroupUrl, function (data) {
-                    var header = "<h2 class='text-center'>" + data.description + " Years Old Asthma Control Assessment" + "</h2>";
-                    $('#topText').append(header);
-                });
+                // var ageGroupUrl = "/api/age-groups?age=" + age.toString();
+                // $.get(ageGroupUrl, function (data) {
+                //     var header = "<h2 class='text-center'>" + data.description + " Years Old Asthma Control Assessment" + "</h2>";
+                //     $('#topText').append(header);
+                // });
+
+
 
                 // questionnaire paging
                 var current = 1;
@@ -136,6 +141,12 @@
                             questionHtml += "<button type='button' id = 'answer" + val.answerChoices[i].id.toString() + "' class='list-group-item answer-choice' onClick=highlightAnswerChoice(this.id)>" + val.answerChoices[i].answerText.toString() + "</button>";
                         }
                         questionHtml += "</div>";
+
+                        if(!$('#questionTitle').length) {
+                            var header = "<h2 id='questionTitle' class='text-center'>" + val.ageGroup.description + " Years Old Asthma Control Assessment" + "</h2>";
+                            $('#topText').append(header);
+                        }
+
                         $('#questions').append(questionHtml);
                     });
                     questionHtml = '';
