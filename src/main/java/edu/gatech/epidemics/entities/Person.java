@@ -28,7 +28,7 @@ public class Person implements Serializable {
     private String password;
     private Boolean active;
     @NotNull
-    PersonType personType;
+    private String personType;
     @NotNull
     private String firstName;
     private String middleName;
@@ -89,11 +89,11 @@ public class Person implements Serializable {
         this.active = active;
     }
 
-    public PersonType getPersonType() {
+    public String getPersonType() {
         return personType;
     }
 
-    public void setPersonType(PersonType personType) {
+    public void setPersonType(String personType) {
         this.personType = personType;
     }
 
