@@ -6,7 +6,6 @@
 
     <groupId>edu.gatech</groupId>
     <artifactId>epidemics-web</artifactId>
-    <packaging>war</packaging>
     <version>1.0</version>
     <name>Asthma Control</name>
     <description>Asthma control web app for CDC by Team Epidemics</description>
@@ -86,11 +85,6 @@
             <artifactId>spring-boot-starter-jdbc</artifactId>
         </dependency>-->
 
-        <!--<dependency>
-            <groupId>com.h2database</groupId>
-            <artifactId>h2</artifactId>
-            <scope>runtime</scope>
-        </dependency>-->
 
         <!--Web-Jars-->
         <!-- https://mvnrepository.com/artifact/org.webjars/bootstrap -->
@@ -114,6 +108,11 @@
             <artifactId>font-awesome</artifactId>
             <version>4.7.0</version>
         </dependency>
+        <dependency>
+            <groupId>org.webjars.bower</groupId>
+            <artifactId>bootswatch</artifactId>
+            <version>3.3.7</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -134,7 +133,7 @@
                         <resource>
                             <targetPath>/</targetPath>
                             <directory>${project.build.directory}</directory>
-                            <include>${project.build.finalName}.war</include>
+                            <include>${project.build.finalName}.jar</include>
                         </resource>
                         <resource>
                             <targetPath>/</targetPath>
