@@ -174,7 +174,7 @@
                         // disable the button while the answers are being submitted
                         // show success toastr on json success
 
-                        /* commented out for now, need to pass properly formatted JSON*/
+                        /* commented out for now, need to pass properly formatted JSON
                         var url = '/api/questionnaire/';
                         var answers = new Object();
                         answers.patientId = patientId;
@@ -201,7 +201,7 @@
                                 console.log(err);
 
                           }
-                        });
+                        });*/
                         // temporarily here, hide questions and show results (will actually go to new page)
                         $("#questionsPage").hide();
                         $("#resultspage").show();
@@ -239,6 +239,6 @@
                 answersDictionary[ans[0]] = ans[1];
             };
         </script>
-</div>
+    </div>
 </body>
 </html>

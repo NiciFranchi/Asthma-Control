@@ -56,7 +56,6 @@
         var row = '';
         $.get(url, function (data) {
             console.log("Data: ", data);
-            $.each(data, function(key, val){
                 console.log('Key/Val: ', key, val);
                 row = '';
                 row += '<tr>';
@@ -67,13 +66,18 @@
                 row += '<button class="personEditButton" data-personId="' + val.id.toString() + '">Edit</button>';
                 row += '</td>';
                 row += '<td>';
-                row += '<button class="personQuestionnaireButton" data-personId="' + val.id.toString() + '">Start</button>';
+                row += '<button class="personQuestionnaireButton" onClick="startInterview(' + val.id.toString() + ')">Start</button>';
                 row += '</td>';
                 row += '</tr>';
                 $('#tbodyPatient').append(row);
             });
         })
     });
+
+    function startInterview(id) {
+        alert(id);
+    }
+
 </script>
 </body>
 </html>
