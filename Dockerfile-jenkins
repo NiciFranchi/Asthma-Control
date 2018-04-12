@@ -10,12 +10,12 @@ RUN mvn clean package
 FROM tomcat:8-jre8-slim
 #FROM openjdk:8
 #FROM tomcat:8.0.20-jre8
-#ADD epidemics-web.war /usr/local/tomcat/webapps/app.war
-COPY --from=builder /usr/src/app/target/epidemics-web.war /usr/local/tomcat/webapps/app.war
+#ADD epidemics-web.jar /usr/local/tomcat/webapps/app.jar
+COPY --from=builder /usr/src/app/target/epidemics-web.jar /usr/local/tomcat/webapps/app.jar
 COPY target/* /
 COPY ./src/main/webapp/* /usr/local/tomcat/webapps/webapp/
 
-RUN bash -c 'touch /app.war'
+RUN bash -c 'touch /app.jar'
 RUN bash -c 'chmod +x /wrapper.sh'
 CMD ["catalina.sh", "run"]
 ENTRYPOINT ["/bin/bash", "/wrapper.sh"]
