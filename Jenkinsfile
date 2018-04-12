@@ -36,12 +36,12 @@ pipeline{
                 //as the latest version.
                 script{
                     docker.withRegistry('https://build.hdap.gatech.edu'){
-                        def epidemics-dbImage = docker.build("epidemics-db:1.0", "-f database/Dockerfile-jenkins database")
-                        epidemics-dbImage.push('latest')
-                        def epidemics-fhirImage = docker.build("epidemics-fhir:1.0", "-f fhir/Dockerfile-jenkins fhir")
-                        epidemics-fhirImage.push('latest')
-                        def epidemics-webImage = docker.build("epidemics-web:1.0", "-f Dockerfile-jenkins .")
-                        epidemics-webImage.push('latest')
+                        def epidemicsdbImage = docker.build("epidemics-db:1.0", "-f database/Dockerfile-jenkins database")
+                        epidemicsdbImage.push('latest')
+                        def epidemicsfhirImage = docker.build("epidemics-fhir:1.0", "-f fhir/Dockerfile-jenkins fhir")
+                        epidemicsfhirImage.push('latest')
+                        def epidemicswebImage = docker.build("epidemics-web:1.0", "-f Dockerfile-jenkins .")
+                        epidemicswebImage.push('latest')
                     }
                 }
             }
