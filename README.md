@@ -61,4 +61,14 @@ $ docker-compose up
 
 _Navigate to [http://localhost:8081/](http://localhost:8081/)_
 
+iPhone (Responsive Website)
+![Image](https://i.imgur.com/e1cykvP.png)
+
+iPad (Responsive Website)
+![Image](https://i.imgur.com/A7hpArU.png)
+
+Home screen:
+![Image](https://i.imgur.com/YhUXY9e.png)
+
+Questionnaire:
 ![Image](https://i.imgur.com/5mklpjx.png)
