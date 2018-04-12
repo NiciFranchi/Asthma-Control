@@ -56,7 +56,7 @@ $ docker-compose up
     $ mvn clean package
     
     # run web server locally (profiles.active=local)
-    java -Djava.security.egd=file:/dev/./urandom -Dspring.profiles.active=local -jar target/epidemics-web.war
+    java -Djava.security.egd=file:/dev/./urandom -Dspring.profiles.active=local -jar target/epidemics-web.jar
     ```
 
 _Navigate to [http://localhost:8081/](http://localhost:8081/)_
