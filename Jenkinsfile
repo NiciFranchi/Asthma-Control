@@ -5,6 +5,7 @@ pipeline{
     //Define stages for the build process
     stages{
         //Define the test stage
+        /*
         stage('Test'){
             //Define the docker image to use for the test stage
             agent{
@@ -22,6 +23,7 @@ pipeline{
                 // sh '''mvn test'''
             }
         }
+        */
 
         //Define the deploy stage
         stage('Deploy'){
