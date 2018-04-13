@@ -22,7 +22,7 @@
                             <button id="btPreviousQuestion" class="btn btn-default">Previous</button>
                         </li>
                         <li>
-                            <button id="btNextQuestion" class="btn btn-default">Next</button>
+                            <button id="btNextQuestion" class="btn btn-default" disabled>Next</button>
                         </li>
                     </ul>
                 </nav>
@@ -106,19 +106,7 @@
                 var urlParams = new URLSearchParams(location.search);
                 var person_id = urlParams.get('person');
                 var patientId = parseInt(person_id,10);
-                var userName = "aarsh";
-
-                var age = 18;
-
-                // update header with age group
-                // var ageGroupUrl = "/api/age-groups?age=" + age.toString();
-                // $.get(ageGroupUrl, function (data) {
-                //     var header = "<h2 class='text-center'>" + data.description + " Years Old Asthma Control Assessment" + "</h2>";
-                //     $('#topText').append(header);
-                // });
-
-
-
+ 
                 // questionnaire paging
                 var current = 1;
                 var min = 1;
@@ -137,7 +125,7 @@
                             "<h3 class='questionText'>" + val.questionText + "</h3>" +
                             "<div class='list-group answer-choices'>";
                         for (var i = 0; i < val.answerChoices.length; i++) {
-                            questionHtml += "<button type='button' id = 'answer" + val.answerChoices[i].id.toString() + "' class='list-group-item answer-choice' onClick=highlightAnswerChoice(this.id)>" + val.answerChoices[i].answerText.toString() + "</button>";
+                            questionHtml += "<button type='button' id = 'answer" + val.answerChoices[i].id.toString() + "' class='list-group-item answer-choice btnsQ" + val.questionNumber.toString() + "' onClick='highlightAnswerChoice(this.id, "+val.questionNumber.toString() +")'>" + val.answerChoices[i].answerText.toString() + "</button>";
                         }
                         questionHtml += "</div>";
 
@@ -164,6 +152,9 @@
                     if (current - 1 < min) {
                         return;
                     }
+                    // anytime you've pressed previous there is an answer selected, so you can next
+                    // probably not the best practice but can work for now!
+                    $('#btNextQuestion').prop('disabled', false);
                     var questionId = 'question' + current.toString();
                     $('#' + questionId).hide();
                     current--;
@@ -180,8 +171,10 @@
                     }
                 });
                 $("#btNextQuestion").click(function () {
+                    // disable the button
+                    $('#btNextQuestion').prop('disabled', true);
                     if ($('#btNextQuestion').text() == 'Submit') {
-                        // disable the button while the answers are being submitted
+
                         // show success toastr on json success
 
                         /* commented out for now, need to pass properly formatted JSON
@@ -242,11 +235,14 @@
                 });
             });
             // sometimes, jQuery might not recognize dynamically created DOM objects, after page load
-            var highlightAnswerChoice = function (btnId) {
-                $('.answer-choices button').removeClass('active');
+            var highlightAnswerChoice = function (btnId, qstnID) {
+                console.log("btnsQ" + qstnID.toString());
+                $('.btnsQ' + qstnID).removeClass('active');
                 $('#' + btnId).addClass('active');
                 ans = (btnId.replace('answer', '')).split('_');
                 answersDictionary[ans[0]] = ans[1];
+                // we've selected an answer, so allow user to next/submit
+                $('#btNextQuestion').prop('disabled', false);
             };
         </script>
     </div>
