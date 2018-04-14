@@ -22,23 +22,23 @@ public class PersonApiController {
     @Autowired
     private PersonService personService;
     
-    @GetMapping(value = "/api/persons")
+    @GetMapping(value = "/api/person")
     public List<Person> get() {
         return personService.findAll();
     }
     
-    @GetMapping(value = "/api/persons/{id}")
+    @GetMapping(value = "/api/person/{id}")
     public Person get(@PathVariable int id) {
         Optional<Person> person = personService.findById(id);
         return person.get();
     }
     
-    @RequestMapping(value = "/api/persons", params = "username")
+    @RequestMapping(value = "/api/person", params = "username")
     public List<Person> findByUsername(@RequestParam("username") String username) {
         return personService.findByUsername(username);
     }
     
-    @PostMapping(path = "/api/persons", consumes = "application/json", produces = "application/json")
+    @PostMapping(path = "/api/person", consumes = "application/json", produces = "application/json")
     public void addPerson(@RequestBody Person person) {
         personService.add(person);
     }

@@ -1,34 +1,34 @@
 person
 
-GET /api/persons : lists all persons
-GET /api/persons/id : lists a specific id
-GET /api/persons?username=user : get a list of persons matching a specific username
-POST /api/persons with a request body of Person (json) : upsert a person
+GET /api/person : lists all persons
+GET /api/person/id : lists a specific id
+GET /api/person?username=user : get a list of persons matching a specific username
+POST /api/person with a request body of Person (json) : upsert a person
 
 age group
 
-GET /api/age-groups : lists all age groups
-GET /api/age-groups/id : lists a specific id
-GET /api/age-groups?age=18 : get the age group of a specific age
-POST /api/age-groups with a request body of AgeGroup (json) : upsert an age group
+GET /api/age-group : lists all age groups
+GET /api/age-group/id : lists a specific id
+GET /api/age-group?age=18 : get the age group of a specific age
+POST /api/age-group with a request body of AgeGroup (json) : upsert an age group
 
 question
 
-GET /api/questions : lists all questions
-GET /api/questions/id : lists a specific id
-GET /api/questions?age=18 : get the questions for the age group of a specific age
-POST /api/questions with a request body of Question (json) : upsert a question
+GET /api/question : lists all questions
+GET /api/question/id : lists a specific id
+GET /api/question?age=18 : get the questions for the age group of a specific age
+POST /api/question with a request body of Question (json) : upsert a question
 
 answer choice
 
-GET /api/answer-choices : lists all answer choices
-GET /api/answer-choices/id : lists a specific id
-POST /api/answer-choices with a request body of AnswerChoice (json) : upsert an answer choice
+GET /api/answer-choice : lists all answer choices
+GET /api/answer-choice/id : lists a specific id
+POST /api/answer-choice with a request body of AnswerChoice (json) : upsert an answer choice
 
 visit
-GET /api/visits : lists all visits
-GET /api/visits/id : lists a specific id
-POST /api/visits with a request body of Visit (json) : upsert a visit
+GET /api/visit : lists all visits
+GET /api/visit/id : lists a specific id
+POST /api/visit with a request body of Visit (json) : upsert a visit
 
 response
 GET /api/response : lists all responses

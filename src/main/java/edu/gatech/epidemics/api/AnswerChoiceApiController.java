@@ -19,18 +19,18 @@ public class AnswerChoiceApiController {
     @Autowired
     private AnswerChoiceService answerService;
     
-    @GetMapping(value = "/api/answer-choices")
+    @GetMapping(value = "/api/answer-choice")
     public List<AnswerChoice> get() {
         return answerService.findAll();
     }
     
-    @GetMapping(value = "/api/answer-choices/{id}")
+    @GetMapping(value = "/api/answer-choice/{id}")
     public AnswerChoice get(@PathVariable int id) {
         Optional<AnswerChoice> answerChoice = answerService.findById(id);
         return answerChoice.get();
     }
     
-    @PostMapping(path = "/api/answer-choices", consumes = "application/json", produces = "application/json")
+    @PostMapping(path = "/api/answer-choice", consumes = "application/json", produces = "application/json")
     public void addAnswerChoice(@RequestBody AnswerChoice answerChoice) {
         answerService.add(answerChoice);
     }

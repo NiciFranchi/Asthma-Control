@@ -19,18 +19,18 @@ public class VisitApiController {
     @Autowired
     private VisitService visitService;
     
-    @GetMapping(value = "/api/visits")
+    @GetMapping(value = "/api/visit")
     public List<Visit> get() {
         return visitService.findAll();
     }
     
-    @GetMapping(value = "/api/visits/{id}")
+    @GetMapping(value = "/api/visit/{id}")
     public Visit get(@PathVariable int id) {
         Optional<Visit> visit = visitService.findById(id);
         return visit.get();
     }
     
-    @PostMapping(path = "/api/visits", consumes = "application/json", produces = "application/json")
+    @PostMapping(path = "/api/visit", consumes = "application/json", produces = "application/json")
     public void addVisit(@RequestBody Visit visit) {
         visitService.add(visit);
     }
