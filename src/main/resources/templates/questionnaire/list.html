@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
     <title>Questionnaire</title>
     <!--/*/ <th:block th:include="fragments/headerinc :: head"></th:block> /*/-->
@@ -30,10 +30,10 @@
             <div class="col-xs-1"></div>
         </div>
     </div>
-    <div class = "container" id = "resultspage" hidden>
-        <!-- HTML section for RESULTS page, which will eventually be moved to a new .jsp file
+    <!--<div class="container" id="resultspage" hidden>
+        &lt;!&ndash; HTML section for RESULTS page, which will eventually be moved to a new .jsp file
         hard coded for now, will adjust when API is available (returned calculated control levels + recomendation)
-        as part of this, div id topText is left appearing for now -->
+        as part of this, div id topText is left appearing for now &ndash;&gt;
         <div class="py-2">
             <div class="container unselectable">
                 <div class="row">
@@ -59,8 +59,8 @@
                     </div>
                 </div>
                 <div class="row">
-                    <!-- potential bug, what happens if you delete all text? data-emptytext doesnt seem to help-->
-                    <!-- Will pull in recommended action treatment from API here (remove hardcode, apppend to HTML)-->
+                    &lt;!&ndash; potential bug, what happens if you delete all text? data-emptytext doesnt seem to help&ndash;&gt;
+                    &lt;!&ndash; Will pull in recommended action treatment from API here (remove hardcode, apppend to HTML)&ndash;&gt;
                     <div class="col-md-12 panel panel-default" data-emptytext="Enter Action for treatment">
                         <ul id="ulActionTreatment" class="treatment_actions" contenteditable="true">
                             <li>Step up (1 step) and</li>
@@ -72,7 +72,7 @@
                     </div>
                 </div>
             </div>
-            <!-- this hardcode will remain on Results page, static text from requirements -->
+            &lt;!&ndash; this hardcode will remain on Results page, static text from requirements &ndash;&gt;
             <div class="py-2">
                 <div class="container unselectable">
                     <div class="row">
@@ -91,160 +91,167 @@
                     </div>
                 </div>
             </div>
-            <!-- will save to FHIR using this button-->
+            &lt;!&ndash; will save to FHIR using this button&ndash;&gt;
             <div class="text-center">
                 <button id="btSubmitFHIR" class="btn btn-default">Save Action for Treatment</button>
             </div>
         </div>
-        <script type="text/javascript">
-            var answersDictionary;
-            (function () {
-                answersDictionary = {};
-            })();
-            $(document).ready(function () {
+    </div>-->
+    <script type="text/javascript">
+        var answersDictionary;
+        (function () {
+            answersDictionary = {};
+        })();
+        $(document).ready(function () {
 
-                var urlParams = new URLSearchParams(location.search);
-                var person_id = urlParams.get('person');
-                var patientId = parseInt(person_id,10);
- 
-                // questionnaire paging
-                var current = 1;
-                var min = 1;
-                var max = 1;
+            var urlParams = new URLSearchParams(location.search);
+            var person_id = urlParams.get('person');
+            var patientId = parseInt(person_id, 10);
 
-                var questionHtml = '';
+            // questionnaire paging
+            var current = 1;
+            var min = 1;
+            var max = 1;
 
-                var url = '/api/questionnaire/' + patientId.toString();
-                $.get(url, function (data) {
+            var questionHtml = '';
 
-                    // for paging
-                    max = data.length;
-                    $.each(data, function (key, val) {
-                        questionHtml =
-                            "<div id= 'question" + val.questionNumber.toString() + "' class='question'>" +
-                            "<h3 class='questionText'>" + val.questionText + "</h3>" +
-                            "<div class='list-group answer-choices'>";
-                        for (var i = 0; i < val.answerChoices.length; i++) {
-                            questionHtml += "<button type='button' id = 'answer" + val.answerChoices[i].id.toString() + "' class='list-group-item answer-choice btnsQ" + val.questionNumber.toString() + "' onClick='highlightAnswerChoice(this.id, "+val.questionNumber.toString() +")'>" + val.answerChoices[i].answerText.toString() + "</button>";
-                        }
-                        questionHtml += "</div>";
+            var url = '/api/questionnaire/' + patientId.toString();
+            $.get(url, function (data) {
 
-                        if(!$('#questionTitle').length) {
-                            var header = "<h2 id='questionTitle' class='text-center'>" + val.ageGroup.description + " Years Old Asthma Control Assessment" + "</h2>";
-                            $('#topText').append(header);
-                        }
+                // for paging
+                max = data.length;
+                $.each(data, function (key, val) {
+                    questionHtml =
+                        "<div id= 'question" + val.questionNumber.toString() + "' class='question'>" +
+                        "<h3 class='questionText'>" + val.questionText + "</h3>" +
+                        "<div class='list-group answer-choices'>";
+                    for (var i = 0; i < val.answerChoices.length; i++) {
+                        questionHtml += "<button type='button' id = 'answer" + val.answerChoices[i].id.toString() + "' class='list-group-item answer-choice btnsQ" + val.questionNumber.toString() + "' onClick='highlightAnswerChoice(this.id, " + val.questionNumber.toString() + ")'>" + val.answerChoices[i].answerText.toString() + "</button>";
+                    }
+                    questionHtml += "</div>";
 
-                        $('#questions').append(questionHtml);
-                    });
-                    questionHtml = '';
-                    // for paging
-                    $('.question').hide();
-                    $("#btPreviousQuestion").hide();
-                    $('#question1').show();
-                    $('#counter').text(current.toString() + '/' + max.toString());
+                    if (!$('#questionTitle').length) {
+                        var header = "<h2 id='questionTitle' class='text-center'>" + val.ageGroup.description + " Years Old Asthma Control Assessment" + "</h2>";
+                        $('#topText').append(header);
+                    }
 
-                }).fail(function () {
-                    console.log('did not got json');
+                    $('#questions').append(questionHtml);
                 });
+                questionHtml = '';
+                // for paging
+                $('.question').hide();
+                $("#btPreviousQuestion").hide();
+                $('#question1').show();
+                $('#counter').text(current.toString() + '/' + max.toString());
 
-                // pagination
-                $("#btPreviousQuestion").click(function () {
-                    if (current - 1 < min) {
-                        return;
-                    }
-                    // anytime you've pressed previous there is an answer selected, so you can next
-                    // probably not the best practice but can work for now!
-                    $('#btNextQuestion').prop('disabled', false);
-                    var questionId = 'question' + current.toString();
-                    $('#' + questionId).hide();
-                    current--;
-                    questionId = 'question' + current.toString();
-                    $('#' + questionId).show();
-                    $('#counter').text(current.toString() + '/' + max.toString());
-                    if (current == min) {
-                        $("#btPreviousQuestion").hide();
-                    }
-                    if (current == max - 1) {
-                        $('#btNextQuestion').text('Next');
-                        $('#btNextQuestion').addClass('btn-default');
-                        $('#btNextQuestion').removeClass('btn-primary');
-                    }
-                });
-                $("#btNextQuestion").click(function () {
-                    // disable the button
-                    $('#btNextQuestion').prop('disabled', true);
-                    if ($('#btNextQuestion').text() == 'Submit') {
-
-                        // show success toastr on json success
-
-                        /* commented out for now, need to pass properly formatted JSON
-                        var url = '/api/questionnaire/';
-                        var answers = new Object();
-                        answers.patientId = patientId;
-                        answers.answers = '';
-                        $.each(answersDictionary, function(k, v){
-                            answers.answers += k.toString() + '_' + v.toString() + '|';
-                        });
-                        $.ajax({
-                            type: 'POST',
-                            headers:{
-                                'Accept': 'application/json',
-                                'Content-Type': 'application/json'
-                            },
-                            url: url,
-                            data: JSON.stringify(answers),
-                            dataType:'json',
-                            success: function(){
-                                toastr.success('Answers submitted');
-                            },
-                            error: function(xhr, status, err){
-                                toastr.error('Couldn\'t sumbit.');
-                                console.log(xhr);
-                                console.log(status);
-                                console.log(err);
-
-                          }
-                        });*/
-                        // temporarily here, hide questions and show results (will actually go to new page)
-                        $("#questionsPage").hide();
-                        $("#resultspage").show();
-                    }
-                    if (current + 1 > max) {
-                        return;
-                    }
-                    var questionId = 'question' + current.toString();
-                    $('#' + questionId).hide();
-                    current++;
-                    questionId = 'question' + current.toString();
-                    $('#' + questionId).show();
-                    if (current == max) {
-                        $('#btNextQuestion').text('Submit');
-                        $('#btNextQuestion').removeClass('btn-default');
-                        $('#btNextQuestion').addClass('btn-primary');
-                    }
-                    // doesn't need to be in an if block really. any time you've hit next you are beyond the first question...
-
-                    $("#btPreviousQuestion").show();
-                    $('#counter').text(current.toString() + '/' + max.toString());
-                });
-                // this code will move to RESULTS.jsp, call FHIR API to save there.
-                $("#btSubmitFHIR").click(function () {
-                    // disable the button while the answers are being submitted
-                    // show success toastr on json success
-                    toastr.success('Action plan submitted to FHIR');
-                });
+            }).fail(function () {
+                console.log('did not got json');
             });
-            // sometimes, jQuery might not recognize dynamically created DOM objects, after page load
-            var highlightAnswerChoice = function (btnId, qstnID) {
-                console.log("btnsQ" + qstnID.toString());
-                $('.btnsQ' + qstnID).removeClass('active');
-                $('#' + btnId).addClass('active');
-                ans = (btnId.replace('answer', '')).split('_');
-                answersDictionary[ans[0]] = ans[1];
-                // we've selected an answer, so allow user to next/submit
+
+            // pagination
+            $("#btPreviousQuestion").click(function () {
+                if (current - 1 < min) {
+                    return;
+                }
+                // anytime you've pressed previous there is an answer selected, so you can next
+                // probably not the best practice but can work for now!
                 $('#btNextQuestion').prop('disabled', false);
-            };
-        </script>
-    </div>
+                var questionId = 'question' + current.toString();
+                $('#' + questionId).hide();
+                current--;
+                questionId = 'question' + current.toString();
+                $('#' + questionId).show();
+                $('#counter').text(current.toString() + '/' + max.toString());
+                if (current == min) {
+                    $("#btPreviousQuestion").hide();
+                }
+                if (current == max - 1) {
+                    $('#btNextQuestion').text('Next');
+                    $('#btNextQuestion').addClass('btn-default');
+                    $('#btNextQuestion').removeClass('btn-primary');
+                }
+            });
+            $("#btNextQuestion").click(function () {
+                // disable the button
+                $('#btNextQuestion').prop('disabled', true);
+                if ($('#btNextQuestion').text() == 'Submit') {
+
+                    // show success toastr on json success
+
+                    /* commented out for now, need to pass properly formatted JSON
+                    var url = '/api/questionnaire/';
+                    var answers = new Object();
+                    answers.patientId = patientId;
+                    answers.answers = '';
+                    $.each(answersDictionary, function(k, v){
+                        answers.answers += k.toString() + '_' + v.toString() + '|';
+                    });
+                    $.ajax({
+                        type: 'POST',
+                        headers:{
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json'
+                        },
+                        url: url,
+                        data: JSON.stringify(answers),
+                        dataType:'json',
+                        success: function(){
+                            toastr.success('Answers submitted');
+                        },
+                        error: function(xhr, status, err){
+                            toastr.error('Couldn\'t sumbit.');
+                            console.log(xhr);
+                            console.log(status);
+                            console.log(err);
+
+                      }
+                    });*/
+
+
+                    // temporarily here, hide questions and show results (will actually go to new page)
+                    /*$("#questionsPage").hide();
+                    $("#resultspage").show();*/
+
+
+                    // redirect
+
+                }
+                if (current + 1 > max) {
+                    return;
+                }
+                var questionId = 'question' + current.toString();
+                $('#' + questionId).hide();
+                current++;
+                questionId = 'question' + current.toString();
+                $('#' + questionId).show();
+                if (current == max) {
+                    $('#btNextQuestion').text('Submit');
+                    $('#btNextQuestion').removeClass('btn-default');
+                    $('#btNextQuestion').addClass('btn-primary');
+                }
+                // doesn't need to be in an if block really. any time you've hit next you are beyond the first question...
+
+                $("#btPreviousQuestion").show();
+                $('#counter').text(current.toString() + '/' + max.toString());
+            });
+            // this code will move to RESULTS.jsp, call FHIR API to save there.
+            $("#btSubmitFHIR").click(function () {
+                // disable the button while the answers are being submitted
+                // show success toastr on json success
+                toastr.success('Action plan submitted to FHIR');
+            });
+        });
+        // sometimes, jQuery might not recognize dynamically created DOM objects, after page load
+        var highlightAnswerChoice = function (btnId, qstnID) {
+            console.log("btnsQ" + qstnID.toString());
+            $('.btnsQ' + qstnID).removeClass('active');
+            $('#' + btnId).addClass('active');
+            ans = (btnId.replace('answer', '')).split('_');
+            answersDictionary[ans[0]] = ans[1];
+            // we've selected an answer, so allow user to next/submit
+            $('#btNextQuestion').prop('disabled', false);
+        };
+    </script>
+</div>
 </body>
 </html>

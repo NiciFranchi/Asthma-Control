@@ -2,12 +2,10 @@
 <html lang="en">
 <head>
     <title>All Patients</title>
-    <!--/*/ <th:block th:include="fragments/headerinc :: head"></th:block> /*/-->
 </head>
 <body>
 <div class="container">
     <!--/*/ <th:block th:include="fragments/header :: header"></th:block> /*/-->
-
     <table class="table table-hover table-bordered table-striped">
         <thead>
         <tr>
@@ -18,14 +16,14 @@
         </thead>
         <tbody id="tbodyPatient">
 
-        <!--&lt;!&ndash;Show this row when site is loading the data, else hide it-->
-        <!--<tr class="loadingRecords" id="loadingRecords">-->
-            <!--<td colspan="3">-->
-                <!--<div class="row text-center">-->
-                   <!-- <span class="fa-spin glyphicon glyphicon-refresh"></span>Loading data ...-->
-                <!--</div>-->
-           <!-- </td>-->
-        <!--</tr>-->
+        <!--Show this row when site is loading the data, else hide it-->
+        <tr class="loadingRecords" id="loadingRecords">
+            <td colspan="3">
+                <div class="row text-center">
+                    <span class="fa-spin glyphicon glyphicon-refresh"></span>Loading data ...
+                </div>
+            </td>
+        </tr>
 
         <!--&lt;!&ndash;Show this row when there are no records to display, else hide it&ndash;&gt;-->
         <!--<tr dclass="noRecords">-->
@@ -50,40 +48,43 @@
         </tfoot>
     </table>
 </div>
+<!--/*/ <th:block th:include="fragments/headerinc :: head"></th:block> /*/-->
 <script type="text/javascript">
     $(function () {
+
+        // declarations
         var url = '/api/persons/';
 
-        $.get(url, function (data) {
-            console.log("Data: ", data);
-            $.each(data, function (key, val) {
-                var edit = "redirect('upsert','" + val.id.toString() + "')";
-                var start = "redirect('start','" + val.id.toString() + "')";
-                console.log(edit);
-                console.log(start);
-                row = '';
-                row += '<tr>';
-                row += '<td>';
-                row += (val.firstName + ' ' + val.lastName);
-                row += '</td>';
-                row += '<td>';
-                row += '<button class="personEditButton" onClick="' + edit + '">Edit</button>';
-                row += '</td>';
-                row += '<td>';
-                row += '<button class="personQuestionnaireButton" onClick="' + start + '"><i class="glyphicon glyphicon-play"></i></button>';
-                row += '</td>';
-                row += '</tr>';
-                $('#tbodyPatient').append(row);
+        //house-keeping
+        $('#loadingRecords').show();
+
+        $.get(url, function () {})
+            .done(function (data) {
+                $.each(data, function (key, val) {
+                    var edit = "redirect('upsert','" + val.id.toString() + "')";
+                    var start = "redirect('start','" + val.id.toString() + "')";
+                    row = '';
+                    row += '<tr>';
+                    row += '<td>';
+                    row += (val.firstName + ' ' + val.lastName);
+                    row += '</td>';
+                    row += '<td>';
+                    row += '<button class="personEditButton" onClick="' + edit + '">Edit</button>';
+                    row += '</td>';
+                    row += '<td>';
+                    row += '<button class="personQuestionnaireButton" onClick="' + start + '"><i class="glyphicon glyphicon-play"></i></button>';
+                    row += '</td>';
+                    row += '</tr>';
+                    $('#tbodyPatient').append(row);
+                });
+                toastr.info('Patients loaded.');
+            })
+            .fail(function () {
+                toastr.error('Can\'t load patients.');
             });
-        });
     });
     
     function redirect(upsertOrStart, id) {
-        var baseUrl = window.location.origin;
-        console.log("upsertOrStart: " + upsertOrStart);
-        if (!baseUrl.endsWith('/')) {
-            baseUrl += '/';
-        }
         var url = "";
         if (upsertOrStart == "upsert")
           {
@@ -103,10 +104,6 @@
     }
     // just realized i copie
     function upsertPatient(id) {
-        var baseUrl = window.location.origin;
-        if (!baseUrl.endsWith('/')) {
-            baseUrl += '/';
-        }
         // add personid to this string for edit (should be the same funciton and parsed on the other end, probably)
         var newUrl = baseUrl + 'person/edit?person='+ id.toString();
 
@@ -115,7 +112,6 @@
 
         window.location.href = newUrl;
     }
-
 </script>
 </body>
 </html>
