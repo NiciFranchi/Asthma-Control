@@ -18,13 +18,13 @@
         </thead>
         <tbody id="tbodyPatient">
 
-        <!--&lt;!&ndash;Show this row when site is loading the data, else hide it&ndash;&gt;-->
-        <!--<tr class="loadingRecords">-->
+        <!--&lt;!&ndash;Show this row when site is loading the data, else hide it-->
+        <!--<tr class="loadingRecords" id="loadingRecords">-->
             <!--<td colspan="3">-->
                 <!--<div class="row text-center">-->
-                    <!--<span class="fa-spin glyphicon glyphicon-refresh"></span>&nbsp;Loading data ...-->
+                   <!-- <span class="fa-spin glyphicon glyphicon-refresh"></span>Loading data ...-->
                 <!--</div>-->
-            <!--</td>-->
+           <!-- </td>-->
         <!--</tr>-->
 
         <!--&lt;!&ndash;Show this row when there are no records to display, else hide it&ndash;&gt;-->
@@ -43,7 +43,7 @@
         <tr>
             <td colspan="3">
                 <div>
-                    <button>Add Patient</button>
+                    <button id ="btnaddPatient" onClick="redirect('upsert',-1 )">Add Patient</button>
                 </div>
             </td>
         </tr>
@@ -53,33 +53,62 @@
 <script type="text/javascript">
     $(function () {
         var url = '/api/persons/';
-        var row = '';
+
         $.get(url, function (data) {
             console.log("Data: ", data);
             $.each(data, function (key, val) {
+                var edit = "redirect('upsert','" + val.id.toString() + "')";
+                var start = "redirect('start','" + val.id.toString() + "')";
+                console.log(edit);
+                console.log(start);
                 row = '';
                 row += '<tr>';
                 row += '<td>';
                 row += (val.firstName + ' ' + val.lastName);
                 row += '</td>';
                 row += '<td>';
-                row += '<button class="personEditButton" data-personId="' + val.id.toString() + '">Edit</button>';
+                row += '<button class="personEditButton" onClick="' + edit + '">Edit</button>';
                 row += '</td>';
                 row += '<td>';
-                row += '<button class="personQuestionnaireButton" onClick="startInterview(' + val.id.toString() + ')"><i class="glyphicon glyphicon-play"></i></button>';
+                row += '<button class="personQuestionnaireButton" onClick="' + start + '"><i class="glyphicon glyphicon-play"></i></button>';
                 row += '</td>';
                 row += '</tr>';
                 $('#tbodyPatient').append(row);
             });
         });
     });
+    
+    function redirect(upsertOrStart, id) {
+        var baseUrl = window.location.origin;
+        console.log("upsertOrStart: " + upsertOrStart);
+        if (!baseUrl.endsWith('/')) {
+            baseUrl += '/';
+        }
+        var url = "";
+        if (upsertOrStart == "upsert")
+          {
+            url = "person/edit?person=" + id.toString();
+          }
+        else if (upsertOrStart == "start")
+          {
+            url = "questionnaire/list?person=" + id.toString();
+          }
+        var newUrl = baseUrl + url;
+        console.log("newUrl: " + newUrl);
 
-    function startInterview(id) {
+        // back button in browser won't work with this
+        // window.location.replace(newUrl);
+
+        window.location.href = newUrl;
+    }
+    // just realized i copie
+    function upsertPatient(id) {
         var baseUrl = window.location.origin;
         if (!baseUrl.endsWith('/')) {
             baseUrl += '/';
         }
-        var newUrl = baseUrl + 'questionnaire/list?person=' + id.toString();
+        // add personid to this string for edit (should be the same funciton and parsed on the other end, probably)
+        var newUrl = baseUrl + 'person/edit?person='+ id.toString();
 
         // back button in browser won't work with this
         // window.location.replace(newUrl);
