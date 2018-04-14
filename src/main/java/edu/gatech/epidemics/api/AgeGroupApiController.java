@@ -22,23 +22,23 @@ public class AgeGroupApiController {
     @Autowired
     private AgeGroupService ageGroupService;
     
-    @GetMapping(value = "/api/age-groups")
+    @GetMapping(value = "/api/age-group")
     public List<AgeGroup> get() {
         return ageGroupService.findAll();
     }
     
-    @GetMapping(value = "/api/age-groups/{id}")
+    @GetMapping(value = "/api/age-group/{id}")
     public AgeGroup get(@PathVariable int id) {
         Optional<AgeGroup> ageGroup = ageGroupService.findById(id);
         return ageGroup.get();
     }
     
-    @RequestMapping(value = "/api/age-groups", params = "age")
+    @RequestMapping(value = "/api/age-group", params = "age")
     public AgeGroup findByAge(@RequestParam("age") Integer age) {
         return ageGroupService.findByAge(age);
     }
     
-    @PostMapping(path = "/api/age-groups", consumes = "application/json", produces = "application/json")
+    @PostMapping(path = "/api/age-group", consumes = "application/json", produces = "application/json")
     public void addAgeGroup(@RequestBody AgeGroup ageGroup) {
         ageGroupService.add(ageGroup);
     }

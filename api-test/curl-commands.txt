@@ -1,30 +1,30 @@
 # Person: add OR update if exists
-curl -i -X POST -H 'Content-Type: application/json' -d '{"id":1,"username":"john","password":"test","active":true,"personType":"PATIENT","firstName":"John","middleName":"M.","lastName":"Doe","contactPhone":"555-555-5555","contactEmail":"email@test.com","contactFax":"555-555-5556","addressLine1":"Address Line1","addressLine2":"Address Line2","city":"Georgia","state":null,"zip":"12345","birthday":"2000-04-01"}' http://localhost:8081/api/persons
+curl -i -X POST -H 'Content-Type: application/json' -d '{"id":1,"username":"john","password":"test","active":true,"personType":"PATIENT","firstName":"John","middleName":"M.","lastName":"Doe","contactPhone":"555-555-5555","contactEmail":"email@test.com","contactFax":"555-555-5556","addressLine1":"Address Line1","addressLine2":"Address Line2","city":"Georgia","state":null,"zip":"12345","birthday":"2000-04-01"}' http://localhost:8081/api/person
 
 # AgeGroup: add OR update if exists
-curl -i -X POST -H 'Content-Type: application/json' -d '{"id":1,"minAge":0,"maxAge":3,"description":"0-3"}' http://localhost:8081/api/age-groups
-curl -i -X POST -H 'Content-Type: application/json' -d '{"id":2,"minAge":4,"maxAge":9,"description":"4-9"}' http://localhost:8081/api/age-groups
-curl -i -X POST -H 'Content-Type: application/json' -d '{"id":3,"minAge":10,"maxAge":9999,"description":"10+"}' http://localhost:8081/api/age-groups
+curl -i -X POST -H 'Content-Type: application/json' -d '{"id":1,"minAge":0,"maxAge":3,"description":"0-3"}' http://localhost:8081/api/age-group
+curl -i -X POST -H 'Content-Type: application/json' -d '{"id":2,"minAge":4,"maxAge":9,"description":"4-9"}' http://localhost:8081/api/age-group
+curl -i -X POST -H 'Content-Type: application/json' -d '{"id":3,"minAge":10,"maxAge":9999,"description":"10+"}' http://localhost:8081/api/age-group
 
 # Question: add OR update if exists
-curl -i -X POST -H 'Content-Type: application/json' -d '{"id":1,"ageGroup":{"id":1},"questionNumber":1,"questionText":"AG-1 This is question 1.","domainOfControl":"IMPAIRMENT"}' http://localhost:8081/api/questions
-curl -i -X POST -H 'Content-Type: application/json' -d '{"id":2,"ageGroup":{"id":1},"questionNumber":2,"questionText":"AG-1 This is question 2.","domainOfControl":"RISK"}' http://localhost:8081/api/questions
-curl -i -X POST -H 'Content-Type: application/json' -d '{"id":3,"ageGroup":{"id":2},"questionNumber":1,"questionText":"AG-2 This is question 1.","domainOfControl":"IMPAIRMENT"}' http://localhost:8081/api/questions
-curl -i -X POST -H 'Content-Type: application/json' -d '{"id":4,"ageGroup":{"id":2},"questionNumber":2,"questionText":"AG-2 This is question 2.","domainOfControl":"RISK"}' http://localhost:8081/api/questions
-curl -i -X POST -H 'Content-Type: application/json' -d '{"id":5,"ageGroup":{"id":3},"questionNumber":1,"questionText":"AG-3 This is question 1.","domainOfControl":"IMPAIRMENT"}' http://localhost:8081/api/questions
-curl -i -X POST -H 'Content-Type: application/json' -d '{"id":6,"ageGroup":{"id":3},"questionNumber":2,"questionText":"AG-3 This is question 2.","domainOfControl":"RISK"}' http://localhost:8081/api/questions
+curl -i -X POST -H 'Content-Type: application/json' -d '{"id":1,"ageGroup":{"id":1},"questionNumber":1,"questionText":"AG-1 This is question 1.","domainOfControl":"IMPAIRMENT"}' http://localhost:8081-/api/question
+curl -i -X POST -H 'Content-Type: application/json' -d '{"id":2,"ageGroup":{"id":1},"questionNumber":2,"questionText":"AG-1 This is question 2.","domainOfControl":"RISK"}' http://localhost:8081-/api/question
+curl -i -X POST -H 'Content-Type: application/json' -d '{"id":3,"ageGroup":{"id":2},"questionNumber":1,"questionText":"AG-2 This is question 1.","domainOfControl":"IMPAIRMENT"}' http://localhost:8081-/api/question
+curl -i -X POST -H 'Content-Type: application/json' -d '{"id":4,"ageGroup":{"id":2},"questionNumber":2,"questionText":"AG-2 This is question 2.","domainOfControl":"RISK"}' http://localhost:8081-/api/question
+curl -i -X POST -H 'Content-Type: application/json' -d '{"id":5,"ageGroup":{"id":3},"questionNumber":1,"questionText":"AG-3 This is question 1.","domainOfControl":"IMPAIRMENT"}' http://localhost:8081-/api/question
+curl -i -X POST -H 'Content-Type: application/json' -d '{"id":6,"ageGroup":{"id":3},"questionNumber":2,"questionText":"AG-3 This is question 2.","domainOfControl":"RISK"}' http://localhost:8081-/api/question
 
 # AnswerChoice: add OR update if exists
-curl -i -X POST -H 'Content-Type: application/json' -d '{"id":1,"questionId":5,"answerNumber":1,"answerText":"Q1-A1"}' http://localhost:8081/api/answer-choices
-curl -i -X POST -H 'Content-Type: application/json' -d '{"id":2,"questionId":5,"answerNumber":2,"answerText":"Q1-A2"}' http://localhost:8081/api/answer-choices
-curl -i -X POST -H 'Content-Type: application/json' -d '{"id":3,"questionId":5,"answerNumber":3,"answerText":"Q1-A3"}' http://localhost:8081/api/answer-choices
-curl -i -X POST -H 'Content-Type: application/json' -d '{"id":4,"questionId":6,"answerNumber":1,"answerText":"Q2-A1"}' http://localhost:8081/api/answer-choices
-curl -i -X POST -H 'Content-Type: application/json' -d '{"id":5,"questionId":6,"answerNumber":2,"answerText":"Q2-A2"}' http://localhost:8081/api/answer-choices
-curl -i -X POST -H 'Content-Type: application/json' -d '{"id":6,"questionId":6,"answerNumber":3,"answerText":"Q2-A3"}' http://localhost:8081/api/answer-choices
+curl -i -X POST -H 'Content-Type: application/json' -d '{"id":1,"questionId":5,"answerNumber":1,"answerText":"Q1-A1"}' http://localhost:8081/api/answer-choice
+curl -i -X POST -H 'Content-Type: application/json' -d '{"id":2,"questionId":5,"answerNumber":2,"answerText":"Q1-A2"}' http://localhost:8081/api/answer-choice
+curl -i -X POST -H 'Content-Type: application/json' -d '{"id":3,"questionId":5,"answerNumber":3,"answerText":"Q1-A3"}' http://localhost:8081/api/answer-choice
+curl -i -X POST -H 'Content-Type: application/json' -d '{"id":4,"questionId":6,"answerNumber":1,"answerText":"Q2-A1"}' http://localhost:8081/api/answer-choice
+curl -i -X POST -H 'Content-Type: application/json' -d '{"id":5,"questionId":6,"answerNumber":2,"answerText":"Q2-A2"}' http://localhost:8081/api/answer-choice
+curl -i -X POST -H 'Content-Type: application/json' -d '{"id":6,"questionId":6,"answerNumber":3,"answerText":"Q2-A3"}' http://localhost:8081/api/answer-choice
 
 # Visit
-curl -i -X POST -H 'Content-Type: application/json' -d '{"id":1,"patientId":1,"visitDate":"2018-04-08"}' http://localhost:8081/api/visits
+curl -i -X POST -H 'Content-Type: application/json' -d '{"id":1,"patientId":1,"visitDate":"2018-04-08"}' http://localhost:8081/api/visit
 
 # Response
-curl -i -X POST -H 'Content-Type: application/json' -d '{"id":1,"visitId":1,"question":{"id":5},"answer":{"id":3}}' http://localhost:8081/api/responses
-curl -i -X POST -H 'Content-Type: application/json' -d '{"id":1,"visitId":1,"question":{"id":6},"answer":{"id":5}}' http://localhost:8081/api/responses
+curl -i -X POST -H 'Content-Type: application/json' -d '{"id":1,"visitId":1,"question":{"id":5},"answer":{"id":3}}' http://localhost:8081/api/response
+curl -i -X POST -H 'Content-Type: application/json' -d '{"id":1,"visitId":1,"question":{"id":6},"answer":{"id":5}}' http://localhost:8081/api/response
