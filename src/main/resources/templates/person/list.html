@@ -90,7 +90,7 @@
         });
     });
 
-    function redirect(target, id) {
+    var redirect = function (target, id) {
         var url = "";
         if (target == "upsert") {
             url = "person/edit?person=" + id.toString();

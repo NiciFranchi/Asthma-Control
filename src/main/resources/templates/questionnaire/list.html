@@ -104,18 +104,17 @@
         })();
         $(document).ready(function () {
 
+            // declarations
             var urlParams = new URLSearchParams(location.search);
             var person_id = urlParams.get('person');
             var patientId = parseInt(person_id, 10);
-
-            // questionnaire paging
+            var url = '/api/questionnaire/' + patientId.toString();
+            var questionHtml = '';
             var current = 1;
             var min = 1;
             var max = 1;
 
-            var questionHtml = '';
 
-            var url = '/api/questionnaire/' + patientId.toString();
             $.get(url, function (data) {
 
                 // for paging
@@ -214,7 +213,7 @@
 
 
                     // redirect
-
+                    redirect('result');
                 }
                 if (current + 1 > max) {
                     return;
@@ -241,7 +240,8 @@
                 toastr.success('Action plan submitted to FHIR');
             });
         });
-        // sometimes, jQuery might not recognize dynamically created DOM objects, after page load
+
+
         var highlightAnswerChoice = function (btnId, qstnID) {
             console.log("btnsQ" + qstnID.toString());
             $('.btnsQ' + qstnID).removeClass('active');
@@ -251,6 +251,12 @@
             // we've selected an answer, so allow user to next/submit
             $('#btNextQuestion').prop('disabled', false);
         };
+
+        var redirect = function (url) {
+            var newUrl = baseUrl + url;
+            console.log("newUrl: " + newUrl);
+            window.location.href = newUrl;
+        }
     </script>
 </div>
 </body>
