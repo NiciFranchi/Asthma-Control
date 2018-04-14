@@ -17,7 +17,7 @@
         <tbody id="tbodyPatient">
 
         <!--Show this row when site is loading the data, else hide it-->
-        <tr class="loadingRecords" id="loadingRecords">
+        <tr id="loadingRecords" class="loadingRecords" style="display: none;">
             <td colspan="3">
                 <div class="row text-center">
                     <span class="fa-spin glyphicon glyphicon-refresh"></span>Loading data ...
@@ -25,14 +25,14 @@
             </td>
         </tr>
 
-        <!--&lt;!&ndash;Show this row when there are no records to display, else hide it&ndash;&gt;-->
-        <!--<tr dclass="noRecords">-->
-            <!--<td colspan="3">-->
-                <!--<div class="row text-center">-->
-                    <!--<span class="glyphicon glyphicon-info-sign"></span>&nbsp;Nothing to show here.-->
-                <!--</div>-->
-            <!--</td>-->
-        <!--</tr>-->
+        <!--Show this row when there are no records to display, else hide it-->
+        <tr id="noRecords" class="noRecords" style="display: none;">
+            <td colspan="3">
+                <div class="row text-center">
+                    <span class="glyphicon glyphicon-info-sign"></span>&nbsp;Nothing to show here.
+                </div>
+            </td>
+        </tr>
 
         <!--insert patients here-->
 
@@ -60,24 +60,31 @@
 
         $.get(url, function () {})
             .done(function (data) {
-                $.each(data, function (key, val) {
-                    var edit = "redirect('upsert','" + val.id.toString() + "')";
-                    var start = "redirect('start','" + val.id.toString() + "')";
-                    row = '';
-                    row += '<tr>';
-                    row += '<td>';
-                    row += (val.firstName + ' ' + val.lastName);
-                    row += '</td>';
-                    row += '<td>';
-                    row += '<button class="personEditButton" onClick="' + edit + '">Edit</button>';
-                    row += '</td>';
-                    row += '<td>';
-                    row += '<button class="personQuestionnaireButton" onClick="' + start + '"><i class="glyphicon glyphicon-play"></i></button>';
-                    row += '</td>';
-                    row += '</tr>';
-                    $('#tbodyPatient').append(row);
-                });
-                toastr.info('Patients loaded.');
+                $('#loadingRecords').hide();
+                if(data.length == 0){
+                    $('#noRecords').show();
+                }
+                else {
+                    $('#noRecords').hide();
+                    $.each(data, function (key, val) {
+                        var edit = "redirect('upsert','" + val.id.toString() + "')";
+                        var start = "redirect('start','" + val.id.toString() + "')";
+                        row = '';
+                        row += '<tr>';
+                        row += '<td>';
+                        row += (val.firstName + ' ' + val.lastName);
+                        row += '</td>';
+                        row += '<td>';
+                        row += '<button class="personEditButton" onClick="' + edit + '">Edit</button>';
+                        row += '</td>';
+                        row += '<td>';
+                        row += '<button class="personQuestionnaireButton" onClick="' + start + '"><i class="glyphicon glyphicon-play"></i></button>';
+                        row += '</td>';
+                        row += '</tr>';
+                        $('#tbodyPatient').append(row);
+                    });
+                    toastr.info('Patients loaded.');
+                }
             })
             .fail(function () {
                 toastr.error('Can\'t load patients.');
