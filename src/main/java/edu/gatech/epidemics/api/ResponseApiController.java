@@ -38,7 +38,7 @@ public class ResponseApiController {
     }
     
     @PostMapping(path = "/api/responses", consumes = "application/json")
-    public void addResponse(@RequestBody Responses responses) {
+    public String addResponse(@RequestBody Responses responses) {
         Visit visit = new Visit(responses.getPatientId(), new Date());
         visit = visitService.add(visit);
 
@@ -53,5 +53,6 @@ public class ResponseApiController {
             ));
         }
         responseService.addAll(responseList);
+        return visit.getId().toString();
     }
 }

@@ -61,7 +61,7 @@
                     questionHtml += "</div>";
 
                     if (!$('#questionTitle').length) {
-                        var header = "<h2 id='questionTitle' class='text-center'>" + val.ageGroup.description + " Years Old Asthma Control Assessment" + "</h2>";
+                        var header = "<h2 id='questionTitle' class='text-center'>" + val.ageGroup.description + " Asthma Control Assessment" + "</h2>";
                         $('#topText').append(header);
                     }
 
@@ -130,8 +130,9 @@
                         data: JSON.stringify(responses),
                         contentType: 'application/json',
                         dataType:'json',
-                        success: function(){
+                        success: function(visitId){
                             toastr.success('Answers submitted');
+                            redirect('questionnaire/result?visitId=' + visitId.toString());
                         },
                         error: function(xhr, status, err){
                             toastr.error('Couldn\'t sumbit.');
@@ -142,8 +143,6 @@
                       }
                     });
 
-                    // redirect
-                    //redirect('result');
                 }
                 if (current + 1 > max) {
                     return;
@@ -180,7 +179,7 @@
         };
 
         var redirect = function (url) {
-            var newUrl = baseUrl + url;
+            var newUrl = getBaseUrl() + url;
             console.log("newUrl: " + newUrl);
             window.location.href = newUrl;
         }
