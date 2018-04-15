@@ -23,6 +23,8 @@ public class Visit implements Serializable {
     private Integer patientId;
     @NotNull
     private Date visitDate;
+    @OneToMany(mappedBy = "visitId", cascade = CascadeType.ALL)
+    private Set<Response> reponses;
 
     public Visit() {
     }
@@ -60,12 +62,16 @@ public class Visit implements Serializable {
         this.visitDate = visitDate;
     }
 
+    public Set<Response> getReponses() {
+        return reponses;
+    }
+
+    public void setReponses(Set<Response> reponses) {
+        this.reponses = reponses;
+    }
+
     @Override
     public String toString() {
-        return "Visit{" +
-                "id=" + id +
-                ", patientId=" + patientId +
-                ", visitDate=" + visitDate +
-                '}';
+        return "Visit{" + "id=" + id + ", patientId=" + patientId + ", visitDate=" + visitDate + ", reponses=" + reponses + '}';
     }
 }
