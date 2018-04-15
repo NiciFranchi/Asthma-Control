@@ -32,9 +32,6 @@
     </div>
     <script type="text/javascript">
         var answersDictionary;
-        (function () {
-            answersDictionary = {};
-        })();
         $(document).ready(function () {
 
             // declarations
@@ -42,6 +39,7 @@
             var person_id = urlParams.get('person');
             var patientId = parseInt(person_id, 10);
             var url = '/api/questionnaire/' + patientId.toString();
+            answersDictionary = {};
             var questionHtml = '';
             var current = 1;
             var min = 1;
@@ -109,23 +107,28 @@
                 if ($('#btNextQuestion').text() == 'Submit') {
 
                     // show success toastr on json success
+                    
+                    var url = '/api/responses';
+                    var responses = new Object();
+                    var questionAnswer = undefined;
+                    responses.patientId = patientId;
+                    responses.questionAnswers = [];
 
-                    /* commented out for now, need to pass properly formatted JSON
-                    var url = '/api/questionnaire/';
-                    var answers = new Object();
-                    answers.patientId = patientId;
-                    answers.answers = '';
                     $.each(answersDictionary, function(k, v){
-                        answers.answers += k.toString() + '_' + v.toString() + '|';
+                        questionAnswer = new Object();
+                        questionAnswer.questionId = k;
+                        questionAnswer.answerId = v;
+                        responses.questionAnswers.push(questionAnswer);
                     });
+
                     $.ajax({
                         type: 'POST',
                         headers:{
-                            'Accept': 'application/json',
                             'Content-Type': 'application/json'
                         },
                         url: url,
-                        data: JSON.stringify(answers),
+                        data: JSON.stringify(responses),
+                        contentType: 'application/json',
                         dataType:'json',
                         success: function(){
                             toastr.success('Answers submitted');
@@ -137,10 +140,10 @@
                             console.log(err);
 
                       }
-                    });*/
+                    });
 
                     // redirect
-                    redirect('result');
+                    //redirect('result');
                 }
                 if (current + 1 > max) {
                     return;
@@ -163,13 +166,16 @@
         });
 
 
-        var highlightAnswerChoice = function (btnId, qstnID) {
-            console.log("btnsQ" + qstnID.toString());
-            $('.btnsQ' + qstnID).removeClass('active');
+        var highlightAnswerChoice = function (btnId, questionId) {
+
+            // functional
+            var answerId = (btnId.replace('answer', ''));
+            // console.log("Question ID: " + questionId.toString() + " AnswerChoice ID: ");
+            answersDictionary[questionId] = answerId;
+
+            // cosmetic
+            $('.btnsQ' + questionId).removeClass('active');
             $('#' + btnId).addClass('active');
-            ans = (btnId.replace('answer', '')).split('_');
-            answersDictionary[ans[0]] = ans[1];
-            // we've selected an answer, so allow user to next/submit
             $('#btNextQuestion').prop('disabled', false);
         };
 

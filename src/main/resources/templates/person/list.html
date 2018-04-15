@@ -98,7 +98,7 @@
         else if (target == "start") {
             url = "questionnaire/list?person=" + id.toString();
         }
-        var newUrl = baseUrl + url;
+        var newUrl = getBaseUrl() + url;
         console.log("newUrl: " + newUrl);
         window.location.href = newUrl;
     }

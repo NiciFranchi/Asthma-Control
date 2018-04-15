@@ -1,12 +1,25 @@
 package edu.gatech.epidemics.viewmodel;
 
-import java.util.Dictionary;
-import java.util.Hashtable;
-
 /**
  * @author atalati
  */
 public class Responses {
     private int patientId;
-    Dictionary questionAnswers = new Hashtable<Integer, String>();
+    private QuestionAnswer[] questionAnswers;
+
+    public int getPatientId() {
+        return patientId;
+    }
+
+    public void setPatientId(int patientId) {
+        this.patientId = patientId;
+    }
+
+    public QuestionAnswer[] getQuestionAnswers() {
+        return questionAnswers;
+    }
+
+    public void setQuestionAnswers(QuestionAnswer[] questionAnswers) {
+        this.questionAnswers = questionAnswers;
+    }
 }

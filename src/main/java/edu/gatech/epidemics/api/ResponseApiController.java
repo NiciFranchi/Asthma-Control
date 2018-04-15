@@ -32,8 +32,9 @@ public class ResponseApiController {
         return response.get();
     }
     
-    @PostMapping(path = "/api/responses", consumes = "application/json", produces = "application/json")
-    public void addResponse(@RequestBody Responses response) {
+    @PostMapping(path = "/api/responses", consumes = "application/json")
+    public String addResponse(@RequestBody Responses response) {
         System.out.println(response);
+        return "";
     }
 }

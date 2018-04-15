@@ -136,7 +136,9 @@
     <script type="text/javascript">
         baseUrl = '';
         getBaseUrl = function () {
-            var baseUrl = window.location.origin;
+            var a = window.location.href;
+            var b = window.location.host;
+            var baseUrl = a.substring(0, a.indexOf(b) + b.length + 1)
             if (!baseUrl.endsWith('/')) {
                 baseUrl += '/';
             }
