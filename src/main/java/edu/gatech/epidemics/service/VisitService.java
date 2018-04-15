@@ -28,7 +28,7 @@ public class VisitService {
         return visitRepository.findById(id);
     }
     
-    public void add(Visit visit) {
-        visitRepository.save(visit);
+    public Visit add(Visit visit) {
+        return visitRepository.save(visit);
     }
 }

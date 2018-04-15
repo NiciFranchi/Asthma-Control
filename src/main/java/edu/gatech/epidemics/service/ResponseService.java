@@ -28,7 +28,12 @@ public class ResponseService {
         return responseRepository.findById(id);
     }
     
-    public void add(Response response) {
-        responseRepository.save(response);
+    public Response add(Response response) {
+        return responseRepository.save(response);
+    }
+
+    public Iterable<Response> addAll(Iterable<Response> responses)
+    {
+        return responseRepository.saveAll(responses);
     }
 }

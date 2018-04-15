@@ -20,15 +20,21 @@ public class Response implements Serializable {
     @NotNull
     private Integer visitId;
     @NotNull
-    @ManyToOne
-    @JoinColumn(name = "question_id")
-    private Question question;
+    private Integer questionId;
     @NotNull
-    @ManyToOne
-    @JoinColumn(name = "answer_id")
-    private AnswerChoice answer;
+    private Integer answerId;
 
     public Response() {
+    }
+
+    public Response(@NotNull Integer visitId, @NotNull Integer questionId, @NotNull Integer answerId) {
+        this.visitId = visitId;
+        this.questionId = questionId;
+        this.answerId = answerId;
+    }
+
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
     }
 
     public Integer getId() {
@@ -47,24 +53,29 @@ public class Response implements Serializable {
         this.visitId = visitId;
     }
 
-    public Question getQuestion() {
-        return question;
+    public Integer getQuestionId() {
+        return questionId;
     }
 
-    public void setQuestion(Question question) {
-        this.question = question;
+    public void setQuestionId(Integer questionId) {
+        this.questionId = questionId;
     }
 
-    public AnswerChoice getAnswer() {
-        return answer;
+    public Integer getAnswerId() {
+        return answerId;
     }
 
-    public void setAnswer(AnswerChoice answer) {
-        this.answer = answer;
+    public void setAnswerId(Integer answerId) {
+        this.answerId = answerId;
     }
 
     @Override
     public String toString() {
-        return "Response{" + "id=" + id + ", visitId=" + visitId + ", question=" + question + ", answer=" + answer + '}';
+        return "Response{" +
+                "id=" + id +
+                ", visitId=" + visitId +
+                ", questionId=" + questionId +
+                ", answerId=" + answerId +
+                '}';
     }
 }
