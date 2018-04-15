@@ -83,7 +83,7 @@
                     row += '</tr>';
                     $('#tbodyPatient').append(row);
                 });
-                toastr.info('Patients loaded.');
+                toastr.success('Patients loaded.');
             }
         }).fail(function () {
             toastr.error('Can\'t load patients.');
