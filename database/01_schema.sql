@@ -88,7 +88,9 @@ CREATE TABLE assessment (
 `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
 `visit_id` INT NOT NULL,
 `domain_of_control` VARCHAR(50) NOT NULL,
+`assessment_level` VARCHAR(50) NOT NULL,
+`treatment_text` VARCHAR(2000) NOT NULL,
 FOREIGN KEY(visit_id)
   REFERENCES visit(id)
-  ON DELETE CASCADE,
+  ON DELETE CASCADE
 )ENGINE=InnoDB;

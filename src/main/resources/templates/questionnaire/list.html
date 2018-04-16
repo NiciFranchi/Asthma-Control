@@ -33,6 +33,7 @@
     <script type="text/javascript">
       var visit;
       var questions;
+      var questionNumber = 0;
 
       $(document).ready(function () {
         var urlParams = new URLSearchParams(location.search);
@@ -81,13 +82,30 @@
             toastr.error('Can\'t load questions.');
         });
       }
+      
+      $("#btPreviousQuestion").click(function () {
+        questionNumber -= 1;
+        askQuestion();
+      });
+      
+      $("#btNextQuestion").click(function () {
+        questionNumber += 1;
+        if (questionNumber === questions.length) {
+          submit();
+        } else {
+          askQuestion();
+        }
+      });
 
-      var askQuestion = function(questionNumber) {
+      var askQuestion = function() {
         var question = questions[questionNumber];
+        $('#btNextQuestion').prop('disabled', true);
         if (questionNumber === 0) {
+          $('#btPreviousQuestion').prop('disabled', true);
           $("#btPreviousQuestion").hide();
         } else {
           $("#btPreviousQuestion").show();
+          $('#btPreviousQuestion').prop('disabled', false);
         }
 
         if (questionNumber === questions.length-1) {
@@ -107,8 +125,8 @@
           questionHtml +=
               "<button type='button' "
             + "id = 'answer" + i.toString() + "' "
-            + "class='list-group-item answer-choice btnsQ" + questionNumber.toString() + "' "
-            + "onClick='highlightAnswerChoice(" + i.toString() + ", " + questionNumber.toString() + ")'>" 
+            + "class='list-group-item answer-choice btnsQ' "
+            + "onClick='highlightAnswerChoice(" + i.toString() + ")'>" 
                 + question.answerChoices[i].answerText.toString()
             + "</button>";
         }
@@ -116,21 +134,15 @@
         $('#questions').html(questionHtml);
         $('#counter').text((questionNumber+1).toString() + '/' + questions.length.toString());
         
-        $("#btPreviousQuestion").click(function () {
-          askQuestion(questionNumber-1);
-        });
-        
-        $("#btNextQuestion").click(function () {
-          $('#btNextQuestion').prop('disabled', true);
-          if (questionNumber === questions.length-1) {
-            submit();
-          } else {
-            askQuestion(questionNumber+1);
-          }
-        });
+        if (visit.responses.length > questionNumber) {
+          var answerNumber = visit.responses[questionNumber].answer.answerNumber - 1;
+          $('.btnsQ').removeClass('active');
+          $('#answer' + answerNumber).addClass('active');
+          $('#btNextQuestion').prop('disabled', false);
+        }
       }
       
-      var highlightAnswerChoice = function (answerNumber, questionNumber) {
+      var highlightAnswerChoice = function (answerNumber) {
         var question = questions[questionNumber];
         var answer = question.answerChoices[answerNumber];
         if (visit.responses.length <= questionNumber) {
@@ -139,8 +151,8 @@
           visit.responses[questionNumber].answer = answer;
         }
         // cosmetic
-        $('.btnsQ' + questionNumber).removeClass('active');
-        $('#' + answerNumber).addClass('active');
+        $('.btnsQ').removeClass('active');
+        $('#answer' + answerNumber).addClass('active');
         $('#btNextQuestion').prop('disabled', false);
       };
       
@@ -174,142 +186,6 @@
           var newUrl = baseUrl + url;
           console.log("newUrl: " + newUrl);
           window.location.href = newUrl;
-      }
-      
-      var oldLogic = function() {
-        // declarations
-          var urlParams = new URLSearchParams(location.search);
-          var person_id = urlParams.get('person');
-          var patientId = parseInt(person_id, 10);
-          var url = '/api/visits/' + patientId.toString();
-          answersDictionary = {};
-          var questionHtml = '';
-          var current = 1;
-          var min = 1;
-          var max = 1;
-
-
-          $.get(url, function (data) {
-
-              // for paging
-              max = data.length;
-              $.each(data, function (key, val) {
-                  questionHtml =
-                      "<div id= 'question" + val.questionNumber.toString() + "' class='question'>" +
-                      "<h3 class='questionText'>" + val.questionText + "</h3>" +
-                      "<div class='list-group answer-choices'>";
-                  for (var i = 0; i < val.answerChoices.length; i++) {
-                      questionHtml += "<button type='button' id = 'answer" 
-                              + val.answerChoices[i].id.toString() + "' class='list-group-item answer-choice btnsQ" 
-                              + val.questionNumber.toString() + "' onClick='highlightAnswerChoice(this.id, " 
-                              + val.questionNumber.toString() + ")'>" + val.answerChoices[i].answerText.toString() + "</button>";
-                  }
-                  questionHtml += "</div>";
-
-                  if (!$('#questionTitle').length) {
-                      var header = "<h2 id='questionTitle' class='text-center'>" + val.ageGroup.description 
-                              + " Years Old Asthma Control Assessment" + "</h2>";
-                      $('#topText').append(header);
-                  }
-
-                  $('#questions').append(questionHtml);
-              });
-              questionHtml = '';
-              // for paging
-              $('.question').hide();
-              $("#btPreviousQuestion").hide();
-              $('#question1').show();
-              $('#counter').text(current.toString() + '/' + max.toString());
-
-          }).fail(function () {
-              console.log('did not got json');
-          });
-
-          // pagination
-          $("#btPreviousQuestion").click(function () {
-              if (current - 1 < min) {
-                  return;
-              }
-              // anytime you've pressed previous there is an answer selected, so you can next
-              // probably not the best practice but can work for now!
-              $('#btNextQuestion').prop('disabled', false);
-              var questionId = 'question' + current.toString();
-              $('#' + questionId).hide();
-              current--;
-              questionId = 'question' + current.toString();
-              $('#' + questionId).show();
-              $('#counter').text(current.toString() + '/' + max.toString());
-              if (current == min) {
-                  $("#btPreviousQuestion").hide();
-              }
-              if (current == max - 1) {
-                  $('#btNextQuestion').text('Next');
-                  $('#btNextQuestion').addClass('btn-default');
-                  $('#btNextQuestion').removeClass('btn-primary');
-              }
-          });
-          $("#btNextQuestion").click(function () {
-              // disable the button
-              $('#btNextQuestion').prop('disabled', true);
-              if ($('#btNextQuestion').text() == 'Submit') {
-
-                  // show success toastr on json success
-
-                  var url = '/api/responses';
-                  var responses = new Object();
-                  var questionAnswer = undefined;
-                  responses.patientId = patientId;
-                  responses.questionAnswers = [];
-
-                  $.each(answersDictionary, function(k, v){
-                      questionAnswer = new Object();
-                      questionAnswer.questionId = k;
-                      questionAnswer.answerId = v;
-                      responses.questionAnswers.push(questionAnswer);
-                  });
-
-                  $.ajax({
-                      type: 'POST',
-                      headers:{
-                          'Content-Type': 'application/json'
-                      },
-                      url: url,
-                      data: JSON.stringify(responses),
-                      contentType: 'application/json',
-                      dataType:'json',
-                      success: function(){
-                          toastr.success('Answers submitted');
-                      },
-                      error: function(xhr, status, err){
-                          toastr.error('Couldn\'t sumbit.');
-                          console.log(xhr);
-                          console.log(status);
-                          console.log(err);
-
-                    }
-                  });
-
-                  // redirect
-                  //redirect('result');
-              }
-              if (current + 1 > max) {
-                  return;
-              }
-              var questionId = 'question' + current.toString();
-              $('#' + questionId).hide();
-              current++;
-              questionId = 'question' + current.toString();
-              $('#' + questionId).show();
-              if (current == max) {
-                  $('#btNextQuestion').text('Submit');
-                  $('#btNextQuestion').removeClass('btn-default');
-                  $('#btNextQuestion').addClass('btn-primary');
-              }
-              // doesn't need to be in an if block really. any time you've hit next you are beyond the first question...
-
-              $("#btPreviousQuestion").show();
-              $('#counter').text(current.toString() + '/' + max.toString());
-          });
       }
     </script>
 </div>

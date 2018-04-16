@@ -35,6 +35,8 @@ public class VisitApiController {
     public Visit addVisit(@RequestBody Visit visit) {
         if (visit.getId() == null) {
             visit.setVisitDate(new Date());
+        } else if (!visit.getResponses().isEmpty()) {
+            visit.assess();
         }
         return visitService.add(visit);
     }
