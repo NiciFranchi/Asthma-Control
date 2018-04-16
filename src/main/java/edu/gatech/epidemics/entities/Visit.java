@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
@@ -24,7 +25,8 @@ public class Visit implements Serializable {
     @NotNull
     private Date visitDate;
     @OneToMany(mappedBy = "visitId", cascade = CascadeType.ALL)
-    private Set<Response> reponses;
+    @OrderBy("question")
+    private Set<Response> responses;
 
     public Visit() {
     }
@@ -62,16 +64,16 @@ public class Visit implements Serializable {
         this.visitDate = visitDate;
     }
 
-    public Set<Response> getReponses() {
-        return reponses;
+    public Set<Response> getResponses() {
+        return responses;
     }
 
-    public void setReponses(Set<Response> reponses) {
-        this.reponses = reponses;
+    public void setResponses(Set<Response> responses) {
+        this.responses = responses;
     }
 
     @Override
     public String toString() {
-        return "Visit{" + "id=" + id + ", patientId=" + patientId + ", visitDate=" + visitDate + ", reponses=" + reponses + '}';
+        return "Visit{" + "id=" + id + ", patientId=" + patientId + ", visitDate=" + visitDate + ", responses=" + responses + '}';
     }
 }

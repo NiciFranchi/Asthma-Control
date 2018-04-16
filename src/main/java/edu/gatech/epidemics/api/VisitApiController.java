@@ -2,6 +2,7 @@ package edu.gatech.epidemics.api;
 
 import edu.gatech.epidemics.entities.Visit;
 import edu.gatech.epidemics.service.VisitService;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,19 +20,22 @@ public class VisitApiController {
     @Autowired
     private VisitService visitService;
     
-    @GetMapping(value = "/api/visit")
+    @GetMapping(value = "/api/visits")
     public List<Visit> get() {
         return visitService.findAll();
     }
     
-    @GetMapping(value = "/api/visit/{id}")
+    @GetMapping(value = "/api/visits/{id}")
     public Visit get(@PathVariable int id) {
         Optional<Visit> visit = visitService.findById(id);
         return visit.get();
     }
     
-    @PostMapping(path = "/api/visit", consumes = "application/json", produces = "application/json")
-    public void addVisit(@RequestBody Visit visit) {
-        visitService.add(visit);
+    @PostMapping(path = "/api/visits", consumes = "application/json", produces = "application/json")
+    public Visit addVisit(@RequestBody Visit visit) {
+        if (visit.getId() == null) {
+            visit.setVisitDate(new Date());
+        }
+        return visitService.add(visit);
     }
 }

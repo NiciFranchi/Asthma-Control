@@ -11,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.PostLoad;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -47,6 +48,7 @@ public class Person implements Serializable {
     @Transient
     private Integer age;
     @OneToMany(mappedBy = "patientId", cascade = CascadeType.ALL)
+    @OrderBy("visitDate")
     private Set<Visit> visits;
 
     public Person() {
