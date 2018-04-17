@@ -19,7 +19,8 @@ import javax.validation.constraints.NotNull;
 public class Visit implements Serializable {
     private static final long serialVersionUID = 1L;
     private static final String[] LEVELS = {"Well Controlled", "Not Well Controlled", "Very Poorly Controlled"};
-    private static final String[] TREATMENT_1 = {
+    private static final String[][] TREATMENT = {
+    {
         "<li>Maintain current treatment.</li>\n"
         + "<li>Regular followup every 1-6 months.</li>\n"
         + "<li>Consider step down if well controlled for at least 3 months.</li>",
@@ -32,6 +33,31 @@ public class Visit implements Serializable {
         + "<li>Reevaluate in 2 weeks.</li>\n"
         + "<li>If no clear benefit in 4-6 weeks, consider alternative diagnoses or adjusting therapy.</li>\n"
         + "<li>For side effects, consider alternative treatment options.</li>"
+    },
+    {
+        "<li>Maintain current step.</li>\n"
+        + "<li>Regular followup every 1-6 months.</li>\n"
+        + "<li>Consider step down if well controlled for at least 3 months.</li>",
+        "<li>Step up at least 1 step and</li>\n"
+        + "<li>Reevaluate in 2-6 weeks.</li>\n"
+        + "<li>For side effects: consider alternative treatment options.</li>",
+        "<li>Consider short course of oral systemic corticosteroids,</li>\n"
+        + "<li>Step up 1-2 steps, and</li>\n"
+        + "<li>Reevaluate in 2 weeks.</li>\n"
+        + "<li>For side effects, consider alternative treatment options.</li>"
+    },
+    {
+        "<li>Maintain current step.</li>\n"
+        + "<li>Regular followups every 1-6 months to maintain control.</li>\n"
+        + "<li>Consider step down if well controlled for at least 3 months.</li>",
+        "<li>Step up 1 step and</li>\n"
+        + "<li>Reevaluate in 2-6 weeks.</li>\n"
+        + "<li>For side effects, consider alternative treatment options.</li>",
+        "<li>Consider short course of oral systemic corticosteroids,</li>\n"
+        + "<li>Step up 1-2 steps, and</li>\n"
+        + "<li>Reevaluate in 2 weeks.</li>\n"
+        + "<li>For side effects, consider alternative treatment options.</li>"
+    }
     };
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -100,34 +126,33 @@ public class Visit implements Serializable {
     }
     
     public void assess() {
-        if (responses.get(0).getQuestion().getAgeGroup().getId() == 1) {
-            if (responses.size() < 5) {
-                return;
-            }
-            if (assessments == null) {
-                assessments = new LinkedList<>();
-            }
-            int maxResponseImpairment = responses.stream()
-                .filter(r -> r.getQuestion().getDomainOfControl().equals("Impairment"))
-                .mapToInt(r -> r.getAnswer().getAnswerNumber())
-                .max().getAsInt();
-            Assessment assessmentImpairment = new Assessment();
-            assessmentImpairment.setVisitId(id);
-            assessmentImpairment.setDomainOfControl("Impairment");
-            assessmentImpairment.setAssessmentLevel(LEVELS[maxResponseImpairment-1]);
-            assessmentImpairment.setTreatmentText(TREATMENT_1[maxResponseImpairment-1]);
-            assessments.add(assessmentImpairment);
-            int maxResponseRisk = responses.stream()
-                .filter(r -> r.getQuestion().getDomainOfControl().equals("Risk"))
-                .mapToInt(r -> r.getAnswer().getAnswerNumber())
-                .max().getAsInt();
-            Assessment assessmentRisk = new Assessment();
-            assessmentRisk.setVisitId(id);
-            assessmentRisk.setDomainOfControl("Risk");
-            assessmentRisk.setAssessmentLevel(LEVELS[maxResponseRisk-1]);
-            assessmentRisk.setTreatmentText(TREATMENT_1[maxResponseRisk-1]);
-            assessments.add(assessmentRisk);
+        int ageGroupId = responses.get(0).getQuestion().getAgeGroup().getId();
+        if (assessments == null) {
+            assessments = new LinkedList<>();
         }
+        
+        int maxResponseImpairment = responses.stream()
+            .filter(r -> r.getQuestion().getDomainOfControl().equals("Impairment"))
+            .filter(r -> r.getAnswer().getAnswerNumber() <= 3)
+            .mapToInt(r -> r.getAnswer().getAnswerNumber())
+            .max().getAsInt();
+        int maxResponseRisk = responses.stream()
+            .filter(r -> r.getQuestion().getDomainOfControl().equals("Risk"))
+            .filter(r -> r.getAnswer().getAnswerNumber() <= 3)
+            .mapToInt(r -> r.getAnswer().getAnswerNumber())
+            .max().getAsInt();
+        Assessment assessmentImpairment = new Assessment();
+        assessmentImpairment.setVisitId(id);
+        assessmentImpairment.setDomainOfControl("Impairment");
+        Assessment assessmentRisk = new Assessment();
+        assessmentRisk.setVisitId(id);
+        assessmentRisk.setDomainOfControl("Risk");
+        assessmentImpairment.setTreatmentText(TREATMENT[ageGroupId-1][maxResponseImpairment-1]);
+        assessmentRisk.setTreatmentText(TREATMENT[ageGroupId-1][maxResponseRisk-1]);
+        assessmentImpairment.setAssessmentLevel(LEVELS[maxResponseImpairment-1]);
+        assessmentRisk.setAssessmentLevel(LEVELS[maxResponseRisk-1]);
+        assessments.add(assessmentImpairment);
+        assessments.add(assessmentRisk);
     }
 
     @Override
