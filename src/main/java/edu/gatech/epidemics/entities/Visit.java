@@ -119,10 +119,10 @@ public class Visit implements Serializable {
                 .max().getAsInt();
             Assessment assessmentRisk = new Assessment();
             assessmentRisk.setVisitId(id);
-            assessmentRisk.setDomainOfControl("Impairment");
-            assessmentRisk.setAssessmentLevel(LEVELS[maxResponseImpairment-1]);
-            assessmentRisk.setTreatmentText(TREATMENT_1[maxResponseImpairment-1]);
-            assessments.add(new Assessment());
+            assessmentRisk.setDomainOfControl("Risk");
+            assessmentRisk.setAssessmentLevel(LEVELS[maxResponseRisk-1]);
+            assessmentRisk.setTreatmentText(TREATMENT_1[maxResponseRisk-1]);
+            assessments.add(assessmentRisk);
         }
     }
 
