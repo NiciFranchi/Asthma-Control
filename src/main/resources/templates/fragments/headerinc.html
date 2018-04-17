@@ -138,13 +138,13 @@
             var baseUrl = '';
             var a = window.location.href;
             var b = window.location.host;
-            var baseUrl = a.substring(0, a.indexOf(b) + b.length + 1)
+            var baseUrl = a.substring(0, a.indexOf(b) + b.length + 1);
             if (!baseUrl.endsWith('/')) {
                 baseUrl += '/';
             }
             console.log(baseUrl);
             return baseUrl;
-        }
+        };
         $(function () {
             toastr.options = {
                 "closeButton": true,

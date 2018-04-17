@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
@@ -31,6 +32,7 @@ public class Question implements Serializable {
     @NotNull
     private String domainOfControl;
     @OneToMany(mappedBy = "questionId", cascade = CascadeType.ALL)
+    @OrderBy("answerNumber")
     private Set<AnswerChoice> answerChoices;
 
     public Question() {

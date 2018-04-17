@@ -3,6 +3,7 @@ SET default_storage_engine=InnoDB;
 
 USE epidemics;
 
+DROP TABLE IF EXISTS assessment;
 DROP TABLE IF EXISTS response;
 DROP TABLE IF EXISTS visit;
 DROP TABLE IF EXISTS answer_choice;
@@ -80,5 +81,16 @@ FOREIGN KEY(question_id)
   ON DELETE CASCADE,
 FOREIGN KEY(answer_id)
   REFERENCES answer_choice(id)
+  ON DELETE CASCADE
+)ENGINE=InnoDB;
+
+CREATE TABLE assessment (
+`id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+`visit_id` INT NOT NULL,
+`domain_of_control` VARCHAR(50) NOT NULL,
+`assessment_level` VARCHAR(50) NOT NULL,
+`treatment_text` VARCHAR(2000) NOT NULL,
+FOREIGN KEY(visit_id)
+  REFERENCES visit(id)
   ON DELETE CASCADE
 )ENGINE=InnoDB;

@@ -61,12 +61,11 @@
             error: function(xhr, status, err){
                 toastr.error('Couldn\'t create visit.');
                 console.log(xhr);
-                console.log(status);
                 console.log(err);
                 console.log(visit);
           }
         });
-      };
+      }
 
       var getQuestions = function (patientId) {
         $.get('/api/questions?patientId=' + patientId.toString(), function () {
@@ -81,7 +80,7 @@
             toastr.error('Can\'t load questions.');
             console.log(patientId.toString());
         });
-      };
+      }
       
       $("#btPreviousQuestion").click(function () {
         questionNumber -= 1;
@@ -140,7 +139,7 @@
           $('#answer' + answerNumber).addClass('active');
           $('#btNextQuestion').prop('disabled', false);
         }
-      };
+      }
       
       var highlightAnswerChoice = function (answerNumber) {
         var question = questions[questionNumber];
@@ -168,22 +167,22 @@
             dataType:'json',
             success: function(response){
                 toastr.success('Answers submitted');
-                redirect('/questionnaire/result?visitId=' + visit.id.toString());
+                redirect('result?visitId=' + visit.id.toString());
             },
             error: function(xhr, status, err){
                 toastr.error('Couldn\'t record response.');
-                console.log(status);
+                console.log(xhr);
                 console.log(err);
                 console.log(visit);
           }
         });
-      };
+      }
       
       var redirect = function (url) {
           var newUrl = getBaseUrl() + url;
           console.log("newUrl: " + newUrl);
           window.location.href = newUrl;
-      };
+      }
     </script>
 </div>
 </body>
