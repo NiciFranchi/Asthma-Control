@@ -18,9 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class QuestionApiController {
-    
-    @Autowired
-    Environment environment;
+
     @Autowired
     private QuestionService questionService;
     @Autowired
