@@ -22,17 +22,18 @@ CREATE PROCEDURE reset_and_fill()
 		DELETE FROM `answer_choice`;
 		DELETE FROM `visit`;
 		DELETE FROM `response`;
+		DELETE FROM `assessment`;
 
-
+		ALTER TABLE `assessment` AUTO_INCREMENT = 1;
 		ALTER TABLE `person` AUTO_INCREMENT = 1;
 		INSERT INTO `person` (`id`, `username`, `password`, `active`, `person_type`, `first_name`, `middle_name`, `last_name`, `contact_phone`, `contact_email`, `contact_fax`, `address_line1`, `address_line2`, `city`, `state`, `zip`, `birthday`) 
 		VALUES 
-		(NULL, 'cory.rempel', 'c705d522bab6e3ba27b3f717062a116f81f7d7ca', 1, 'PATIENT', 'Rafael', 'Cassandra', 'Pagac', '05942567846', 'meagan.borer@example.com', '1-776-561-7474x2407', '296 Zemlak Lakes Apt. 213', NULL, 'Estellfort', 'Alabama', '64442-4566', '2017-01-01')
-		, (NULL, 'destinee04', '6f3e7ed83350d98f37eacda698b253ae860f65bf', 1, 'PATIENT', 'Vilma', 'Kenny', 'Littel', '797-097-4004', 'alanna25@example.org', '695-400-3889', '637 Orlando Villages', NULL, 'South Shanelle', 'Idaho', '70626', '2012-01-01')
-		, (NULL, 'jayne83', 'edbc5c5de12bafb9fc526bc7a07414ed8bca6912', 0, 'PATIENT', 'Germaine', 'Stefan', 'O''Connell', '1-175-844-0894x1179', 'wtowne@example.org', '1-057-191-2477x86919', '077 Kiana Meadow Apt. 294', NULL, 'Gennaroview', 'Idaho', '06492-5283', '2001-03-01')
-		, (NULL, 'max98', 'a2b1461da75dfa3626b9e57194a723d97e531d98', 0, 'PATIENT', 'Adele', 'Louvenia', 'McGlynn', '(902)958-2151', 'oswald06@example.org', '1-107-279-0147x7515', '7836 Karl Light Suite 956', NULL, 'West Kadinburgh', 'Vermont', '46090-9722', '1979-12-31')
+		(NULL, 'cory.rempel', 'c705d522bab6e3ba27b3f717062a116f81f7d7ca', 1, 'PATIENT', 'Rafael', 'Cassandra', 'Pagac', '05942567846', 'meagan.borer@example.com', '1-776-561-7474x2407', '296 Zemlak Lakes Apt. 213', NULL, 'Estellfort', 'Alabama', '64442-4566', '2015-03-17')
+		, (NULL, 'destinee04', '6f3e7ed83350d98f37eacda698b253ae860f65bf', 1, 'PATIENT', 'Vilma', 'Kenny', 'Littel', '797-097-4004', 'alanna25@example.org', '695-400-3889', '637 Orlando Villages', NULL, 'South Shanelle', 'Idaho', '70626', '2015-05-22')
+		, (NULL, 'jayne83', 'edbc5c5de12bafb9fc526bc7a07414ed8bca6912', 0, 'PATIENT', 'Germaine', 'Stefan', 'O''Connell', '1-175-844-0894x1179', 'wtowne@example.org', '1-057-191-2477x86919', '077 Kiana Meadow Apt. 294', NULL, 'Gennaroview', 'Idaho', '06492-5283', '2016-04-15')
+		, (NULL, 'max98', 'a2b1461da75dfa3626b9e57194a723d97e531d98', 0, 'PATIENT', 'Adele', 'Louvenia', 'McGlynn', '(902)958-2151', 'oswald06@example.org', '1-107-279-0147x7515', '7836 Karl Light Suite 956', NULL, 'West Kadinburgh', 'Vermont', '46090-9722', '2017-11-30')
 		, (NULL, 'goodwin.lilian', '6cab70f14ca8bd66fdcdca0ebe6abd19fa512b02', 1, 'PATIENT', 'Jarrett', 'Eryn', 'Monahan', '786-062-5270x1497', 'ziemann.paris@example.org', '353-641-8594x65082', '50474 Melissa Extension', NULL, 'South Rooseveltbury', 'Connecticut', '40059', '2018-02-01')
-		, (NULL, 'domingo86', '1b8b0e5a41a9801e8d183384d8c8cc39dd65e1cf', 1, 'PATIENT', 'Raina', 'Ara', 'Hackett', '01162819571', 'kaycee.murazik@example.com', '(554)535-1305', '517 Hoeger Corner', NULL, 'South Danika', 'SouthDakota', '65486', '1955-06-15')
+		, (NULL, 'domingo86', '1b8b0e5a41a9801e8d183384d8c8cc39dd65e1cf', 1, 'PATIENT', 'Raina', 'Ara', 'Hackett', '01162819571', 'kaycee.murazik@example.com', '(554)535-1305', '517 Hoeger Corner', NULL, 'South Danika', 'SouthDakota', '65486', '2018-01-01')
 		, (NULL, 'jedidiah74', '8917728597287023859a36d85f104b973e78aad8', 0, 'DOCTOR', 'Laurianne', 'Jordon', 'Weimann', '422-049-5812x4040', 'oswald60@example.org', '(152)175-0155x9891', '68091 Wyman View', NULL, 'Gislasonville', 'Georgia', '42819', '1984-05-22')
 		, (NULL, 'hackett.liana', '1d22f3bb84a492443eeb008cdf90ad435bade188', 1, 'DOCTOR', 'Lila', 'Isaiah', 'Dach', '912-201-2612x10631', 'ben.crist@example.com', '128-401-4330', '4918 Powlowski Station', NULL, 'Port Bonitahaven', 'Alabama', '90443-3715', '2005-03-22');
 
