@@ -2,6 +2,7 @@ package edu.gatech.epidemics.entities;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -102,6 +103,9 @@ public class Visit implements Serializable {
         if (responses.get(0).getQuestion().getAgeGroup().getId() == 1) {
             if (responses.size() < 5) {
                 return;
+            }
+            if (assessments == null) {
+                assessments = new LinkedList<>();
             }
             int maxResponseImpairment = responses.stream()
                 .filter(r -> r.getQuestion().getDomainOfControl().equals("Impairment"))
