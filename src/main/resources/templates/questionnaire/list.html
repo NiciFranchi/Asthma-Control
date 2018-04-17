@@ -56,15 +56,14 @@
                 toastr.success('Visit created');
                 visit = response;
                 visit.responses = [];
-                console.log(visit)
-                getQuestions(patientId);
+                getQuestions(patientId.toString());
             },
             error: function(xhr, status, err){
                 toastr.error('Couldn\'t create visit.');
                 console.log(xhr);
                 console.log(status);
                 console.log(err);
-
+                console.log(visit);
           }
         });
       }
@@ -80,6 +79,7 @@
             askQuestion(0);
         }).fail(function () {
             toastr.error('Can\'t load questions.');
+            console.log(patientId.toString());
         });
       }
       
@@ -169,7 +169,6 @@
             success: function(response){
                 visit = response;
                 visitUnchanged = true;
-                console.log(visit);
                 redirect('result?visitId=' + visit.id.toString());
             },
             error: function(xhr, status, err){
@@ -177,7 +176,7 @@
                 console.log(xhr);
                 console.log(status);
                 console.log(err);
-
+                console.log(visit);
           }
         });
       }
