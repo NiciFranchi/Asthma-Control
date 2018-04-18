@@ -109,7 +109,7 @@ CREATE PROCEDURE reset_and_fill()
 		,(NULL,11,3,'<75%')
 		,(NULL,11,4,'Not available')
 		,(NULL,12,1,'0-1 /year')
-		,(NULL,12,2,'>= 2  / year')
+		,(NULL,12,3,'>= 2  / year')
 		,(NULL,13,1,'<=2 days /week')
 		,(NULL,13,2,'>2 days/week')
 		,(NULL,13,3,'Throughout the day')
@@ -138,7 +138,7 @@ CREATE PROCEDURE reset_and_fill()
 		,(NULL,20,3,'<=15')
 		,(NULL,20,4,'Not available')
 		,(NULL,21,1,'0-1 /year')
-		,(NULL,21,2,'>= 2  / year');
+		,(NULL,21,3,'>= 2  / year');
 
 
 		ALTER TABLE `visit` AUTO_INCREMENT = 1;
