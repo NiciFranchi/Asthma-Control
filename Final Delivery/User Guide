@@ -1,0 +1,15 @@
+# Asthma Control - User Guide
+CDC
+Georgia Tech
+Team Epidemics
+
+# Overview
+
+Asthma guidelines suggest having a patient's asthma control evaluated regularly. This application is a working prototype used to ask patients a series of questions appropriate to their age group, evaluate their current control of their asthma, and provide recommended action steps for treatment based on EPR-3 asthma guidelines. This information is then stored to a FHIR server.  
+
+# Application
+
+This application is a web application, which currently runs locally with the default configuration (*see installation manual*). After configuring the environment and launching the application following the installation manual, a user navigates to http://localhost:8081 to begin using the application.
+
+## Select a patient and home screen
+
