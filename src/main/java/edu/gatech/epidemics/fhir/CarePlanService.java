@@ -5,5 +5,5 @@ import org.springframework.stereotype.Service;
 /**
  * @author atalati
  */
-public class Patient {
+public class CarePlanService {
 }

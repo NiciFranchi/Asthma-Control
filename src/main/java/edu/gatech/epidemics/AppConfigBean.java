@@ -26,7 +26,8 @@ public class AppConfigBean {
     private String db_password;
     @Value("${db_platform}")
     private String db_platform;
-
+    @Value("fhir_baseUrl")
+    private String fhir_baseUrl;
 
     public String getDb_driver() {
         return db_driver;
@@ -68,5 +69,11 @@ public class AppConfigBean {
         this.db_platform = db_platform;
     }
 
+    public String getFhir_baseUrl() {
+        return fhir_baseUrl;
+    }
 
+    public void setFhir_baseUrl(String fhir_baseUrl) {
+        this.fhir_baseUrl = fhir_baseUrl;
+    }
 }

@@ -60,7 +60,7 @@
     </div>
 </div>
 <div class="row">
-    <div class ="col-md-6">
+    <!--<div class ="col-md-6">
         <div class = "form-check">
             <input class="form-check-input" type="checkbox" id="cbPatient" checked>
             <label class="form-check-label" for="cbPatient"> Save Patient </label>
@@ -73,7 +73,7 @@
             <input class="form-check-input" type="checkbox" id="cbCarePlan" checked >
             <label class="form-check-label" for="cbCarePlan"> Save Control Levels and Actions for treatment </label>
         </div>
-    </div>
+    </div>-->
     <div class ="col-md-6">
         <div class="text-right">
             <button id="btSubmitFHIR" class="btn btn-default">Transmit to FHIR</button>
@@ -81,9 +81,10 @@
     </div>
 </div>
     <script type="text/javascript">
+        var visitId;
         $(document).ready(function () {
             var urlParams = new URLSearchParams(location.search);
-            var visitId = parseInt(urlParams.get('visitId'), 10);
+            visitId = parseInt(urlParams.get('visitId'), 10);
             console.log("visitId: " + visitId);
 
             url = "/api/visits/" + visitId.toString();
@@ -103,13 +104,25 @@
                       }
                 });
             });
-
-           $("#btSubmitFHIR").click(function () {
-                // show success toastr on json success
-                toastr.success('Action plan submitted to FHIR');
-           });
-
         });
+        $("#btSubmitFHIR").click(function () {
+           $.ajax({
+               type: 'POST',
+               url: '/api/fhir/questionnaire?visitId=' + visitId.toString(),
+               dataType: 'text',
+               success: function(data){
+                   toastr.success('Questionnaire transmitted to FHIR');
+                   var win = window.open(data,'_blank');
+                   win.focus();
+               },
+               error: function(xhr, status, err){
+                   toastr.error('Couldn\'t transmit.');
+                   console.log(err);
+               }
+           });
+        });
+
+        
         </script>
 </div>
 </body>
