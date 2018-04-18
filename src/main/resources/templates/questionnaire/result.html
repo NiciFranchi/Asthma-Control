@@ -59,9 +59,26 @@
         </div>
     </div>
 </div>
-<!-- will save to FHIR using this button-->
-<div class="text-center">
-    <button id="btSubmitFHIR" class="btn btn-default">Save Action for Treatment</button>
+<div class="row">
+    <div class ="col-md-6">
+        <div class = "form-check">
+            <input class="form-check-input" type="checkbox" id="cbPatient" checked>
+            <label class="form-check-label" for="cbPatient"> Save Patient </label>
+        </div>
+        <div class = "form-check">
+            <input class="form-check-input" type="checkbox" id="cbQuestionnaire" >
+            <label class="form-check-label" for="cbQuestionnaire"> Save Questionnaire </label>
+        </div>
+        <div class = "form-check">
+            <input class="form-check-input" type="checkbox" id="cbCarePlan" checked >
+            <label class="form-check-label" for="cbCarePlan"> Save Control Levels and Actions for treatment </label>
+        </div>
+    </div>
+    <div class ="col-md-6">
+        <div class="text-right">
+            <button id="btSubmitFHIR" class="btn btn-default">Transmit to FHIR</button>
+        </div>
+    </div>
 </div>
     <script type="text/javascript">
         $(document).ready(function () {
@@ -74,12 +91,12 @@
             }).done (function (data) {
                 // update the control level and recommended actions for treatment for risk and impairment
                 $.each(data.assessments, function (key, val) { 
-                    if (val.domainOfControl == "Impairment")
+                    if (val.domainOfControl === "Impairment")
                       {
                           document.getElementById("hImpairmentText").textContent += val.assessmentLevel;
                           $('#ulImpairmentActionTreatment').html(val.treatmentText);
                       }
-                    else if (val.domainOfControl == "Risk")
+                    else if (val.domainOfControl === "Risk")
                       {
                           document.getElementById("hRiskText").textContent += val.assessmentLevel;
                           $('#ulRiskActionTreatment').html(val.treatmentText);
