@@ -38,8 +38,8 @@ public class QuestionnaireApiController {
     QuestionComponent questionComponent;
 
 
-    @PostMapping(value = "/api/fhir/questionnaire", params = "visitId", consumes = "application/json")
-    public void createQuestionnaireFhirResource(@RequestParam("visitId") Integer visitId) {
+    @PostMapping(value = "/api/fhir/questionnaire", params = "visitId")
+    public String createQuestionnaireFhirResource(@RequestParam("visitId") Integer visitId) {
         Optional<Visit> visit = visitService.findById(visitId);
 
         String linkId;
@@ -84,5 +84,7 @@ public class QuestionnaireApiController {
         // Questionnaire Response
         answers = new Answers(appConfigBean.getFhir_baseUrl());
         questionnaireResponseId = answers.createQuestionnaireResponse(questionnaireId, questionnaireResponse);
+
+        return String.format("%s/QuestionnaireResponse/%s", appConfigBean.getFhir_baseUrl(), questionnaireResponseId);
     }
 }

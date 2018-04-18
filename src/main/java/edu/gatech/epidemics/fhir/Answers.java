@@ -15,7 +15,7 @@ public class Answers extends FhirBase {
     }
 
     public String createQuestionnaireResponse(String questionnaireId, QuestionnaireResponse questionnaireResponse) {
-        String questionnaireReferenceUrl = String.format("%s/Questionnaire/%d", getBaseUrl(), questionnaireId);
+        String questionnaireReferenceUrl = String.format("%s/Questionnaire/%s", getBaseUrl(), questionnaireId);
         questionnaireResponse.setStatus(QuestionnaireResponse.QuestionnaireResponseStatus.COMPLETED);
 
         questionnaireResponse
