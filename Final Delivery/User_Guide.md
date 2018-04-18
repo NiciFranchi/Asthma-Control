@@ -1,6 +1,6 @@
 # Asthma Control - User Guide
->CDC
->Georgia Tech
+>CDC, 
+>Georgia Tech, 
 >Team Epidemics
 **Still need to add screenshots**
 
@@ -39,7 +39,7 @@ The end user can select to save any combination of the questionnaire (if it does
 ## Post-Submission
 
 **still under consideration**
-
+A configurable option is to show new tabs upon completion of uploading data to FHIR. This mode would not be enabled for end users, but for developers and testing this shows that data has been successfully saved to FHIR. Once data has been stored, for each FHIR resource selected for storage by the end user, a browser tab is opened containing the information returne when querying FHIR for the information stored whent he button is pressed. 
 
 
 # Navigation Bar 
