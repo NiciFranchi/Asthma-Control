@@ -7,16 +7,18 @@
 
 Asthma guidelines suggest having a patient's asthma control evaluated regularly. This application is a working prototype used to ask patients a series of questions appropriate to their age group, evaluate their current control of their asthma across the domains of risk and impairment, and provide recommended action steps for treatment based on EPR-3 asthma guidelines. This information is then stored to a FHIR server.  
 
-# Application
+# Application Steps
 
 This application is a web application, which currently runs locally with the default configuration (*see installation manual*). After configuring the environment and launching the application following the installation manual, a user navigates to http://localhost:8081 to begin using the application. The end user selects a patient and begins their questionnaire.
 
 ## Select a patient and home screen
-The end user (a clinician, with a patient) will be presented with a list of patients from which they can select one to fill out a questionnaire for. Selecting the "play" icon for the user will launch the questionnaire, taking into account the age of the selected user as of the day that the questionnaire is being taken.
+The end user (a clinician, with a patient) will be presented with a list of patients from which they can select one to fill out a questionnaire for. Selecting the *"play"* icon for the row of the desired patient will launch the questionnaire. 
+>The questionnaire launched depends on the age of the selected patient as of the day that the questionnaire is being taken. Patients are grouped to either 0-4, 5-11, or 12+ years of age in accordance with the EPR-3 guidelines. Each age group receives different questions in their questionnaire.
 
 
 ## Answer questions about asthma control
-The end user will be presented with questions about the patient's control of asthma one question at a time. Each question must be answered to proceed. The user selects a question by clicking anywhere in the button associated with that answer, and upon clicking the button for the selected answer will change color. To change an answer, the end user clicks on a button for another answer to select that answer. Once an answer has been selected, the "Next" button will become enabled, allowing the user to proceed to the next question in the questionnaire. 
+The end user will be presented with questions about the patient's control of asthma one question at a time. Each question must be answered to proceed. The user selects a question by clicking anywhere in the button associated with that answer, and upon clicking the button for the selected answer will change color. 
+>To change an answer, the end user clicks on a button for another answer to select that answer. Once an answer has been selected, the "Next" button will become enabled, allowing the user to proceed to the next question in the questionnaire. 
 
 At  any time during the question-answering portion, if the user wants to return to a previously answered question and adjust their answer they can press the "Previous" button. The answer they previously selected will remain highlighted, and they can change answers, as before, by selecting the button of another answer.
 
