@@ -38,7 +38,7 @@ public class QuestionnaireApiController {
     QuestionComponent questionComponent;
 
 
-    @PostMapping(value = "/api/fhir/questionnaire", params = "visitId")
+    @PostMapping(value = "/api/fhir/questionnaire", params = "visitId", produces = "application/json")
     public String createQuestionnaireFhirResource(@RequestParam("visitId") Integer visitId) {
         Optional<Visit> visit = visitService.findById(visitId);
 
