@@ -2,6 +2,7 @@
 >CDC
 >Georgia Tech
 >Team Epidemics
+**Still need to add screenshots**
 
 # Overview
 
@@ -32,3 +33,22 @@ After the user submits the questions and these control levels are calculated the
 These **Actions** are presented as editable to the end user. This allows for the clinician to customize the action steps for an individual patient (e.g., add patient-specific context for clarity or add or remove action steps) if desirable. 
 
 When the end user is ready to save the asthma control levels they press the *Transmit to FHIR* button to save these levels to the FHIR server.
+>**still under consideration**
+The end user can select to save any combination of the questionnaire (if it doesn't exist) and responses to the questionnaire, patient information, and asthma control levels and actions for treatment via check boxes presented on the final page before transmitting data to FHIR
+
+## Post-Submission
+
+**still under consideration**
+
+
+
+# Navigation Bar 
+
+In addition to the information held on each page specific to that page, each page contains a common navigation bar across the top of the page with clickable links. This navigation bar is the same across all pages of the application.
+
+- Patient
+	- This link redirects to the home page, where a user can select a patient
+-	Help
+	-	This page links to a small page offering guidance, a subset of this user guide. 	
+- Logout
+	- This page will redirect to the home page, where a user can select a patient
