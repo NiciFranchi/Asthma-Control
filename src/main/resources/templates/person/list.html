@@ -6,15 +6,24 @@
 <body>
 <div class="container">
     <!--/*/ <th:block th:include="fragments/header :: header"></th:block> /*/-->
-    <table class="table table-hover table-bordered table-striped">
+    <table id="tblPatient" class="table table-hover table-bordered table-striped">
         <thead>
         <tr>
-            <th>Name</th>
+            <th>Name
+                <button class="btn btn-xs btn-default" title="Toggle filter" onclick="toggleFilter()"><span
+                        class="glyphicon glyphicon-filter" aria-hidden="true"></span></button>
+            </th>
             <th>Edit</th>
             <th>Asthma Assessment</th>
         </tr>
         </thead>
         <tbody id="tbodyPatient">
+
+        <!--filter row-->
+        <tr>
+            <td colspan="3"><input type="text" name="patientNameFilter" id="tbpatientNameFilter" class="form-control">
+            </td>
+        </tr>
 
         <!--Show this row when site is loading the data, else hide it-->
         <tr id="loadingRecords" class="loadingRecords" style="display: none;">
@@ -50,58 +59,104 @@
 </div>
 <!--/*/ <th:block th:include="fragments/headerinc :: head"></th:block> /*/-->
 <script type="text/javascript">
+    var patients = [];
     $(function () {
-
-        // declarations
-        var url = '/api/persons/';
 
         //house-keeping
         $('#loadingRecords').show();
+        $('#tblPatient tbody tr:first-child').hide();
+
+        loadPatients();
+    });
+
+    var toggleFilter = function () {
+        $('#tbpatientNameFilter').val('');
+        $("#tblPatient tbody tr:first-child").toggle();
+        if ($("#tblPatient tbody tr:first-child").css('display') === 'none') {
+            showPatients(patients);
+        }
+    };
+
+    $("#tbpatientNameFilter").keyup(function () {
+        var filterText = $(this).val();
+        if (filterText.length < 3) {
+            return;
+        }
+        $("#tblPatient").find("tr:gt(2)").remove();
+        //console.log('Filter by:' + filterText);
+        var filterdRecords = [];
+        $.each(patients, function (key, val) {
+            var matchesFirstName = val.firstName.toLowerCase().indexOf(filterText.toLowerCase()) >= 0;
+            var matchesLastName = val.lastName.toLowerCase().indexOf(filterText.toLowerCase()) >= 0;
+            if (matchesFirstName || matchesLastName) {
+                // var row = getPatientRowHtml(val);
+                // $('#tbodyPatient').append(row);
+                filterdRecords.push(val);
+            }
+        });
+        showPatients(filterdRecords);
+        toastr.info('To clear filter, click again.');
+    });
+
+    var showPatients = function (records) {
+        $("#tblPatient").find("tr:gt(2)").remove();
+        $.each(records, function (key, val) {
+            var row = getPatientRowHtml(val);
+            $('#tbodyPatient').append(row);
+        });
+    };
+
+    var loadPatients = function () {
+        // declarations
+        var url = '/api/persons/';
 
         $.get(url, function () {
         }).done(function (data) {
             $('#loadingRecords').hide();
-            if (data.length == 0) {
+            if (data.length === 0) {
                 $('#noRecords').show();
             }
             else {
+                patients = data;
                 $('#noRecords').hide();
-                $.each(data, function (key, val) {
-                    var edit = "redirect('upsert','" + val.id.toString() + "')";
-                    var start = "redirect('start','" + val.id.toString() + "')";
-                    row = '';
-                    row += '<tr>';
-                    row += '<td>';
-                    row += (val.firstName + ' ' + val.lastName);
-                    row += '</td>';
-                    row += '<td>';
-                    row += '<button class="personEditButton" onClick="' + edit + '">Edit</button>';
-                    row += '</td>';
-                    row += '<td>';
-                    row += '<button class="personQuestionnaireButton" onClick="' + start + '">Start Assessment</i></button>';
-                    row += '</td>';
-                    row += '</tr>';
-                    $('#tbodyPatient').append(row);
-                });
-                toastr.success('Patients loaded.');
+                showPatients(patients);
             }
+            toastr.success('Patients loaded.');
         }).fail(function () {
             toastr.error('Can\'t load patients.');
         });
-    });
+    };
+
+    var getPatientRowHtml = function (val) {
+        var edit = "redirect('upsert','" + val.id.toString() + "')";
+        var start = "redirect('start','" + val.id.toString() + "')";
+        var rowHtml = '';
+        rowHtml += '<tr>';
+        rowHtml += '<td>';
+        rowHtml += (val.firstName + ' ' + val.lastName);
+        rowHtml += '</td>';
+        rowHtml += '<td>';
+        rowHtml += '<button class="personEditButton" onClick="' + edit + '">Edit</button>';
+        rowHtml += '</td>';
+        rowHtml += '<td>';
+        rowHtml += '<button class="personQuestionnaireButton" onClick="' + start + '">Start Assessment</i></button>';
+        rowHtml += '</td>';
+        rowHtml += '</tr>';
+        return rowHtml;
+    };
 
     var redirect = function (target, id) {
         var url = "";
-        if (target == "upsert") {
+        if (target === "upsert") {
             url = "person/edit?person=" + id.toString();
         }
-        else if (target == "start") {
+        else if (target === "start") {
             url = "questionnaire/list?person=" + id.toString();
         }
         var newUrl = getBaseUrl() + url;
         console.log("newUrl: " + newUrl);
         window.location.href = newUrl;
-    }
+    };
 </script>
 </body>
 </html>
