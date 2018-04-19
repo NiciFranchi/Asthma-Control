@@ -13,7 +13,7 @@ FROM tomcat:8-jre8-slim
 #ADD epidemics-web.jar /usr/local/tomcat/webapps/app.jar
 COPY --from=builder /usr/src/app/target/epidemics-web.jar /usr/local/tomcat/webapps/app.jar
 COPY --from=builder /usr/src/app/target/* /
-COPY ./src/main/webapp/* /usr/local/tomcat/webapps/webapp/
+COPY ./src/main/resources/* /usr/local/tomcat/webapps/webapp/
 
 RUN bash -c 'touch /app.jar'
 RUN bash -c 'chmod +x /wrapper.sh'
