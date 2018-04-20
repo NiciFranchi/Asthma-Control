@@ -21,9 +21,9 @@ public class PersonController {
         return "person/edit";
     }
 
-    @GetMapping(value = "/person/view")
+    @GetMapping(value = "/person/import")
     public String view() {
-        System.out.println("View patient");
-        return "person/view";
+        System.out.println("Import patient from FHIR");
+        return "person/import";
     }
 }

@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!--/*/ <th:block th:include="fragments/headerinc :: head"></th:block> /*/-->
+    <title>FHIR: Import Patient</title>
+</head>
+<body>
+<div class="container">
+    <!--/*/ <th:block th:include="fragments/header :: header"></th:block> /*/-->
+
+    <div id="frmFhirPatientImport" name="fhirPatientImport" method="" action="">
+        <fieldset>
+
+            <!-- Form Name -->
+            <legend><h2>Import Patient from FHIR</h2></legend>
+            <div class="row">
+
+                <!-- Multiple Radios -->
+                <div class="form-group col-md-3">
+                    <label class="control-label">Search by</label>
+                    <div>
+                        <div class="radio">
+                            <label for="rdSearchChoice-0"><input name="rdSearchChoice" id="rdSearchChoice-0" value="name" type="radio">Name</label>
+                        </div>
+                        <div class="radio">
+                            <label for="rdSearchChoice-1"><input name="rdSearchChoice" id="rdSearchChoice-1" value="id" type="radio">ID</label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Text input-->
+                <div class="form-group-sm col-md-3 nameSearch">
+                    <label class="control-label" for="tbFirstName">Given name</label>
+                    <div>
+                        <input id="tbFirstName" name="tbFirstName" placeholder="As it exactly appears in FHIR" class="form-control input-sm" required="" type="text">
+                        <span class="help-block">First Name</span>
+                    </div>
+                </div>
+
+                <!-- Text input-->
+                <div class="form-group-sm col-md-3 nameSearch">
+                    <label class="control-label" for="tbLastName">Family name</label>
+                    <div>
+                        <input id="tbLastName" name="tbLastName" placeholder="As it exactly appears in FHIR" class="form-control input-sm" required="" type="text">
+                        <span class="help-block">Last Name</span>
+                    </div>
+                </div>
+
+                <!-- Text input-->
+                <div class="form-group-sm col-md-3 idSearch">
+                    <label class="control-label" for="tbPatientId">Patient ID</label>
+                    <div>
+                        <input id="tbPatientId" name="tbPatientId" placeholder="Patient FHIR resource identifier"
+                               class="form-control input-sm" type="text">
+                    </div>
+                </div>
+
+                <!-- Button -->
+                <div class="form-group col-md-3">
+                    <label class="control-label" for="btnSearch"></label>
+                    <div>
+                        <button id="btnSearch" type="submit" name="singlebutton" class="btn btn-sm btn-primary">Search
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+    </div>
+
+
+    <table id="tblFhirResults" class="table table-hover table-bordered table-striped">
+        <thead>
+        <tr>
+            <th><h4>Name</h4></th>
+            <th><h4>Address Line 1</h4></th>
+            <th><h4>Address Line 1</h4></th>
+            <th><h4>City</h4></th>
+            <th><h4>State</h4></th>
+            <th><h4>Fax</h4></th>
+            <th><h4>Email</h4></th>
+            <th><h4>Phone</h4></th>
+            <th><h4>Birthday</h4></th>
+            <th><h4>Action</h4></th>
+        </tr>
+        </thead>
+        <tbody id="tblFhirResultsBody"></tbody>
+    </table>
+
+
+    <script type="text/javascript">
+
+        var searchType = undefined;
+        var url = '/api/fhir/patient';
+        var fhirPatients = [];
+        var fhirPatient = {};
+
+        $(function () {
+            $('#rdSearchChoice-0').prop('checked', true);
+            $('.nameSearch').show();
+            $('.idSearch').hide();
+            searchType = $("input[type='radio'][name='rdSearchChoice']:checked").val();
+        });
+
+        $('#rdSearchChoice-0, #rdSearchChoice-1').change(function () {
+            searchType = $("input[type='radio'][name='rdSearchChoice']:checked").val();
+            var nameSearchParameters = $('.nameSearch');
+            var idSearchParameters = $('.idSearch');
+            var tbFirstNameElement = $('#tbFirstName');
+            var tbLastNameElement = $('#tbLastName');
+            var tbPatientIdElement = $('#tbPatientId');
+            switch (searchType) {
+                case 'id':
+                    nameSearchParameters.hide();
+                    idSearchParameters.show();
+                    tbFirstNameElement.removeAttr('required');
+                    tbLastNameElement.removeAttr('required');
+                    tbPatientIdElement.attr("required", "required");
+                    break;
+                case 'name':
+                    nameSearchParameters.show();
+                    idSearchParameters.hide();
+                    tbFirstNameElement.attr("required", "required");
+                    tbLastNameElement.attr("required", "required");
+                    tbPatientIdElement.removeAttr('required');
+                    break;
+            }
+        });
+
+        $('#btnSearch').click(function () {
+            url = '/api/fhir/patient';
+            fhirPatients = [];
+            fhirPatient = {};
+
+            switch (searchType) {
+                case 'id':
+                    url += '/' + $('#tbPatientId').val();
+                    break;
+                case 'name':
+                    url += ('?firstName=' + encodeURIComponent($('#tbFirstName').val()) + '&lastName=' + encodeURIComponent($('#tbLastName').val()));
+                    break;
+            }
+            console.log(url);
+            $('div[name=fhirPatientImport]').validate({
+                highlight: function (element) {
+                    $(element).closest('.form-group-sm').removeClass('is-valid').addClass('has-error');
+                },
+                success: function (element) {
+                    element.text('Looks good!').removeClass('has-error').addClass('is-valid')
+                        .closest('.form-group').removeClass('has-error').addClass('is-valid');
+                }
+            });
+            $.get(url, function (data) {
+            }).done(function (data) {
+                console.log(data);
+                if ($.isArray(data)) {
+                    fhirPatients = data;
+                    $.each(fhirPatients, function (key, val) {
+                        var row = getPatientRowHtml(key, val);
+                        $('#tblFhirResultsBody').append(row);
+                    });
+                }
+                else {
+                    fhirPatient = data;
+                    var row = getPatientRowHtml(-1, fhirPatient);
+                    $('#tblFhirResultsBody').append(row);
+                }
+
+            }).fail(function (a, b, c) {
+                console.log('fail');
+                console.log(a);
+                console.log(b);
+                console.log(c);
+            }).always(function () {
+                console.log('always');
+            });
+        });
+
+        var getPatientRowHtml = function (id, val) {
+            var importButtonHtml = '<button type=\"button\" onClick="importPatient(' + id.toString() +')\"';
+            importButtonHtml += '"><span class=\"glyphicon glyphicon-save\" aria-hidden=\"true\"></span> Import</button>';
+            var dtBirthday = null;
+            if(val.birthday !== null || val.birthday !== undefined){
+                dtBirthday = new Date(val.birthday);
+                dtBirthday = dtBirthday.toLocaleDateString();
+            }
+            if(val.contactPhone !== null || val.contactPhone !== undefined){
+                val.contactPhone = formatPhoneNumber(val.contactPhone);
+            }
+            var rowHtml = '';
+            rowHtml += '<tr><td>';
+            rowHtml += (val.firstName || '') + ' ' + (val.lastName || '');
+            rowHtml += '</td><td>';
+            rowHtml += val.addressLine1 || '';
+            rowHtml += '</td><td>';
+            rowHtml += val.addressLine2 || '';
+            rowHtml += '</td><td>';
+            rowHtml += val.city || '';
+            rowHtml += '</td><td>';
+            rowHtml += val.state || '';
+            rowHtml += '</td><td>';
+            rowHtml += val.contactFax || '';
+            rowHtml += '</td><td>';
+            rowHtml += val.contactEmail || '';
+            rowHtml += '</td><td>';
+            rowHtml += val.contactPhone || '';
+            rowHtml += '</td><td>';
+            rowHtml += dtBirthday || '';
+            rowHtml += '</td><td>';
+            rowHtml += importButtonHtml;
+            rowHtml += '</td></tr>';
+            return rowHtml;
+        };
+
+        var importPatient = function (id) {
+            if(id === -1){
+                debugger;
+                localStorage.setItem("objFhirImportPatient", JSON.stringify(fhirPatient));
+                redirect('person/edit?person=-2');
+            }
+            else{
+                debugger;
+                localStorage.setItem("objFhirImportPatient", JSON.stringify(fhirPatients[id]));
+                redirect('person/edit?person=-2');
+            }
+        };
+
+        var formatPhoneNumber = function (s) {
+            var s2 = (""+s).replace(/\D/g, '');
+            var m = s2.match(/^(\d{3})(\d{3})(\d{4})$/);
+            return (!m) ? null : "(" + m[1] + ") " + m[2] + "-" + m[3];
+        };
+
+        var redirect = function (url) {
+            var newUrl = getBaseUrl() + url;
+            console.log("newUrl: " + newUrl);
+            window.location.href = newUrl;
+        };
+    </script>
+</div>
+</body>
+</html>

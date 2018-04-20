@@ -16,10 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 /**
  * @author atalati
@@ -39,8 +36,12 @@ public class QuestionnaireApiController {
 
 
     @PostMapping(value = "/api/fhir/questionnaire", params = "visitId", produces = "application/json")
-    public String createQuestionnaireFhirResource(@RequestParam("visitId") Integer visitId) {
+    public List<String> createQuestionnaireFhirResource(@RequestParam("visitId") Integer visitId) {
         Optional<Visit> visit = visitService.findById(visitId);
+
+        if(!visit.isPresent()){
+            return Collections.emptyList();
+        }
 
         String linkId;
         Question question;
@@ -55,7 +56,6 @@ public class QuestionnaireApiController {
 
             question = response.getQuestion();
             questionComponent = new QuestionComponent();
-            // linkId = String.format("ag_%s_%d", ag.replace(" ","").toLowerCase(),i);
             linkId = String.format("ag%d_%d", question.getAgeGroup().getId(), question.getQuestionNumber());
 
             if(ageGroupText == null){
@@ -73,7 +73,6 @@ public class QuestionnaireApiController {
                     .setLinkId(linkId)
                     .addAnswer()
                     .setValue(new StringType(response.getAnswer().getAnswerText()));
-
         }
 
         // Questionnaire
@@ -85,6 +84,10 @@ public class QuestionnaireApiController {
         answers = new Answers(appConfigBean.getFhir_baseUrl());
         questionnaireResponseId = answers.createQuestionnaireResponse(questionnaireId, questionnaireResponse);
 
-        return String.format("%s/QuestionnaireResponse/%s", appConfigBean.getFhir_baseUrl(), questionnaireResponseId);
+        List<String> response = new ArrayList<>();
+        response.add(String.format("%s/Questionnaire/%s", appConfigBean.getFhir_baseUrl(), questionnaireId));
+        response.add(String.format("%s/QuestionnaireResponse/%s", appConfigBean.getFhir_baseUrl(), questionnaireResponseId));
+
+        return response;
     }
 }

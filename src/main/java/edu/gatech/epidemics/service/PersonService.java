@@ -36,4 +36,8 @@ public class PersonService {
         Person newPerson = personRepository.save(person);
         return newPerson;
     }
+
+    public void deleteById(Integer id){
+        personRepository.deleteById(id);
+    }
 }

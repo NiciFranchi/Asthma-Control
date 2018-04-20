@@ -19,10 +19,10 @@
                 <nav>
                     <ul class="pager">
                         <li>
-                            <button id="btPreviousQuestion" class="btn btn-default">Previous</button>
+                            <button id="btPreviousQuestion" class="">Previous</button>
                         </li>
                         <li>
-                            <button id="btNextQuestion" class="btn btn-default" disabled>Next</button>
+                            <button id="btNextQuestion" class="" disabled>Next</button>
                         </li>
                     </ul>
                 </nav>
@@ -110,12 +110,8 @@
 
         if (questionNumber === questions.length-1) {
           $('#btNextQuestion').text('Submit');
-          $('#btNextQuestion').removeClass('btn-default');
-          $('#btNextQuestion').addClass('btn-primary');
         } else {
           $('#btNextQuestion').text('Next');
-          $('#btNextQuestion').removeClass('btn-primary');
-          $('#btNextQuestion').addClass('btn-default');
         }
 
         var questionHtml = "<div class='question'>" +

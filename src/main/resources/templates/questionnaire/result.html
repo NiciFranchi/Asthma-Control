@@ -8,122 +8,147 @@
 <div class="container">
     <!--/*/ <th:block th:include="fragments/header :: header"></th:block> /*/-->
 
-<div class="container">
-    <div class = "container" id = "resultspage">
-        <!-- HTML section for RESULTS page, which will eventually be moved to a new .jsp file
-           hard coded for now, will adjust when API is availbale (returned calculated control levels + recomendation)
-           as part of this, div id topText is left appearing for now -->
-        <div class="py-2">
-            <div class="container">
-              <div class = "col-md-6">
-                <div class="row unselectable">
-                        <h2 id ="hImpairmentText" class="text-center">Impairment: </h2>
-                </div>
-                <div class="row unselectable">
-                        <p class="text-center">Recommended Action for treatment <i><small> (editable) </small></i>:</p>
-                </div>
-                <!-- potential bug, what happens if you delete all text? data-emptytext doesnt seem to help-->
-                <!-- Will pull in recommended action treatment from API here (remove hardcode, apppend to HTML)-->
-                <div class="row">
-                  <div class="panel panel-default" data-emptytext="Enter Action for treatment">
-                    <ul id = "ulImpairmentActionTreatment" class="treatment_actionsZ" contenteditable="true">
-                    </ul>
-                  </div>
-                </div>
-              </div>
-              <div class = "col-md-6">
-                <div class="row unselectable">
-                        <h2 id = "hRiskText" class="text-center">Risk: </h2>
-                </div>
-                <div class="row unselectable">
-                        <p class="text-center">Recommended Action for treatment <i><small> (editable) </small></i>:</p>
-                </div>
-                <div class="row">
-                    <div class="panel panel-default" data-emptytext="Enter Action for treatment">
-                        <ul id = "ulRiskActionTreatment" class="treatment_actionsZ" contenteditable="true">
-                        </ul>
+    <div class="container">
+        <div class="container" id="resultspage">
+            <!-- HTML section for RESULTS page, which will eventually be moved to a new .jsp file
+               hard coded for now, will adjust when API is availbale (returned calculated control levels + recomendation)
+               as part of this, div id topText is left appearing for now -->
+            <div class="py-2">
+                <div class="container">
+                    <div class="col-md-6">
+                        <div class="row unselectable">
+                            <h2 id="hImpairmentText" class="text-center">Impairment: </h2>
+                        </div>
+                        <div class="row unselectable">
+                            <p class="text-center">Recommended Action for treatment <i>
+                                <small> (editable)</small>
+                            </i>:
+                            </p>
+                        </div>
+                        <!-- potential bug, what happens if you delete all text? data-emptytext doesnt seem to help-->
+                        <!-- Will pull in recommended action treatment from API here (remove hardcode, apppend to HTML)-->
+                        <div class="row">
+                            <div class="panel panel-default" data-emptytext="Enter Action for treatment">
+                                <ul id="ulImpairmentActionTreatment" class="treatment_actionsZ" contenteditable="true">
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="row unselectable">
+                            <h2 id="hRiskText" class="text-center">Risk: </h2>
+                        </div>
+                        <div class="row unselectable">
+                            <p class="text-center">Recommended Action for treatment <i>
+                                <small> (editable)</small>
+                            </i>:
+                            </p>
+                        </div>
+                        <div class="row">
+                            <div class="panel panel-default" data-emptytext="Enter Action for treatment">
+                                <ul id="ulRiskActionTreatment" class="treatment_actionsZ" contenteditable="true">
+                                </ul>
+                            </div>
+                        </div>
                     </div>
                 </div>
-              </div>
             </div>
         </div>
     </div>
-</div>
-<!-- this hardcode will remain on Results page, static text from requirements -->
-<div class="py-2">
-    <div class="container unselectable">
-        <div class="row">
-            <div class="col-md-12">
-                <p class=""><small>At present, there are inadequate data to correspond frequencies of exacerbations with different levels of asthma control. In general, more frequent and intense exacerbations (e.g. requiring urgent, unscheduled care, hospitalization, or ICU admission) indicate poorer disease control. For treatment purposes, patients who had >= 2 exacerbations requiring oral systemic corticosteroids in the past year may be considered the same as patients who have <b> not-well-controlled</b> asthma, even in the absence of impairment levels consistent with <b>not-well-controlled</b> asthma. </small></p>
+    <!-- this hardcode will remain on Results page, static text from requirements -->
+    <div class="py-2">
+        <div class="container unselectable">
+            <div class="row">
+                <div class="col-md-12">
+                    <p class="">
+                        <small>At present, there are inadequate data to correspond frequencies of exacerbations with
+                            different levels of asthma control. In general, more frequent and intense exacerbations
+                            (e.g. requiring urgent, unscheduled care, hospitalization, or ICU admission) indicate poorer
+                            disease control. For treatment purposes, patients who had >= 2 exacerbations requiring oral
+                            systemic corticosteroids in the past year may be considered the same as patients who have
+                            <b> not-well-controlled</b> asthma, even in the absence of impairment levels consistent with
+                            <b>not-well-controlled</b> asthma.
+                        </small>
+                    </p>
+                </div>
             </div>
         </div>
     </div>
-</div>
-<div class="row">
-    <!--<div class ="col-md-6">
-        <div class = "form-check">
-            <input class="form-check-input" type="checkbox" id="cbPatient" checked>
-            <label class="form-check-label" for="cbPatient"> Save Patient </label>
-        </div>
-        <div class = "form-check">
-            <input class="form-check-input" type="checkbox" id="cbQuestionnaire" >
-            <label class="form-check-label" for="cbQuestionnaire"> Save Questionnaire </label>
-        </div>
-        <div class = "form-check">
-            <input class="form-check-input" type="checkbox" id="cbCarePlan" checked >
-            <label class="form-check-label" for="cbCarePlan"> Save Control Levels and Actions for treatment </label>
-        </div>
-    </div>-->
-    <div class ="col-md-6">
-        <div class="text-right">
-            <button id="btSubmitFHIR" class="btn btn-default">Transmit to FHIR</button>
+    <div class="row top3">
+        <button id="btSubmitFHIR" class="center-block"><span class="glyphicon glyphicon-send" aria-hidden="true"></span> &nbsp; Transmit to FHIR</button>
+    </div>
+    <div class="row">
+        <div class="top3">
+            <div id="fhirResourcePanel" class="panel panel-default">
+                <div class="panel-heading">
+                    FHIR Resources
+                </div>
+                <div class="panel-body">
+                    <ul class="nav nav-pills">
+                        <li id="questionnaire" role="presentation" class="disabled"><a href="#" target="_blank">Questionnaire</a></li>
+                        <li id="questionnaireResponse" role="presentation" class="disabled"><a href="#" target="_blank">Questionnaire Response</a></li>
+                        <li id="patient" role="presentation" class="disabled"><a href="#" target="_blank">Patient</a></li>
+                        <li id="carePlan" role="presentation" class="disabled"><a href="#" target="_blank">Care Plan</a></li>
+                    </ul>
+                </div>
+            </div>
         </div>
     </div>
-</div>
+
+
     <script type="text/javascript">
+
         var visitId;
+
         $(document).ready(function () {
             var urlParams = new URLSearchParams(location.search);
             visitId = parseInt(urlParams.get('visitId'), 10);
-            console.log("visitId: " + visitId);
-
-            url = "/api/visits/" + visitId.toString();
+            var url = "/api/visits/" + visitId.toString();
             $.get(url, function () {
-            }).done (function (data) {
+            }).done(function (data) {
                 // update the control level and recommended actions for treatment for risk and impairment
-                $.each(data.assessments, function (key, val) { 
-                    if (val.domainOfControl === "Impairment")
-                      {
-                          document.getElementById("hImpairmentText").textContent += val.assessmentLevel;
-                          $('#ulImpairmentActionTreatment').html(val.treatmentText);
-                      }
-                    else if (val.domainOfControl === "Risk")
-                      {
-                          document.getElementById("hRiskText").textContent += val.assessmentLevel;
-                          $('#ulRiskActionTreatment').html(val.treatmentText);
-                      }
+                $.each(data.assessments, function (key, val) {
+                    if (val.domainOfControl === "Impairment") {
+                        document.getElementById("hImpairmentText").textContent += val.assessmentLevel;
+                        $('#ulImpairmentActionTreatment').html(val.treatmentText);
+                    }
+                    else if (val.domainOfControl === "Risk") {
+                        document.getElementById("hRiskText").textContent += val.assessmentLevel;
+                        $('#ulRiskActionTreatment').html(val.treatmentText);
+                    }
                 });
             });
         });
-        $("#btSubmitFHIR").click(function () {
-           $.ajax({
-               type: 'POST',
-               url: '/api/fhir/questionnaire?visitId=' + visitId.toString(),
-               dataType: 'text',
-               success: function(data){
-                   toastr.success('Questionnaire transmitted to FHIR');
-                   var win = window.open(data,'_blank');
-                   win.focus();
-               },
-               error: function(xhr, status, err){
-                   toastr.error('Couldn\'t transmit.');
-                   console.log(err);
-               }
-           });
-        });
 
-        
-        </script>
+        $("#btSubmitFHIR").click(function () {
+
+            $(this).addClass('disabled');
+            $('#fhirResourcePanel').removeClass('panel-default').addClass('panel-primary');
+
+            $.ajax({
+                type: 'POST',
+                url: '/api/fhir/questionnaire?visitId=' + visitId.toString(),
+                contentType: 'application/json',
+                success: function (data) {
+                    var questionnaireElement = $('#questionnaire');
+                    questionnaireElement.removeClass('disabled');
+                    questionnaireElement.children(0).attr('href', data[0]);
+                    questionnaireElement.children(0).addClass('text-primary');
+
+                    var questionnaireResponseElement = $('#questionnaireResponse');
+                    questionnaireResponseElement.removeClass('disabled');
+                    questionnaireResponseElement.children(0).attr('href', data[1]);
+                    questionnaireResponseElement.children(0).addClass('text-primary');
+
+                    toastr.success('Questionnaire transmitted to FHIR');
+                },
+                error: function (xhr, status, err) {
+                    toastr.error('Couldn\'t transmit Questionnaire to FHIR.');
+                    console.log(err);
+                }
+            });
+        });
+    </script>
 </div>
 </body>
 </html>
