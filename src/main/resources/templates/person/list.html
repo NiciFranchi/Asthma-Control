@@ -99,11 +99,11 @@
     });
 
     var toggleFilter = function () {
+        $('#tbpatientNameFilter').val('');
+        $('#tblPatient tbody tr:first-child').toggle();
         if ($('#tblPatient tbody tr:first-child').css('display') === 'none') {
             showPatients(patients);
         }
-        $('#tblPatient tbody tr:first-child').toggle();
-        $('#tbpatientNameFilter').val('');
     };
 
     $('#tbpatientNameFilter').keyup(function () {
