@@ -172,6 +172,7 @@
     </style>
     <!-- Site wide javascript here -->
     <script type="text/javascript">
+
         getBaseUrl = function () {
             var baseUrl = '';
             var a = window.location.href;
@@ -183,6 +184,28 @@
             console.log(baseUrl);
             return baseUrl;
         };
+
+        var formatDate = function (dt) {
+            if (dt === null || dt === undefined) {
+                return dt;
+            }
+            dt = new Date(dt);
+            dt = dt.toLocaleDateString();
+            return dt;
+        };
+
+        Date.prototype.yyyyMMdd = function() {
+            // getMonth() is zero-based
+            var mm = this.getMonth() + 1;
+            var dd = this.getDate();
+
+            return [this.getFullYear(),
+                (mm>9 ? '' : '0') + mm,
+                (dd>9 ? '' : '0') + dd
+            ].join('-');
+        };
+
+
         $(function () {
             toastr.options = {
                 "closeButton": true,

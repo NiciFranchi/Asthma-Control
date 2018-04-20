@@ -46,15 +46,15 @@
         $(document).ready(function () {
             var urlParams = new URLSearchParams(location.search);
             var patientId = parseInt(urlParams.get('person'), 10);
-            if (patientId == -1) {
-                $('#h2Header').text('Add Patient');
 
-            } else if (patientId == -2) {
+            if (patientId === -1) {
+                $('#h2Header').text('Add Patient');
+            } else if (patientId === -2) {
                 $('#h2Header').text('Import Patient');
                 patientFormHTML = "";
                 patient = JSON.parse(localStorage.getItem('objFhirImportPatient'));
                 console.log('import: ', patient);
-                if(patient == undefined || patient == null){
+                if(patient === undefined || patient === null){
                     patientId = -1;
                 } else {
                     displayForm();
@@ -62,6 +62,7 @@
             } else {
                 $('#h2Header').text('Edit Patient');
             }
+
             lookupPatient(patientId);
         });
 
@@ -94,6 +95,18 @@
                     value = "";
                     inputType = 'password';
                 }
+                if(fields[i] === 'contactPhone') {
+                    inputType = 'tel';
+                }
+                else if(fields[i] === 'contactEmail') {
+                    inputType = 'email';
+                }
+                else if(fields[i] === 'birthday') {
+                    inputType = 'date';
+                    value = new Date(value).yyyyMMdd();
+                    console.log(value);
+                }
+
                 if (fields[i] !== 'id' && fields[i] !== 'age' && fields[i] !== 'visits') {
                     var label = field.toString().replace(/([A-Z])/g, " $1");
                     label = label.charAt(0).toUpperCase() + label.slice(1);
