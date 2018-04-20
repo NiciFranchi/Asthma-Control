@@ -32,7 +32,8 @@ public class PersonService {
         return personRepository.findByUsername(username);
     }
     
-    public void add(Person person) {
-        personRepository.save(person);
+    public Person add(Person person) {
+        Person newPerson = personRepository.save(person);
+        return newPerson;
     }
 }

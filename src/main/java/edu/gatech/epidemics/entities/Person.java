@@ -20,7 +20,7 @@ import javax.validation.constraints.NotNull;
 @Entity
 @Table(name = "person")
 public class Person implements Serializable {
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 2L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -52,6 +52,8 @@ public class Person implements Serializable {
     private Set<Visit> visits;
 
     public Person() {
+        this.personType = "PATIENT";
+        this.active = true;
     }
 
     @Override
@@ -176,7 +178,7 @@ public class Person implements Serializable {
     }
 
     public void setState(String state) {
-        this.city = state;
+        this.state = state;
     }
 
     public String getZip() {
@@ -197,11 +199,15 @@ public class Person implements Serializable {
     }
     
     public Integer getAge() {
-        int age = yearFromDate(new Date()) - yearFromDate(birthday);
-        if (birthdayHasNotPassedThisYear()) {
-            age -= 1;
+        if (birthday == null) {
+            return null;
         }
-        return age;
+        
+        int calculatedAge = yearFromDate(new Date()) - yearFromDate(birthday);
+        if (birthdayHasNotPassedThisYear()) {
+            calculatedAge -= 1;
+        }
+        return calculatedAge;
     }
     
     private void setAge() {

@@ -14,8 +14,8 @@ DROP TABLE IF EXISTS person;
 CREATE TABLE person (
 `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
 `username` VARCHAR(25) NOT NULL,
-`password` VARCHAR(50),
-`active` BIT(1),
+`password` VARCHAR(50) NULL,
+`active` BIT(1) NULL,
 `person_type` VARCHAR(50) NOT NULL,
 `first_name` VARCHAR(50) NOT NULL,
 `middle_name` VARCHAR(50) NULL,

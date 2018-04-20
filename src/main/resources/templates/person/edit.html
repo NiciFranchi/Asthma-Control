@@ -5,10 +5,146 @@
     <title>Edit Patient</title>
 </head>
 <body>
-<div class="container">
+<div class="container unselectable">
     <!--/*/ <th:block th:include="fragments/header :: header"></th:block> /*/-->
 
-    <div>'edit patient profile' screen here...</div>
+    <table class="table table-hover table-bordered table-striped">
+        <thead>
+        <tr>
+            <th>Data Label</th>
+            <th>Patient Data</th>
+        </tr>
+        </thead>
+        <tbody id="tbodyPatient">
+
+        <!--Show this row when site is loading the data, else hide it-->
+        <tr id="loadingRecords" class="loadingRecords" style="display: none;">
+            <td colspan="3">
+                <div class="row text-center">
+                    <i class="fa-spin glyphicon glyphicon-refresh"></i>Loading data ...
+                </div>
+            </td>
+        </tr>
+
+        <!--insert patient here-->
+        
+        </tbody>
+        <tfoot>
+        <tr>
+            <td colspan="2">
+                <div>
+                    <button id="btnaddPatient" onClick="savePatient()">Save Patient</button>
+                </div>
+            </td>
+        </tr>
+        </tfoot>
+    </table>
+    <script type="text/javascript">
+      var patient;
+      
+      $(document).ready(function () {
+        var urlParams = new URLSearchParams(location.search);
+        var patientId = parseInt(urlParams.get('person'), 10);
+        lookupPatient(patientId);
+      });
+      
+      var lookupPatient = function (patientId) {
+        if (typeof patientId !== 'number' || patientId <= 0) {
+          patientId = 0;
+        }
+        
+        patientFormHTML = "";
+        $.get('/api/persons/' + patientId.toString(), function () {
+        }).done(function (data) {
+            patient = data;
+            displayForm();
+        }).fail(function () {
+            toastr.error('Can\'t load patient.');
+            console.log(patientId.toString());
+        });
+      };
+      
+      var displayForm = function () {
+        var fields = Object.keys(patient);
+        for (var i = 0; i < fields.length; i++) {
+          var field = fields[i];
+          var value = "";
+          var inputType = 'text';
+          if (typeof patient[field] !== 'undefined' && patient[field] !== null) {
+            value = patient[field].toString();
+          }
+          if (fields[i] === 'password') {
+            value = "";
+            inputType = 'password';
+          }
+          if (fields[i] !== 'id' && fields[i] !== 'age' && fields[i] !== 'visits') {
+            var label = field.toString().replace(/([A-Z])/g, " $1");
+            label = label.charAt(0).toUpperCase() + label.slice(1);
+            patientFormHTML += '<tr>'
+                             + '<td>' + label + '</td> '
+                             + '<td><input type="' + inputType + '" class="form-control" '
+                                + 'id="field' + field.toString() + '" '
+                                + 'value="' + value  + '" /></td>'
+                             + '</tr></td>';
+          }
+        }
+        $('#tbodyPatient').append(patientFormHTML);
+      };
+      
+      var savePatient = function () {
+        var updatedPatient = loadForm();
+        var patientJSON = JSON.stringify(updatedPatient);
+        
+        $.ajax({
+            type: 'POST',
+            headers:{
+                'Content-Type': 'application/json'
+            },
+            url: '/api/persons',
+            data: patientJSON,
+            contentType: 'application/json',
+            dataType:'json',
+            success: function(response){
+                if (patient.id === 0) {
+                    toastr.success('Patient Created');
+                } else {
+                    toastr.success('Patient Updated');
+                }
+                console.log(response);
+                redirect('person/list');
+            },
+            error: function(xhr, status, err){
+                toastr.error('Couldn\'t upsert patient.');
+                console.log(xhr);
+                console.log(status);
+                console.log(err);
+                console.log(patient);
+                console.log(updatedPatient);
+          }
+        });
+      };
+      
+      var loadForm = function () {
+        var updatedPatient = jQuery.extend(true, {}, patient);
+        delete updatedPatient.age;
+        delete updatedPatient.visits;
+        
+        var fields = Object.keys(updatedPatient);
+        for (var i = 0; i < fields.length; i++) {
+          if (fields[i] !== 'id' && fields[i] !== 'password') {
+            updatedPatient[fields[i]] = $('#field' + fields[i]).val();
+          }
+        }
+        
+        return updatedPatient;
+      };
+      
+      var redirect = function (url) {
+          var newUrl = getBaseUrl() + url;
+          console.log("newUrl: " + newUrl);
+          window.location.href = newUrl;
+      };
+    </script>
 </div>
 </body>
 </html>

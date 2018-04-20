@@ -3,7 +3,6 @@ package edu.gatech.epidemics.api;
 import edu.gatech.epidemics.entities.Person;
 import edu.gatech.epidemics.service.PersonService;
 import java.util.List;
-import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,8 +28,15 @@ public class PersonApiController {
     
     @GetMapping(value = "/api/persons/{id}")
     public Person get(@PathVariable int id) {
-        Optional<Person> person = personService.findById(id);
-        return person.get();
+        Person person;
+        
+        if (id == 0) {
+            person = new Person();
+        } else {
+            person = personService.findById(id).get();
+        }
+        
+        return person;
     }
     
     @RequestMapping(value = "/api/persons", params = "username")
@@ -39,7 +45,7 @@ public class PersonApiController {
     }
     
     @PostMapping(path = "/api/persons", consumes = "application/json", produces = "application/json")
-    public void addPerson(@RequestBody Person person) {
-        personService.add(person);
+    public Person addPerson(@RequestBody Person person) {
+        return personService.add(person);
     }
 }
