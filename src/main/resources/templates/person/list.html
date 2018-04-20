@@ -82,7 +82,7 @@
         if (filterText.length < 3) {
             return;
         }
-        $("#tblPatient").find("tr:gt(2)").remove();
+        $("#tblPatient").find("tr:gt(2):lt(-1)").remove();
         //console.log('Filter by:' + filterText);
         var filterdRecords = [];
         $.each(patients, function (key, val) {
@@ -99,7 +99,7 @@
     });
 
     var showPatients = function (records) {
-        $("#tblPatient").find("tr:gt(2)").remove();
+        $("#tblPatient").find("tr:gt(2):lt(-1)").remove();
         $.each(records, function (key, val) {
             var row = getPatientRowHtml(val);
             $('#tbodyPatient').append(row);
