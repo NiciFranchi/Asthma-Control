@@ -27,13 +27,13 @@ public class PatientApiController {
     private PersonService personService;
 
     @GetMapping(value = "/api/fhir/patient", params = {"firstName", "lastName"}, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public List<Person> findPatients(@RequestParam("firstName") String firstName, @RequestParam("lastName") String lastName){
+    public List<Person> findPatients(@RequestParam("firstName") String firstName, @RequestParam("lastName") String lastName) {
         List<Person> people = new Patient(appConfigBean.getFhir_baseUrl()).findPatients(firstName, lastName);
         return people;
     }
 
     @GetMapping(value = "/api/fhir/patient/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public Person findPatient(@PathVariable String id){
+    public Person findPatient(@PathVariable String id) {
         System.out.println("Finding patient ID: " + id);
         Person person = new Patient(appConfigBean.getFhir_baseUrl()).findPatient(id);
         return person;

@@ -8,11 +8,11 @@
 <div class="container">
     <!--/*/ <th:block th:include="fragments/header :: header"></th:block> /*/-->
 
-    <div id="frmFhirPatientImport" name="fhirPatientImport" method="" action="">
+    <form id="frmFhirPatientImport" name="fhirPatientImport">
         <fieldset>
 
             <!-- Form Name -->
-            <legend><h2>Import Patient from FHIR</h2></legend>
+            <legend><h2>FHIR: Import Patient</h2></legend>
             <div class="row">
 
                 <!-- Multiple Radios -->
@@ -20,10 +20,12 @@
                     <label class="control-label">Search by</label>
                     <div>
                         <div class="radio">
-                            <label for="rdSearchChoice-0"><input name="rdSearchChoice" id="rdSearchChoice-0" value="name" type="radio">Name</label>
+                            <label for="rdSearchChoice-0"><input name="rdSearchChoice" id="rdSearchChoice-0"
+                                                                 value="name" type="radio">Name</label>
                         </div>
                         <div class="radio">
-                            <label for="rdSearchChoice-1"><input name="rdSearchChoice" id="rdSearchChoice-1" value="id" type="radio">ID</label>
+                            <label for="rdSearchChoice-1"><input name="rdSearchChoice" id="rdSearchChoice-1" value="id"
+                                                                 type="radio">ID</label>
                         </div>
                     </div>
                 </div>
@@ -32,7 +34,8 @@
                 <div class="form-group-sm col-md-3 nameSearch">
                     <label class="control-label" for="tbFirstName">Given name</label>
                     <div>
-                        <input id="tbFirstName" name="tbFirstName" placeholder="As it exactly appears in FHIR" class="form-control input-sm" required="" type="text">
+                        <input id="tbFirstName" name="tbFirstName" placeholder="As it exactly appears in FHIR"
+                               class="form-control input-sm" required="" type="text">
                         <span class="help-block">First Name</span>
                     </div>
                 </div>
@@ -41,7 +44,8 @@
                 <div class="form-group-sm col-md-3 nameSearch">
                     <label class="control-label" for="tbLastName">Family name</label>
                     <div>
-                        <input id="tbLastName" name="tbLastName" placeholder="As it exactly appears in FHIR" class="form-control input-sm" required="" type="text">
+                        <input id="tbLastName" name="tbLastName" placeholder="As it exactly appears in FHIR"
+                               class="form-control input-sm" required="" type="text">
                         <span class="help-block">Last Name</span>
                     </div>
                 </div>
@@ -65,10 +69,10 @@
                 </div>
             </div>
         </fieldset>
-    </div>
+    </form>
 
 
-    <table id="tblFhirResults" class="table table-hover table-bordered table-striped">
+    <table id="tblFhirResults" class="table table-hover table-bordered table-striped top5">
         <thead>
         <tr>
             <th><h4>Name</h4></th>
@@ -90,24 +94,26 @@
     <script type="text/javascript">
 
         var searchType = undefined;
-        var url = '/api/fhir/patient';
         var fhirPatients = [];
-        var fhirPatient = {};
+        var nameSearchParameters = $('.nameSearch');
+        var idSearchParameters = $('.idSearch');
+        var tbFirstNameElement = $('#tbFirstName');
+        var tbLastNameElement = $('#tbLastName');
+        var tbPatientIdElement = $('#tbPatientId');
+        var searchFormElement = $('#frmFhirPatientImport');
+
 
         $(function () {
             $('#rdSearchChoice-0').prop('checked', true);
             $('.nameSearch').show();
             $('.idSearch').hide();
             searchType = $("input[type='radio'][name='rdSearchChoice']:checked").val();
+            $('#frmFhirPatientImport').submit(false);
         });
 
         $('#rdSearchChoice-0, #rdSearchChoice-1').change(function () {
             searchType = $("input[type='radio'][name='rdSearchChoice']:checked").val();
-            var nameSearchParameters = $('.nameSearch');
-            var idSearchParameters = $('.idSearch');
-            var tbFirstNameElement = $('#tbFirstName');
-            var tbLastNameElement = $('#tbLastName');
-            var tbPatientIdElement = $('#tbPatientId');
+
             switch (searchType) {
                 case 'id':
                     nameSearchParameters.hide();
@@ -127,9 +133,7 @@
         });
 
         $('#btnSearch').click(function () {
-            url = '/api/fhir/patient';
-            fhirPatients = [];
-            fhirPatient = {};
+            var url = '/api/fhir/patient';
 
             switch (searchType) {
                 case 'id':
@@ -139,53 +143,61 @@
                     url += ('?firstName=' + encodeURIComponent($('#tbFirstName').val()) + '&lastName=' + encodeURIComponent($('#tbLastName').val()));
                     break;
             }
-            console.log(url);
-            $('div[name=fhirPatientImport]').validate({
+
+            searchFormElement.validate({
                 highlight: function (element) {
                     $(element).closest('.form-group-sm').removeClass('is-valid').addClass('has-error');
                 },
                 success: function (element) {
                     element.text('Looks good!').removeClass('has-error').addClass('is-valid')
                         .closest('.form-group').removeClass('has-error').addClass('is-valid');
+                },
+                onsubmit: function(element){
+                  if(searchFormElement.valid()){
+                      element.text('').closest('.form-group').removeClass('is-valid').removeClass('has-error');
+                  }
                 }
             });
-            $.get(url, function (data) {
-            }).done(function (data) {
-                console.log(data);
-                if ($.isArray(data)) {
-                    fhirPatients = data;
-                    $.each(fhirPatients, function (key, val) {
-                        var row = getPatientRowHtml(key, val);
-                        $('#tblFhirResultsBody').append(row);
-                    });
-                }
-                else {
-                    fhirPatient = data;
-                    var row = getPatientRowHtml(-1, fhirPatient);
-                    $('#tblFhirResultsBody').append(row);
-                }
 
-            }).fail(function (a, b, c) {
+            if (!searchFormElement.valid()) {
+                toastr.warning('Invalid form.');
+                return;
+            }
+
+            console.log(url);
+            fhirPatients = [];
+
+            $.get(url, function (data) {
+                console.log('FHIR search complete');
+                if (!$.isArray(data)) {
+                    fhirPatients.push(data);
+                } else {
+                    fhirPatients = data;
+                }
+                $.each(fhirPatients, function (key, val) {
+                    var row = getPatientRowHtml(key, val);
+                    $('#tblFhirResultsBody').append(row);
+                });
+            }).fail(function (xhr, status, err) {
                 console.log('fail');
-                console.log(a);
-                console.log(b);
-                console.log(c);
+                console.log(xhr);
+                console.log(status);
+                console.log(err);
             }).always(function () {
-                console.log('always');
+                $('#tbFirstName').val('');
+                $('#tbLastName').val('');
+                $('#tbPatientId').val('')
             });
         });
 
+
         var getPatientRowHtml = function (id, val) {
-            var importButtonHtml = '<button type=\"button\" onClick="importPatient(' + id.toString() +')\"';
+            var importButtonHtml = '<button type=\"button\" onClick="importPatient(' + id.toString() + ')\"';
             importButtonHtml += '"><span class=\"glyphicon glyphicon-save\" aria-hidden=\"true\"></span> Import</button>';
-            var dtBirthday = null;
-            if(val.birthday !== null || val.birthday !== undefined){
-                dtBirthday = new Date(val.birthday);
-                dtBirthday = dtBirthday.toLocaleDateString();
-            }
-            if(val.contactPhone !== null || val.contactPhone !== undefined){
-                val.contactPhone = formatPhoneNumber(val.contactPhone);
-            }
+            var dtBirthday = formatDate(val.birthday);
+            // if (val.contactPhone !== null || val.contactPhone !== undefined) {
+            //     val.contactPhone = formatPhoneNumber(val.contactPhone);
+            // }
             var rowHtml = '';
             rowHtml += '<tr><td>';
             rowHtml += (val.firstName || '') + ' ' + (val.lastName || '');
@@ -212,20 +224,15 @@
         };
 
         var importPatient = function (id) {
-            if(id === -1){
-                debugger;
-                localStorage.setItem("objFhirImportPatient", JSON.stringify(fhirPatient));
-                redirect('person/edit?person=-2');
-            }
-            else{
-                debugger;
-                localStorage.setItem("objFhirImportPatient", JSON.stringify(fhirPatients[id]));
-                redirect('person/edit?person=-2');
-            }
+            var fhirPatient = fhirPatients[id];
+            console.log(fhirPatient);
+            // fhirPatient.contactPhone = formatPhoneNumber(fhirPatient.contactPhone);
+            localStorage.setItem("objFhirImportPatient", JSON.stringify(fhirPatient));
+            redirect('person/edit?person=-2');
         };
 
         var formatPhoneNumber = function (s) {
-            var s2 = (""+s).replace(/\D/g, '');
+            var s2 = ("" + s).replace(/\D/g, '');
             var m = s2.match(/^(\d{3})(\d{3})(\d{4})$/);
             return (!m) ? null : "(" + m[1] + ") " + m[2] + "-" + m[3];
         };
