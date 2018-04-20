@@ -41,7 +41,7 @@
     </table>
     <script type="text/javascript">
         var patientFormHTML = "";
-        var patient = undefined;
+        var patient = {};;
 
         $(document).ready(function () {
             var urlParams = new URLSearchParams(location.search);
@@ -49,10 +49,10 @@
 
             if (patientId === -1) {
                 $('#h2Header').text('Add Patient');
+                lookupPatient(patientId);
             } else if (patientId === -2) {
                 $('#h2Header').text('Import Patient');
                 patientFormHTML = "";
-                patient = {};
                 patient = JSON.parse(localStorage.getItem('objFhirImportPatient'));
                 console.log('import: ', patient);
                 if(patient === undefined || patient === null){
@@ -62,19 +62,17 @@
                 }
             } else {
                 $('#h2Header').text('Edit Patient');
+                lookupPatient(patientId);
             }
         });
 
         var lookupPatient = function (patientId) {
 
-            if(patientId && patientId === -2){
-                return;
-            }
-
             if (typeof patientId !== 'number' || patientId <= 0) {
                 patientId = 0;
             }
 
+            console.log('Load patient: ', patientId);
             patientFormHTML = "";
             $.get('/api/persons/' + patientId.toString(), function () {
             }).done(function (data) {
