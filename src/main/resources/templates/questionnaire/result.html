@@ -12,39 +12,42 @@
         <div class="container" id="resultspage">
             <h4 class="text-center">Asthma Control includes 2 domains: impairment and risk. </h4>
             <h4 class="text-center">Level of control is based on the most severe impairement or risk classification. </h4>
-            <div class="py-2">
-                <div class="container">
-                    <div class="col-md-5 panel panel-default">
-                        <div class="row unselectable">
-                            <h3 id="hImpairmentText" class="text-center">Impairment Domain: </h3>
-                        </div>
-                        <div class="row unselectable">
-                            <p class="text-center">Recommended Action for treatment <i>
-                                <small> (editable)</small>
-                            </i>:
-                            </p>
-                        </div>
-                        <!-- potential bug, what happens if you delete all text? data-emptytext doesnt seem to help-->
-                        <!-- Will pull in recommended action treatment from API here (remove hardcode, apppend to HTML)-->
-                        <div class="row">
+            <div class="">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div id="impairmentControlPanel" class="panel">
+                            <div class="panel-heading">
+                                <div class="row unselectable">
+                                    <h3 id="hImpairmentText" class="text-center">Impairment Domain: </h3>
+                                </div>
+                            </div>
+                            <div class="row unselectable">
+                                <p class="text-center">Recommended Action for treatment <i>
+                                    <small> (editable)</small>
+                                    </i>:
+                                </p>
+                            </div>
+                            <!-- potential bug, what happens if you delete all text? data-emptytext doesnt seem to help-->
+                            <!-- Will pull in recommended action treatment from API here (remove hardcode, apppend to HTML)-->
                             <div class="panel panel-default" data-emptytext="Enter Action for treatment">
                                 <ul id="ulImpairmentActionTreatment" class="treatment_actionsZ" contenteditable="true">
-                                </ul>
-                            </div>
+                               </ul>
+                            </div>                           
                         </div>
                     </div>
-                    <div class="col-md-1"> </div>
-                    <div class="col-md-5 panel panel-default">
-                        <div class="row unselectable">
-                            <h3 id="hRiskText" class="text-center">Risk Domain*: </h3>
-                        </div>
-                        <div class="row unselectable">
-                            <p class="text-center">Recommended Action for treatment <i>
-                                <small> (editable)</small>
-                            </i>:
-                            </p>
-                        </div>
-                        <div class="row">
+                    <div class="col-md-6">
+                        <div id="riskControlPanel" class="panel">
+                            <div class="panel-heading">
+                                <div class="row unselectable">
+                                    <h3 id="hRiskText" class="text-center">Risk Domain*: </h3>
+                                </div>
+                            </div>
+                            <div class="row unselectable">
+                                <p class="text-center">Recommended Action for treatment <i>
+                                    <small> (editable)</small>
+                                    </i>:
+                                </p>
+                            </div>
                             <div class="panel panel-default" data-emptytext="Enter Action for treatment">
                                 <ul id="ulRiskActionTreatment" class="treatment_actionsZ" contenteditable="true">
                                 </ul>
@@ -116,10 +119,30 @@
                     if (val.domainOfControl === "Impairment") {
                         document.getElementById("hImpairmentText").textContent += val.assessmentLevel;
                         $('#ulImpairmentActionTreatment').html(val.treatmentText);
+                        // color code the panel stoplight style
+                        if (val.assessmentLevel == "Well Controlled") {
+                            $('#impairmentControlPanel').addClass('panel-success');
+                        }
+                        else if (val.assessmentLevel == "Not Well Controlled") {
+                            $('#impairmentControlPanel').addClass('panel-warning');
+                        }
+                        else {
+                            $('#impairmentControlPanel').addClass('panel-danger');
+                        }
                     }
                     else if (val.domainOfControl === "Risk") {
                         document.getElementById("hRiskText").textContent += val.assessmentLevel;
                         $('#ulRiskActionTreatment').html(val.treatmentText);
+                        // color code the panel stoplight style
+                        if (val.assessmentLevel == "Well Controlled") {
+                            $('#riskControlPanel').addClass('panel-success');
+                        }
+                        else if (val.assessmentLevel == "Not Well Controlled") {
+                            $('#riskControlPanel').addClass('panel-warning');
+                        }
+                        else {
+                            $('#riskControlPanel').addClass('panel-danger');
+                        }
                     }
                 });
             });
