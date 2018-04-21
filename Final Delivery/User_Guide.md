@@ -2,7 +2,6 @@
 >CDC, 
 >Georgia Tech, 
 >Team Epidemics
-**Still need to add screenshots**
 
 ## Table of Contents
 
@@ -65,13 +64,12 @@ These **Actions** are presented as editable to the end user. This allows for the
 
 ## FHIR integration
 When the end user is ready to save the asthma control levels they press the *Transmit to FHIR* button to save these levels to the FHIR server.
->**still under consideration**
-The end user can select to save any combination of the questionnaire (if it doesn't exist) and responses to the questionnaire, patient information, and asthma control levels and actions for treatment via check boxes presented on the final page before transmitting data to FHIR
+### Save to FHIR
+The end user can transmit the questionnaire (if it doesn't exist) and responses to the questionnaire, patient information, and asthma control levels and actions for treatment to FHIR by clicking the button. 
 
-## Post-Submission
+### Post-Submission
 
-**still under consideration**
-A configurable option is to show new tabs upon completion of uploading data to FHIR. This mode would not be enabled for end users, but for developers and testing this shows that data has been successfully saved to FHIR. Once data has been stored, for each FHIR resource selected for storage by the end user, a browser tab is opened containing the information returne when querying FHIR for the information stored whent he button is pressed. 
+If data has been stored to FHIR, a section at the bottom of the Results page provides options for the end user to retrieve the information they've just stored to FHIR. Clicking any of the available links will open a browser tab containing the information returned from FHIR for that FHIR resource.
 
 ## Edit patient details
 In this screen, the patient that was chosen from the home page is shown with all the details that pertain to the patient. Details can be edited and saved from this page. A sample edit of patient details is shown below.
