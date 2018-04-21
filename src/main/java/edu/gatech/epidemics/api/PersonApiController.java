@@ -1,16 +1,15 @@
 package edu.gatech.epidemics.api;
 
-import com.sun.xml.internal.bind.v2.schemagen.xmlschema.SimpleRestrictionModel;
-import edu.gatech.epidemics.dao.ResponseRepository;
 import edu.gatech.epidemics.entities.Person;
 import edu.gatech.epidemics.service.PersonService;
-import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 public class PersonApiController {
