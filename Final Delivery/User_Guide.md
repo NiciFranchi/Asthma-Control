@@ -82,7 +82,7 @@ When "Add Patient" button on the home page is clicked, a blank form is shown whc
 
 ## Import a patient from FHIR
 
-Clicking the "Import Patient from FHIR" button will navigate the user to a screen where they can search the FHIR server for the patient they would like to import. This search can be done by name or by FHIR ID. When the patient is found, pressing the "Import" button imports the patient to the local database and brings the end user to the edit patient screen, in case they need to update any information for this patient. Clicking the "Save Patient" button returns the end user to the home page.
+Clicking the "Import Patient from FHIR" button will navigate the user to a screen where they can search the FHIR server for the patient they would like to import. This search can be done by name or by FHIR ID. When the patient is found, pressing the "Import" button imports the patient to the local database and brings the end user to the [edit patient screen](User_Guide.md#edit-patient-details), in case they need to update any information for this patient. Clicking the "Save Patient" button returns the end user to the home page.
 
 # Navigation Bar 
 
