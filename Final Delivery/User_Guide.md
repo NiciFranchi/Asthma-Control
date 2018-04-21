@@ -58,6 +58,8 @@ The result of the analysis and treatment plan recommendation are seen in the sam
 
 ![Pic](images/treatment_plan.png)
 
+"Well Controlled" is presented to the user in a green panel, "Not Well Controlled" is presented in yellow, and "Very Poorly Controlled" is presented in red.
+
 These **Actions** are presented as editable to the end user. This allows for the clinician to customize the action steps for an individual patient (e.g., add patient-specific context for clarity or add or remove action steps) if desirable. 
 
 ## Saving externally
