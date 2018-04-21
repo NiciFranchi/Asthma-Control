@@ -49,7 +49,7 @@ At  any time during the question-answering portion, if the user wants to return 
 On the final question the "Next" button is replaced with a  "Submit" button, to end the portion of the questionnaire consisting of questions for the end user. When this button is pressed, the application will calculate the levels of asthma control in accordance with the EPR-3 guidelines and return this information to the patient.
 
 ## Asthma control assessment
-The application uses the patient's age and the responses to each of the questions to calculate asthma control in the **Risk** and **Impairment** domains according to the EPR-3 guidelines. Each domain's control level is calculated independently.
+The application uses the patient's responses to each of the questions to calculate asthma control in the **Risk** and **Impairment** domains according to the EPR-3 guidelines. Each domain's control level is calculated independently.
 
 ## Treatment plan
 After the user submits the questions and these control levels are calculated they are displayed to the end user along with **Recommended Actions for Treatment**, also provided by EPR-3 guidelines. Each domain receives recommended actions for treatment.
