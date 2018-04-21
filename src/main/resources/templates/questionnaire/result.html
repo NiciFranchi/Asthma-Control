@@ -10,14 +10,13 @@
 
     <div class="container">
         <div class="container" id="resultspage">
-            <!-- HTML section for RESULTS page, which will eventually be moved to a new .jsp file
-               hard coded for now, will adjust when API is availbale (returned calculated control levels + recomendation)
-               as part of this, div id topText is left appearing for now -->
+            <h4 class="text-center">Asthma Control includes 2 domains: impairment and risk. </h4>
+            <h4 class="text-center">Level of control is based on the most severe impairement or risk classification. </h4>
             <div class="py-2">
                 <div class="container">
-                    <div class="col-md-6">
+                    <div class="col-md-5 panel panel-default">
                         <div class="row unselectable">
-                            <h2 id="hImpairmentText" class="text-center">Impairment: </h2>
+                            <h3 id="hImpairmentText" class="text-center">Impairment Domain: </h3>
                         </div>
                         <div class="row unselectable">
                             <p class="text-center">Recommended Action for treatment <i>
@@ -34,9 +33,10 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-1"> </div>
+                    <div class="col-md-5 panel panel-default">
                         <div class="row unselectable">
-                            <h2 id="hRiskText" class="text-center">Risk: </h2>
+                            <h3 id="hRiskText" class="text-center">Risk Domain*: </h3>
                         </div>
                         <div class="row unselectable">
                             <p class="text-center">Recommended Action for treatment <i>
@@ -60,8 +60,13 @@
         <div class="container unselectable">
             <div class="row">
                 <div class="col-md-12">
+                    <p><u>More on impairment and risk:</u></p>
+                    <p><b>Impairment</b> is the frequency and intensity of symptoms and functional limitations the patient is experiencing or has recently experienced 
+                    </p>
+                    <p> <b>Risk</b> is the likelihood of either asthma exacerbations, progressive decline in lung function (or, for children, reducing lung growth), or risk adverse effects from medication. This calculator uses only asthma exacerbation history to assess risk and does not include the other components of risk.
+                    </p>
                     <p class="">
-                        <small>At present, there are inadequate data to correspond frequencies of exacerbations with
+                        <small>*At present, there are inadequate data to correspond frequencies of exacerbations with
                             different levels of asthma control. In general, more frequent and intense exacerbations
                             (e.g. requiring urgent, unscheduled care, hospitalization, or ICU admission) indicate poorer
                             disease control. For treatment purposes, patients who had >= 2 exacerbations requiring oral
