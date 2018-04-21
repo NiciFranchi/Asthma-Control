@@ -49,7 +49,7 @@ At  any time during the question-answering portion, if the user wants to return 
 On the final question the "Next" button is replaced with a  "Submit" button, to end the portion of the questionnaire consisting of questions for the end user. When this button is pressed, the application will calculate the levels of asthma control in accordance with the EPR-3 guidelines and return this information to the patient.
 
 ## Asthma control assessment
-The application uses the patient's responses to each of the questions to calculate asthma control in the **Risk** and **Impairment** domains according to the EPR-3 guidelines. Each domain's control level is calculated independently.
+The application uses the patient's responses to each of the questions to calculate asthma control in the **Risk** and **Impairment** domains according to the EPR-3 guidelines for the patient's age group. Each domain's control level is calculated independently.
 
 ## Treatment plan
 After the user submits the questions and these control levels are calculated they are displayed to the end user along with **Recommended Actions for Treatment**, also provided by EPR-3 guidelines. Each domain receives recommended actions for treatment.
@@ -60,7 +60,7 @@ The result of the analysis and treatment plan recommendation are seen in the sam
 
 "Well Controlled" is presented to the user in a green panel, "Not Well Controlled" is presented in yellow, and "Very Poorly Controlled" is presented in red.
 
-These **Actions** are presented as editable to the end user. This allows for the clinician to customize the action steps for an individual patient (e.g., add patient-specific context for clarity or add or remove action steps) if desirable. 
+These **Actions** are presented as editable to the end user. This allows for the clinician to customize the action steps for an individual patient (e.g., add patient-specific context for clarity or add or remove action steps) if desirable. To edit, click into the panel and begin typing. 
 
 ## Saving externally
 When the end user is ready to save the asthma control levels they press the *Transmit to FHIR* button to save information from this questionnaire.
@@ -82,7 +82,7 @@ When "Add Patient" button on the home page is clicked, a blank form is shown whc
 
 ## Import a patient from FHIR
 
-
+Clicking the "Import Patient from FHIR" button will navigate the user to a screen where they can search the FHIR server for the patient they would like to import. This search can be done by name or by FHIR ID. When the patient is found, pressing the "Import" button imports the patient to the local database and brings the end user to the edit patient screen, in case they need to update any information for this patient. Clicking the "Save Patient" button returns the end user to the home page.
 
 # Navigation Bar 
 
