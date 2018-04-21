@@ -74,8 +74,15 @@ The end user can select to save any combination of the questionnaire (if it does
 A configurable option is to show new tabs upon completion of uploading data to FHIR. This mode would not be enabled for end users, but for developers and testing this shows that data has been successfully saved to FHIR. Once data has been stored, for each FHIR resource selected for storage by the end user, a browser tab is opened containing the information returne when querying FHIR for the information stored whent he button is pressed. 
 
 ## Edit patient details
+In this screen, the patient that was chosen from the home page is shown with all the details that pertain to the patient. Details can be edited and saved from this page. A sample edit of patient details is shown below.
+
+![Pic](images/patient_edit.png)
 
 ## Add patient
+
+When "Add Patient" button on the home page is clicked, a blank form is shown whcih can be edited to add details about the patient. This screen can also be used to add a doctor entity as well. Adding doctor entities is not fully functional as it is out of teh scope of our project. A sample add of patient details is shown below.
+
+![Pic](images/add_patient.png)
 
 # Navigation Bar 
 
