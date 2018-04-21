@@ -13,10 +13,9 @@
   * [Asthma control questionnaire](User_Guide.md#asthma-control-questionnaire)
   * [Asthma control assessment](User_Guide.md#asthma-control-assessment)
   * [Treatment plan](User_Guide.md#treatment-plan)
-  * [FHIR integration](User_Guide.md#fhir-integration)
   * [Post-Submission](User_Guide.md#post-Submission)
   * [Navigation Bar](User_Guide.md#navigation-bar)
-
+  
 # Overview
 
 Asthma guidelines suggest having a patient's asthma control evaluated regularly. This application is a working prototype used to ask patients a series of questions appropriate to their age group, evaluate their current control of their asthma across the domains of risk and impairment, and provide recommended action steps for treatment based on EPR-3 asthma guidelines. This information is then stored to a FHIR server.  
@@ -36,7 +35,6 @@ The end user (a clinician, with a patient) is presented with the list of patient
 >The questionnaire launched depends on the age of the selected patient as of the day that the questionnaire is being taken. Patients are grouped to either 0-4, 5-11, or 12+ years of age in accordance with the EPR-3 guidelines. Each age group receives different questions in their questionnaire.
 
 The patient list page also contains controls for [editing patient](User_Guide.md#edit-patient-details) details and [adding new patients](User_Guide.md#adding-patient).
-
 
 ## Asthma control questionnaire
 The end user will be presented with questions about the patient's control of asthma one question at a time. Each question must be answered to proceed. The user selects a question by clicking anywhere in the button associated with that answer, and upon clicking the button for the selected answer will change color. 
@@ -62,14 +60,12 @@ The result of the analysis and treatment plan recommendation are seen in the sam
 
 These **Actions** are presented as editable to the end user. This allows for the clinician to customize the action steps for an individual patient (e.g., add patient-specific context for clarity or add or remove action steps) if desirable. 
 
-## FHIR integration
-When the end user is ready to save the asthma control levels they press the *Transmit to FHIR* button to save these levels to the FHIR server.
-### Save to FHIR
-The end user can transmit the questionnaire (if it doesn't exist) and responses to the questionnaire, patient information, and asthma control levels and actions for treatment to FHIR by clicking the button. 
+## Saving externally
+When the end user is ready to save the asthma control levels they press the *Transmit to FHIR* button to save information from this questionnaire.
 
-### Post-Submission
+The end user will transmit the questionnaire (if it doesn't already exist) and responses to the questionnaire, patient information, and asthma control levels and actions for treatment to FHIR by clicking the *Transmit to FHIR* button.
 
-If data has been stored to FHIR, a section at the bottom of the Results page provides options for the end user to retrieve the information they've just stored to FHIR. Clicking any of the available links will open a browser tab containing the information returned from FHIR for that FHIR resource.
+If data has been stored to FHIR, a section at the bottom of the Results page provides options for the end user to retrieve and review the information they've just stored to FHIR. Clicking any of the available links will open a browser tab containing the information returned from FHIR for that FHIR resource.
 
 ## Edit patient details
 In this screen, the patient that was chosen from the home page is shown with all the details that pertain to the patient. Details can be edited and saved from this page. A sample edit of patient details is shown below.
@@ -81,6 +77,10 @@ In this screen, the patient that was chosen from the home page is shown with all
 When "Add Patient" button on the home page is clicked, a blank form is shown whcih can be edited to add details about the patient. This screen can also be used to add a doctor entity as well. Adding doctor entities is not fully functional as it is out of the scope of our project. A sample add of patient details is shown below.
 
 ![Pic](images/add_patient.png)
+
+## Import a patient from FHIR
+
+
 
 # Navigation Bar 
 
