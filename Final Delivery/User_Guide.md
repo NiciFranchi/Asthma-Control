@@ -78,7 +78,7 @@ In this screen, the patient that was chosen from the home page is shown with all
 
 ## Add patient
 
-When "Add Patient" button on the home page is clicked, a blank form is shown whcih can be edited to add details about the patient. This screen can also be used to add a doctor entity as well. Adding doctor entities is not fully functional as it is out of teh scope of our project. A sample add of patient details is shown below.
+When "Add Patient" button on the home page is clicked, a blank form is shown whcih can be edited to add details about the patient. This screen can also be used to add a doctor entity as well. Adding doctor entities is not fully functional as it is out of the scope of our project. A sample add of patient details is shown below.
 
 ![Pic](images/add_patient.png)
 
