@@ -11,6 +11,7 @@
         <table id="tblPatient" class="table table-hover table-bordered table-striped">
             <thead>
             <tr>
+                <th style="display:table-cell; width: 3%;"></th>
                 <th>
                     <h4 class="text-center">Name
                         <button class="btn btn-xs btn-primary" title="Toggle filter" onclick="toggleFilter()"><span
@@ -24,14 +25,14 @@
 
             <!--filter row-->
             <tr>
-                <td colspan="4"><input type="text" name="patientNameFilter" id="tbpatientNameFilter"
+                <td colspan="5"><input type="text" name="patientNameFilter" id="tbpatientNameFilter"
                                        class="form-control">
                 </td>
             </tr>
 
             <!--Show this row when site is loading the data, else hide it-->
             <tr id="loadingRecords" class="loadingRecords" style="display: none;">
-                <td colspan="4">
+                <td colspan="5">
                     <div class="row text-center">
                         <i class="fa-spin glyphicon glyphicon-refresh"></i>Loading data ...
                     </div>
@@ -40,7 +41,7 @@
 
             <!--Show this row when there are no records to display, else hide it-->
             <tr id="noRecords" class="noRecords" style="display: none;">
-                <td colspan="4">
+                <td colspan="5">
                     <div class="row text-center">
                         <span class="glyphicon glyphicon-info-sign"></span>&nbsp;Nothing to show here.
                     </div>
@@ -52,12 +53,13 @@
             </tbody>
             <tfoot>
             <tr>
-                <td colspan="4">
+                <td colspan="5">
                     <div>
                         <button id="btnaddPatient" onClick="redirect('upsert',-1 )"><span
                                 class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Patient
                         </button>
-                        <button id="btnImportPatient" onclick="redirect('import', -1)"><span class="glyphicon glyphicon-save" aria-hidden="true"></span>
+                        <button id="btnImportPatient" onclick="redirect('import', -1)"><span
+                                class="glyphicon glyphicon-save" aria-hidden="true"></span>
                             Import Patient from FHIR
                         </button>
                     </div>
@@ -66,6 +68,8 @@
             </tfoot>
         </table>
     </div>
+
+    <!--Delete patient confirmation dialog-->
     <div id="modalDeletePatient" class="modal fade patient-delete-confirm" tabindex="-1" role="dialog"
          data-backdrop="static">
         <div class="modal-ld modal-dialog" role="alertdialog">
@@ -176,23 +180,92 @@
         });
     };
 
-    var getPatientRowHtml = function (val) {
-        var edit = "redirect('upsert','" + val.id.toString() + "')";
-        var start = "redirect('start','" + val.id.toString() + "')";
-        var deleteConfirmButtonHtml = '<button type=\"button\" data-toggle=\"modal\" data-target=\".patient-delete-confirm\" data-id="';
-        deleteConfirmButtonHtml += val.id.toString();
+    var togglePatientVisits = function (patientId) {
+        var iconSpanElement = $('#btnChildTable' + patientId);
+        iconSpanElement.toggleClass('glyphicon-triangle-bottom glyphicon-triangle-right');
+        $('#visitsForPatient' + patientId).toggle();
+    };
+
+    var getPatientRowHtml = function (patient) {
+
+        var childTableRowHtml = '';
+
+        if (patient.visits && patient.visits.length > 0) {
+            var validVisits = patient.visits.filter(visitsWithAssessment);
+            if (validVisits && validVisits.length > 0) {
+                childTableRowHtml =
+                    "<tr id='visitsForPatient" + patient.id.toString() + "' style='display: none;'>" +
+                    "  <td colspan=\"5\">" +
+                    "    <table class=\"table table-hover table-bordered table-striped\">" +
+                    "      <thead>" +
+                    "        <tr>" +
+                    "          <th>Visit #</th>" +
+                    "          <th>Date</th>" +
+                    "          <th>Impairment</th>" +
+                    "          <th>Risk</th>" +
+                    "          <th>Details</th>" +
+                    "        </tr>" +
+                    "      </thead>" +
+                    "      <tbody>";
+
+                validVisits.forEach(function (visit) {
+                    var visitDate = (new Date(visit.visitDate)).toLocaleString();
+                    childTableRowHtml +=
+                        "        <a>" +
+                        "          <td>" + visit.id + "</td>" +
+                        "          <td>" + visitDate + "</td>" +
+                        "          <td>" + visit.assessments[0].assessmentLevel + "</td>" +
+                        "          <td>" + visit.assessments[0].assessmentLevel + "</td>" +
+                        "          <td><a href='#' class='text-primary' onclick=\"redirect('visit', " + visit.id + ")\">view</a></td>" +
+                        "        </tr>";
+                });
+
+                childTableRowHtml +=
+                    "      </tbody>" +
+                    "      <tfoot></tfoot>" +
+                    "    </table>" +
+                    "  </td>" +
+                    "</tr>";
+            }
+        }
+
+        function visitsWithAssessment(v) {
+            return v.assessments.length === 2;
+        }
+
+        var cheveronButtonHtml = '';
+        var start = "redirect('start','" + patient.id.toString() + "')";
+        var edit = "redirect('upsert','" + patient.id.toString() + "')";
+        var editButtonHtml = '<button class="personEditButton" onClick="' + edit + '"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Edit</button>';
+
+        var deleteConfirmButtonHtml = '<button type=\"button\" data-toggle=\"modal\" data-target=\".patient-delete-confirm\" data-id="' + patient.id.toString();
         deleteConfirmButtonHtml += '"><span class=\"glyphicon glyphicon-trash\" aria-hidden=\"true\"></span> Delete</button>';
+
+        if (childTableRowHtml && childTableRowHtml.length > 0) {
+            cheveronButtonHtml = '<button type="button" onClick="togglePatientVisits(' + patient.id.toString() + ')"><span id="btnChildTable' + patient.id.toString() + '" class="glyphicon glyphicon-triangle-right"></span></button>';
+        } else {
+            // cheveronButtonHtml = '<button type="button"><span class="glyphicon glyphicon-triangle-right" disabled=""></span></button>';
+            cheveronButtonHtml = '';
+        }
+
         var del = "";
         var rowHtml = '';
         rowHtml += '<tr><td>';
-        rowHtml += (val.firstName + ' ' + val.lastName);
+        rowHtml += cheveronButtonHtml;
         rowHtml += '</td><td>';
-        rowHtml += '<button class="personEditButton" onClick="' + edit + '"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Edit</button>';
+        rowHtml += (patient.firstName + ' ' + patient.lastName);
+        rowHtml += '</td><td>';
+        rowHtml += editButtonHtml;
         rowHtml += '</td><td>';
         rowHtml += deleteConfirmButtonHtml;
         rowHtml += '</td><td>';
         rowHtml += '<button class="personQuestionnaireButton" onClick="' + start + '">Start Assessment</button>';
         rowHtml += '</td></tr>';
+
+        if (childTableRowHtml && childTableRowHtml.length > 0) {
+            rowHtml += childTableRowHtml;
+        }
+
         return rowHtml;
     };
 
@@ -206,6 +279,9 @@
         }
         else if (target === "start") {
             url = 'questionnaire/list?person=' + id.toString();
+        }
+        else if (target === "visit") {
+            url = 'questionnaire/result?visitId=' + id.toString();
         }
         var newUrl = getBaseUrl() + url;
         console.log('newUrl: ' + newUrl);
