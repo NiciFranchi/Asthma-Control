@@ -51,6 +51,10 @@ The patient list page also contains controls for [editing patient](User_Guide.md
 
 On this page the end user can view historical visit information by clicking the drop down arrow next to the patient's name, if present, and clicking *"Details"* on the visit they would like to review.
 
+Prior to startingthe assessment of the aptient, the caregiver can review the patient's prior visit details if available, by clicking the drop down arrow to the left of patient's name. A sample image of what the user would see is below.
+
+![Pic](images/visit_home_page.png)
+
 ## Asthma control questionnaire
 The end user will be presented with questions about the patient's control of asthma one question at a time. Each question must be answered to proceed. The user selects a question by clicking anywhere in the button associated with that answer, and upon clicking the button for the selected answer will change color. 
 >To change an answer, the end user clicks on a button for another answer to select that answer. Once an answer has been selected, the "Next" button will become enabled, allowing the user to proceed to the next question in the questionnaire. 
