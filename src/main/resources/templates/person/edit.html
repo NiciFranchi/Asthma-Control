@@ -133,13 +133,31 @@
                 data: patientJSON,
                 contentType: 'application/json',
                 dataType: 'json',
-                success: function (response) {
+                success: function (data) {
+                    console.log(data);
                     if (patient.id === 0) {
                         toastr.success('Patient Created');
                     } else {
                         toastr.success('Patient Updated');
                     }
-                    redirect('person/list');
+
+                    $.ajax({
+                        type: 'POST',
+                        url:'/api/fhir/patient/' + data.id.toString(),
+                        contentType: 'application/json',
+                        success: function () {
+                            toastr.success('Patient transmitted to FHIR. Redirecting back to home page...');
+                            setTimeout(function() {
+                                    redirect('person/list');
+                                }, 5000);
+                        },
+                        error: function (xhr, status, err) {
+                            toastr.error('Couldn\'t transmit Patient to FHIR.');
+                            console.log(xhr);
+                            console.log(status);
+                            console.log(err);
+                        }
+                    });
                 },
                 error: function (xhr, status, err) {
                     toastr.error('Couldn\'t upsert patient.');

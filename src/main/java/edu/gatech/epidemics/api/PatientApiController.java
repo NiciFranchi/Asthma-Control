@@ -39,16 +39,11 @@ public class PatientApiController {
         return person;
     }
 
-    @PostMapping(value = "/api/fhir/patient", params = "visitId", produces = MediaType.TEXT_PLAIN_VALUE)
-    public String createPatientFhirResource(@RequestParam("visitId") Integer visitId) {
-        Optional<Visit> visit = visitService.findById(visitId);
 
-        if (!visit.isPresent()) {
-            return null;
-        }
+    @PostMapping(value = "/api/fhir/patient/{id}", produces = MediaType.TEXT_PLAIN_VALUE)
+    public String createPatientFhirResource(@PathVariable Integer id) {
 
-        int personId = visit.get().getPatientId();
-        Optional<Person> p = personService.findById(personId);
+        Optional<Person> p = personService.findById(id);
 
         if (!p.isPresent()) {
             return null;
@@ -74,5 +69,17 @@ public class PatientApiController {
 
         String response = String.format("%s/Patient/%s", appConfigBean.getFhir_baseUrl(), patientId);
         return response;
+    }
+
+    @PostMapping(value = "/api/fhir/patient", params = "visitId", produces = MediaType.TEXT_PLAIN_VALUE)
+    public String createPatientFhirResourceByVisitId(@RequestParam("visitId") Integer visitId) {
+        Optional<Visit> visit = visitService.findById(visitId);
+
+        if (!visit.isPresent()) {
+            return null;
+        }
+
+        int personId = visit.get().getPatientId();
+        return createPatientFhirResource(personId);
     }
 }
