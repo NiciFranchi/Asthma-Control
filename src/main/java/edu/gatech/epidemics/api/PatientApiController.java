@@ -39,7 +39,7 @@ public class PatientApiController {
         return person;
     }
 
-    @PostMapping(value = "/api/fhir/patient", params = "visitId", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @PostMapping(value = "/api/fhir/patient", params = "visitId", produces = MediaType.TEXT_PLAIN_VALUE)
     public String createPatientFhirResource(@RequestParam("visitId") Integer visitId) {
         Optional<Visit> visit = visitService.findById(visitId);
 

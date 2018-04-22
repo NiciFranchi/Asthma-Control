@@ -80,16 +80,13 @@
             children, reducing lung growth), or risk adverse effects from medication. This calculator uses only asthma
             exacerbation history to assess risk and does not include the other components of risk.
         </p>
-        <p class="">
+        <p>
             <small>*At present, there are inadequate data to correspond frequencies of exacerbations with different
-                levels of
-                asthma control. In general, more frequent and intense exacerbations (e.g. requiring urgent, unscheduled
-                care, hospitalization, or ICU admission) indicate poorer disease control. For treatment purposes,
-                patients
-                who had >= 2 exacerbations requiring oral systemic corticosteroids in the past year may be considered
-                the same as patients who have
-                <b> not-well-controlled</b> asthma, even in the absence of impairment levels consistent with
-                <b>not-well-controlled</b> asthma.
+                levels of asthma control. In general, more frequent and intense exacerbations (e.g. requiring urgent,
+                unscheduled care, hospitalization, or ICU admission) indicate poorer disease control. For treatment
+                purposes, patients who had >= 2 exacerbations requiring oral systemic corticosteroids in the past year
+                may be considered the same as patients who have <b> not-well-controlled</b> asthma, even in the absence
+                of impairment levels consistent with <b>not-well-controlled</b> asthma.
             </small>
         </p>
     </div>
@@ -178,20 +175,24 @@
 
         transmitQuestionnaire();
         trasmitCarePlan();
+        trasmitPatient();
     });
 
     var transmitQuestionnaire = function () {
+        var questionnaireElement = $('#questionnaire');
+        var questionnaireResponseElement = $('#questionnaireResponse');
+
         $.ajax({
             type: 'POST',
             url: '/api/fhir/questionnaire?visitId=' + visitId.toString(),
             contentType: 'application/json',
             success: function (data) {
-                var questionnaireElement = $('#questionnaire');
+
                 questionnaireElement.removeClass('disabled');
                 questionnaireElement.children(0).attr('href', data[0]);
                 questionnaireElement.children(0).addClass('text-primary');
 
-                var questionnaireResponseElement = $('#questionnaireResponse');
+
                 questionnaireResponseElement.removeClass('disabled');
                 questionnaireResponseElement.children(0).attr('href', data[1]);
                 questionnaireResponseElement.children(0).addClass('text-primary');
@@ -215,9 +216,7 @@
         var riskAssessmentRating = hRiskTextElement.text();
         var impairmentAssessmentRating = hImpairmentTextElement.text();
 
-        // set all editable controls to read-only
-        /* impairmentActionTreatmentElement.attr('contenteditable', false);
-         riskActionTreatmentElement.attr('contenteditable', false); */
+        riskActionTreatmentElement.attr('contenteditable', false);
         editableElements.forEach(function (e) {
             e.setAttribute("contentEditable", false);
         });
@@ -238,8 +237,8 @@
 
         var cp = new CarePlan();
         var annotation = impairmentAssessmentRating + ' and ' + riskAssessmentRating;
-        annotation = annotation.replace(":","");
-        annotation = annotation.replace("*","");
+        annotation = annotation.replace(":", "");
+        annotation = annotation.replace("*", "");
         cp.note = annotation;
         cp.details = details;
         var cp_serialized = JSON.stringify(cp);
@@ -271,16 +270,32 @@
         });
     };
 
+    var trasmitPatient = function () {
+        var patientElement = $('#patient');
+        $.ajax({
+            type: 'POST',
+            url: '/api/fhir/patient?visitId=' + visitId.toString(),
+            contentType: 'application/json',
+            dataType: 'text',
+            success: function (data) {
+                patientElement.removeClass('disabled');
+                patientElement.children(0).attr('href', data);
+                patientElement.children(0).addClass('text-primary');
+                toastr.success('Patient transmitted to FHIR');
+            },
+            error: function (xhr, status, err) {
+                toastr.error('Couldn\'t transmit Patient to FHIR.');
+                console.log(err);
+            }
+        });
+    };
+
     function CarePlan() {
-        // this.status = null; // code.active
-        // this.intent = null; // code.plan
-        // this.subject = null; // patientId
         this.note; // "Impairment: assessment & Risk:assessment"
         this.details = [];
     }
 
     function Detail() {
-        // this.status = null; // not-started
         this.statusReason; // "impairment" OR "risk"
         this.description;
     }
