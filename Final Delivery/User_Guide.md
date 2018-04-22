@@ -36,6 +36,8 @@ The end user (a clinician, with a patient) is presented with the list of patient
 
 The patient list page also contains controls for [editing patient](User_Guide.md#edit-patient-details) details and [adding new patients](User_Guide.md#adding-patient).
 
+On this page the end user can view historical visit information by clicking the drop down arrow next to the patient's name, if present, and clicking *"Details"* on the visit they would like to review.
+
 ## Asthma control questionnaire
 The end user will be presented with questions about the patient's control of asthma one question at a time. Each question must be answered to proceed. The user selects a question by clicking anywhere in the button associated with that answer, and upon clicking the button for the selected answer will change color. 
 >To change an answer, the end user clicks on a button for another answer to select that answer. Once an answer has been selected, the "Next" button will become enabled, allowing the user to proceed to the next question in the questionnaire. 
