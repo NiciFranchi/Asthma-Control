@@ -16,16 +16,16 @@ https://github.gatech.edu/gt-hit-spring2018/Asthma-Control
 
 ## Table of Contents
 
-* [Overview](User_Guide.md#overview)
-* [Epidemics Application](User_Guide.md#epidemics-application)
-  * [Introduction](User_Guide.md#introduction)
-  * [Setup and running](User_Guide.md#setup-and-running)
-  * [Select a patient](User_Guide.md#select-a-patient)
-  * [Asthma control questionnaire](User_Guide.md#asthma-control-questionnaire)
-  * [Asthma control assessment](User_Guide.md#asthma-control-assessment)
-  * [Treatment plan](User_Guide.md#treatment-plan)
-  * [Post-Submission](User_Guide.md#post-Submission)
-  * [Navigation Bar](User_Guide.md#navigation-bar)
+* Overview
+* Epidemics Application
+  * Introduction
+  * Setup and running
+  * Select a patient
+  * Asthma control questionnaire
+  * Asthma control assessment
+  * Treatment plan
+  * Post-Submission
+  * Navigation Bar
   
 # Overview
 
@@ -47,7 +47,7 @@ The end user (a clinician, with a patient) is presented with the list of patient
 
 Clicking the filter icon will allow the end user to begin searching by patient name. Clicking it again will close the filter.
 
-The patient list page also contains controls for [editing patient](User_Guide.md#edit-patient-details) details,  [adding new patients](User_Guide.md#adding-patient) and [importing patients](User_Guide.md#Import-patient-from-FHIR).
+The patient list page also contains controls for editing patient details,  adding new patients and importing patients. Please refer to the appropriate sections in the user guide below.
 
 On this page the end user can view historical visit information by clicking the drop down arrow next to the patient's name, if present, and clicking *"Details"* on the visit they would like to review.
 
@@ -107,7 +107,7 @@ When "Add Patient" button on the home page is clicked, a blank form is shown whc
 Clicking the "Import Patient from FHIR" button will navigate the user to a screen where they can search the FHIR server for the patient they would like to import. This search can be done by name or by FHIR ID. When the patient is found, pressing the "Import" button imports the patient to the local database (see image below)
 
 ![Pic](images/import_view.png)
-and brings the end user to the [edit patient screen](User_Guide.md#edit-patient-details), in case they need to update any information for this patient. Clicking the "Save Patient" button returns the end user to the home page.
+and brings the end user to the edit patient screen (please appropriate section below), in case they need to update any information for this patient. Clicking the "Save Patient" button returns the end user to the home page.
 
 # Navigation Bar 
 
