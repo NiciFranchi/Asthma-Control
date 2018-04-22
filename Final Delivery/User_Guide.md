@@ -2,6 +2,13 @@
 >CDC, 
 >Georgia Tech, 
 >Team Epidemics
+Aarsh Talati
+Ramesh Ramasubramanian
+Matthew Hull
+Charity Leschinski
+Eric Leschinski
+Scott Greiner
+
 
 ## Table of Contents
 
