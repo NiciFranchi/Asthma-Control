@@ -111,5 +111,3 @@ In addition to the information held on each page specific to that page, each pag
 	- This link redirects to the home page, where a user can select a patient
 -	Help
 	-	This page links to a small page offering guidance, a subset of this user guide. 	
-- Logout
-	- This page will redirect to the home page, where a user can select a patient
