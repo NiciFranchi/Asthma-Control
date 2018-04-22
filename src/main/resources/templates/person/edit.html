@@ -41,11 +41,12 @@
     </table>
     <script type="text/javascript">
         var patientFormHTML = "";
-        var patient = {};;
+        var patient = {};
+        var patientId;
 
         $(document).ready(function () {
             var urlParams = new URLSearchParams(location.search);
-            var patientId = parseInt(urlParams.get('person'), 10);
+            patientId = parseInt(urlParams.get('person'), 10);
 
             if (patientId === -1) {
                 $('#h2Header').text('Add Patient');
@@ -54,7 +55,7 @@
                 $('#h2Header').text('Import Patient');
                 patientFormHTML = "";
                 patient = JSON.parse(localStorage.getItem('objFhirImportPatient'));
-                if(patient === undefined || patient === null){
+                if (patient === undefined || patient === null) {
                     patientId = -1;
                 } else {
                     displayForm();
@@ -95,13 +96,13 @@
                     value = "";
                     inputType = 'password';
                 }
-                if(fields[i] === 'contactPhone') {
+                if (fields[i] === 'contactPhone') {
                     inputType = 'tel';
                 }
-                else if(fields[i] === 'contactEmail') {
+                else if (fields[i] === 'contactEmail') {
                     inputType = 'email';
                 }
-                else if(fields[i] === 'birthday') {
+                else if (fields[i] === 'birthday') {
                     inputType = 'date';
                     value = new Date(value).yyyyMMdd();
                 }
@@ -123,6 +124,7 @@
         var savePatient = function () {
             var updatedPatient = loadForm();
             var patientJSON = JSON.stringify(updatedPatient);
+            var done = false;
 
             $.ajax({
                 type: 'POST',
@@ -130,6 +132,7 @@
                     'Content-Type': 'application/json'
                 },
                 url: '/api/persons',
+                async: false,
                 data: patientJSON,
                 contentType: 'application/json',
                 dataType: 'json',
@@ -141,26 +144,35 @@
                         toastr.success('Patient Updated');
                     }
 
-                    $.ajax({
-                        type: 'POST',
-                        url:'/api/fhir/patient/' + data.id.toString(),
-                        contentType: 'application/json',
-                        success: function () {
-                            toastr.success('Patient transmitted to FHIR. Redirecting back to home page...');
-                            setTimeout(function() {
+                    if (patientId === -2) {
+                        redirect('person/list');
+                    }
+                    else {
+                        $.ajax({
+                            type: 'POST',
+                            url: '/api/fhir/patient/' + data.id.toString(),
+                            async: false,
+                            contentType: 'application/json',
+                            success: function (fhirUrl) {
+                                toastr.success('Patient transmitted to FHIR. Redirecting back to home page...');
+                                var fhirRedirect = window.confirm('Patient transmitted to FHIR. View it?');
+                                if (fhirRedirect === true) {
+                                    window.open(fhirUrl, '_blank');
+                                } else {
                                     redirect('person/list');
-                                }, 5000);
-                        },
-                        error: function (xhr, status, err) {
-                            toastr.error('Couldn\'t transmit Patient to FHIR.');
-                            console.log(xhr);
-                            console.log(status);
-                            console.log(err);
-                        }
-                    });
+                                }
+                            },
+                            error: function (xhr, status, err) {
+                                toastr.error('Couldn\'t transmit Patient to FHIR.');
+                                console.log(xhr);
+                                console.log(status);
+                                console.log(err);
+                            }
+                        });
+                    }
                 },
                 error: function (xhr, status, err) {
-                    toastr.error('Couldn\'t upsert patient.');
+                    toastr.error('Couldn\'t save patient.');
                     console.log(xhr);
                     console.log(status);
                     console.log(err);

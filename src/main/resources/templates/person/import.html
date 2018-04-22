@@ -165,6 +165,7 @@
             }
 
             fhirPatients = [];
+            $('#tblFhirResultsBody').empty();
 
             $.get(url, function (data) {
                 if (!$.isArray(data)) {
