@@ -11,6 +11,8 @@
 * Eric Leschinski
 * Scott Greiner
 
+### Github link
+https://github.gatech.edu/gt-hit-spring2018/Asthma-Control
 
 ## Table of Contents
 
