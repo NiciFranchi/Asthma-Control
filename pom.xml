@@ -76,11 +76,6 @@
             <artifactId>hapi-fhir-client</artifactId>
             <version>3.1.0</version>
         </dependency>
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-simple</artifactId>
-            <version>1.7.24</version>
-        </dependency>
 
         <!--Unit Test-->
         <dependency>
