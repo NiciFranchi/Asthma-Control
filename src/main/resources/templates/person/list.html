@@ -173,7 +173,6 @@
                 $('#noRecords').hide();
                 showPatients(patients);
             }
-            console.log('Patients loaded from server');
             toastr.success('Patients loaded.');
         }).fail(function () {
             toastr.error('Can\'t load patients.');

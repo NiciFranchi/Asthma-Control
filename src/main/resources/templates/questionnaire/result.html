@@ -184,7 +184,7 @@
 
         $.ajax({
             type: 'POST',
-            url: '/api/fhir/dataType: \'text\',questionnaire?visitId=' + visitId.toString(),
+            url: '/api/fhir/questionnaire?visitId=' + visitId.toString(),
             contentType: 'application/json',
             success: function (data) {
 
@@ -201,6 +201,8 @@
             },
             error: function (xhr, status, err) {
                 toastr.error('Couldn\'t transmit Questionnaire to FHIR.');
+                console.log(xhr);
+                console.log(status);
                 console.log(err);
             }
         });
@@ -283,6 +285,8 @@
             },
             error: function (xhr, status, err) {
                 toastr.error('Couldn\'t transmit Patient to FHIR.');
+                console.log(xhr);
+                console.log(status);
                 console.log(err);
             }
         });
