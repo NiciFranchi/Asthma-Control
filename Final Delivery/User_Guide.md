@@ -86,7 +86,7 @@ If data has been stored to FHIR, a section at the bottom of the Results page pro
 ![Pic](images/questionnaire_result.png)
 
 ## Edit patient details
-In this screen, the patient that was chosen from the home page is shown with all the details that pertain to the patient. Details can be edited and saved from this page. A sample edit of patient details is shown below.
+In this screen, a patient's current details are shown. Details can be edited and saved from this page. A sample edit of patient details is shown below.
 
 ![Pic](images/patient_edit.png)
 
