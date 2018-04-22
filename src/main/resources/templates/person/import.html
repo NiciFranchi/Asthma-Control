@@ -164,11 +164,9 @@
                 return;
             }
 
-            console.log(url);
             fhirPatients = [];
 
             $.get(url, function (data) {
-                console.log('FHIR search complete');
                 if (!$.isArray(data)) {
                     fhirPatients.push(data);
                 } else {
@@ -225,7 +223,6 @@
 
         var importPatient = function (id) {
             var fhirPatient = fhirPatients[id];
-            console.log(fhirPatient);
             // fhirPatient.contactPhone = formatPhoneNumber(fhirPatient.contactPhone);
             localStorage.setItem("objFhirImportPatient", JSON.stringify(fhirPatient));
             redirect('person/edit?person=-2');
@@ -239,7 +236,6 @@
 
         var redirect = function (url) {
             var newUrl = getBaseUrl() + url;
-            console.log("newUrl: " + newUrl);
             window.location.href = newUrl;
         };
     </script>

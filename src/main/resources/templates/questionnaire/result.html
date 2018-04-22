@@ -184,7 +184,7 @@
 
         $.ajax({
             type: 'POST',
-            url: '/api/fhir/questionnaire?visitId=' + visitId.toString(),
+            url: '/api/fhir/dataType: \'text\',questionnaire?visitId=' + visitId.toString(),
             contentType: 'application/json',
             success: function (data) {
 
@@ -242,8 +242,6 @@
         cp.note = annotation;
         cp.details = details;
         var cp_serialized = JSON.stringify(cp);
-        console.log(cp_serialized);
-
         $.ajax({
             type: 'POST',
             headers: {

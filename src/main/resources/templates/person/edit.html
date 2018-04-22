@@ -54,7 +54,6 @@
                 $('#h2Header').text('Import Patient');
                 patientFormHTML = "";
                 patient = JSON.parse(localStorage.getItem('objFhirImportPatient'));
-                console.log('import: ', patient);
                 if(patient === undefined || patient === null){
                     patientId = -1;
                 } else {
@@ -72,7 +71,6 @@
                 patientId = 0;
             }
 
-            console.log('Load patient: ', patientId);
             patientFormHTML = "";
             $.get('/api/persons/' + patientId.toString(), function () {
             }).done(function (data) {
@@ -106,7 +104,6 @@
                 else if(fields[i] === 'birthday') {
                     inputType = 'date';
                     value = new Date(value).yyyyMMdd();
-                    console.log(value);
                 }
 
                 if (fields[i] !== 'id' && fields[i] !== 'age' && fields[i] !== 'visits') {
@@ -142,7 +139,6 @@
                     } else {
                         toastr.success('Patient Updated');
                     }
-                    console.log(response);
                     redirect('person/list');
                 },
                 error: function (xhr, status, err) {
@@ -173,7 +169,6 @@
 
         var redirect = function (url) {
             var newUrl = getBaseUrl() + url;
-            console.log("newUrl: " + newUrl);
             window.location.href = newUrl;
         };
     </script>
