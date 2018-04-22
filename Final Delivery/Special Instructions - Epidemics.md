@@ -11,10 +11,16 @@
 $ git clone https://github.gatech.edu/gt-hit-spring2018/Asthma-Control.git
 $ cd Asthma-Control/
 ```
+### Point to desired FHIR Server URL
+Navigate to [/src/main/resources/application.properties](https://github.gatech.edu/gt-hit-spring2018/Asthma-Control/blob/a724728af680a61f3596313ecb61e04713e0925a/src/main/resources/application.properties#L20-L25) and replace fhir_baseUrl config parameter with desired parameter 
+```
+fhir_baseUrl=http://localhost:8080/baseDstu3
+```
 
+### Running the Application
 The project can be run either in docker, or locally.
 
-### A) Run in docker:
+#### A) Run in docker:
 
 ```
 # docker maven build
@@ -24,7 +30,7 @@ $ mvn clean package docker:build
 $ docker-compose up 
 ```
 
-### B) Test/Run locally
+#### B) Test/Run locally
 
 - run MySQL docker container
 
