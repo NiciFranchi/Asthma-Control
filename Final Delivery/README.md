@@ -59,9 +59,11 @@ $ docker-compose up
     java -Djava.security.egd=file:/dev/./urandom -Dspring.profiles.active=local -jar target/epidemics-web.jar
     ```
 
-_Navigate to [http://localhost:8081/](http://localhost:8081/)_
+_Web App URL [http://localhost:8081/](http://localhost:8081/)_
 
-iPhone (Responsive Website)
+_Local FHIR Server URL [http://localhost:8080/](http://localhost:8080/)_
+
+<!--iPhone (Responsive Website)
 ![Image](https://i.imgur.com/e1cykvP.png)
 
 iPad (Responsive Website)
@@ -71,4 +73,4 @@ Home screen:
 ![Image](https://i.imgur.com/YhUXY9e.png)
 
 Questionnaire:
-![Image](https://i.imgur.com/5mklpjx.png)
+![Image](https://i.imgur.com/5mklpjx.png)-->
