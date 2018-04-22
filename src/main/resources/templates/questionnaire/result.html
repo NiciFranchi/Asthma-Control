@@ -1,16 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <title>Questionnaire</title>
     <!--/*/ <th:block th:include="fragments/headerinc :: head"></th:block> /*/-->
 </head>
+
 <body>
 <div class="container">
     <!--/*/ <th:block th:include="fragments/header :: header"></th:block> /*/-->
 
-    <div class="row"><h4 class="row text-center">Asthma Control includes 2 domains: impairment and risk. </h4></div>
-    <div class="row"><h4 class="row text-center">Level of control is based on the most severe impairement or risk
-        classification. </h4></div>
+    <div class="row">
+        <h4 class="row text-center">Asthma Control includes 2 domains: impairment and risk. </h4>
+    </div>
+    <div class="row">
+        <h4 class="row text-center">Level of control is based on the most severe impairement or risk
+            classification. </h4>
+    </div>
     <div class="row top3">
         <div class="col-md-12">
             <div class="col-md-6">
@@ -21,9 +27,10 @@
                         </div>
                     </div>
                     <div class="row unselectable">
-                        <p class="text-center">Recommended Action for treatment <i>
-                            <small> (editable)</small>
-                        </i>:
+                        <p class="text-center">Recommended Action for treatment
+                            <i>
+                                <small> (editable)</small>
+                            </i>:
                         </p>
                     </div>
                     <!-- potential bug, what happens if you delete all text? data-emptytext doesnt seem to help-->
@@ -60,32 +67,35 @@
     <!-- this hardcode will remain on Results page, static text from requirements -->
     <div class="row unselectable" style="text-align: justify;">
 
-        <p><u>More on impairment and risk:</u></p>
-        <p><b>Impairment</b> is the frequency and intensity of symptoms and functional limitations the
-            patient
-            is experiencing or has recently experienced
+        <p>
+            <u>More on impairment and risk:</u>
         </p>
-        <p><b>Risk</b> is the likelihood of either asthma exacerbations, progressive decline in lung
-            function
-            (or, for children, reducing lung growth), or risk adverse effects from medication. This
-            calculator
-            uses only asthma exacerbation history to assess risk and does not include the other components
-            of
-            risk.
+        <p>
+            <b>Impairment</b> is the frequency and intensity of symptoms and functional limitations the patient is
+            experiencing
+            or has recently experienced
+        </p>
+        <p>
+            <b>Risk</b> is the likelihood of either asthma exacerbations, progressive decline in lung function (or, for
+            children, reducing lung growth), or risk adverse effects from medication. This calculator uses only asthma
+            exacerbation history to assess risk and does not include the other components of risk.
         </p>
         <p class="">
-            <small>*At present, there are inadequate data to correspond frequencies of exacerbations with
-                different levels of asthma control. In general, more frequent and intense exacerbations
-                (e.g. requiring urgent, unscheduled care, hospitalization, or ICU admission) indicate poorer
-                disease control. For treatment purposes, patients who had >= 2 exacerbations requiring oral
-                systemic corticosteroids in the past year may be considered the same as patients who have
+            <small>*At present, there are inadequate data to correspond frequencies of exacerbations with different
+                levels of
+                asthma control. In general, more frequent and intense exacerbations (e.g. requiring urgent, unscheduled
+                care, hospitalization, or ICU admission) indicate poorer disease control. For treatment purposes,
+                patients
+                who had >= 2 exacerbations requiring oral systemic corticosteroids in the past year may be considered
+                the same as patients who have
                 <b> not-well-controlled</b> asthma, even in the absence of impairment levels consistent with
                 <b>not-well-controlled</b> asthma.
             </small>
         </p>
     </div>
     <div class="row top3">
-        <button id="btSubmitFHIR" class="center-block"><span class="glyphicon glyphicon-send" aria-hidden="true"></span>
+        <button id="btSubmitFHIR" class="center-block">
+            <span class="glyphicon glyphicon-send" aria-hidden="true"></span>
             &nbsp; Transmit to FHIR
         </button>
     </div>
@@ -97,13 +107,18 @@
                 </div>
                 <div class="panel-body">
                     <ul class="nav nav-pills">
-                        <li id="questionnaire" role="presentation" class="disabled"><a href="#" target="_blank">Questionnaire</a>
+                        <li id="questionnaire" role="presentation" class="disabled">
+                            <a href="#" target="_blank">Questionnaire</a>
                         </li>
-                        <li id="questionnaireResponse" role="presentation" class="disabled"><a href="#" target="_blank">Questionnaire
-                            Response</a></li>
-                        <li id="patient" role="presentation" class="disabled"><a href="#" target="_blank">Patient</a>
+                        <li id="questionnaireResponse" role="presentation" class="disabled">
+                            <a href="#" target="_blank">Questionnaire Response
+                            </a>
                         </li>
-                        <li id="carePlan" role="presentation" class="disabled"><a href="#" target="_blank">Care Plan</a>
+                        <li id="patient" role="presentation" class="disabled">
+                            <a href="#" target="_blank">Patient</a>
+                        </li>
+                        <li id="carePlan" role="presentation" class="disabled">
+                            <a href="#" target="_blank">Care Plan</a>
                         </li>
                     </ul>
                 </div>
@@ -158,25 +173,14 @@
 
     $("#btSubmitFHIR").click(function () {
 
-        var riskActionTreatmentElement = $('#ulRiskActionTreatment');
-        var impairmentActionTreatmentElement = $('#ulImpairmentActionTreatment');
-        var editableElements = document.querySelectorAll("[contenteditable=true]");
-
-        // impairmentActionTreatmentElement.attr('contenteditable', false);
-        // riskActionTreatmentElement.attr('contenteditable', false);
-
-        // set all editable controls to read-only
-        for (var i = 0; i < editableElements.length; ++i) {
-            editableElements[i].setAttribute("contentEditable", false);
-        }
-
-        $.each(impairmentActionTreatmentElement.children(), function (index, item) {
-            console.log(item.innerText);
-        });
-
         $(this).addClass('disabled');
         $('#fhirResourcePanel').removeClass('panel-default').addClass('panel-primary');
 
+        //transmitQuestionnaire();
+        trasmitCarePlan();
+    });
+
+    var transmitQuestionnaire = function () {
         $.ajax({
             type: 'POST',
             url: '/api/fhir/questionnaire?visitId=' + visitId.toString(),
@@ -199,28 +203,88 @@
                 console.log(err);
             }
         });
-    });
+    };
 
-    function carePlan() {
-        this.author = 'Aarsh Talati';
-        this.status = null; // code.active
-        this.intent = null; // code.plan
-        this.subject = null; // patientId
-        this.activity = [];
+    var trasmitCarePlan = function () {
+        var hRiskTextElement = $('#hRiskText');
+        var hImpairmentTextElement = $('#hImpairmentText');
+        var riskActionTreatmentElement = $('#ulRiskActionTreatment');
+        var impairmentActionTreatmentElement = $('#ulImpairmentActionTreatment');
+        var editableElements = document.querySelectorAll("[contenteditable=true]");
+
+        var riskAssessmentRating = hRiskTextElement.text();
+        var impairmentAssessmentRating = hImpairmentTextElement.text();
+
+        // set all editable controls to read-only
+        /* impairmentActionTreatmentElement.attr('contenteditable', false);
+         riskActionTreatmentElement.attr('contenteditable', false); */
+        editableElements.forEach(function (e) {
+            e.setAttribute("contentEditable", false);
+        });
+
+        var activities = [];
+
+        function setActivities(e, rating) {
+            $.each(e.children(), function (index, item) {
+                var a = new Activity();
+                var d = new Detail();
+                d.statusReason = rating;
+                d.description = item.innerText;
+                a.Detail = d;
+                activities.push(a);
+            });
+        }
+
+        setActivities(impairmentActionTreatmentElement, impairmentAssessmentRating);
+        setActivities(riskActionTreatmentElement, riskAssessmentRating);
+
+        var cp = new CarePlan();
+        cp.note = impairmentAssessmentRating + ' & ' + riskAssessmentRating;
+        cp.activities = activities;
+        console.log(cp);
+
+        $.ajax({
+            type: 'POST',
+            url: '/api/fhir/careplan',
+            contentType: 'application/json',
+            data: cp,
+            success: function (data) {
+                var carePlanElement = $('#carePlan');
+                carePlanElement.removeClass('disabled');
+                carePlanElement.children(0).attr('href', data[0]);
+                carePlanElement.children(0).addClass('text-primary');
+                toastr.success('Care-Plan transmitted to FHIR');
+            },
+            error: function (xhr, status, err) {
+                toastr.error('Couldn\'t transmit Care-Plan to FHIR.');
+                console.log(err);
+            }
+        });
+    };
+
+    function CarePlan() {
+        // this.status = null; // code.active
+        // this.intent = null; // code.plan
+        // this.subject = null; // patientId
+        this.note = null; // "Impairment: assessment & Risk:assessment"
+        this.activities = [];
     }
 
-    function activity() {
-        this.reference = null; // = Reference.Task
+    function Activity() {
+        // this.reference = null; // = Reference.Task
         this.detail = {};
 
     }
 
-    function detail() {
+    function Detail() {
+        // this.status = null; // not-started
+        this.statusReason = null; // "impairment" OR "risk"
+        this.description = null;
         this.performer = []; // = [patientId]
-        this.description = "";
     }
 
 </script>
 </div>
 </body>
+
 </html>
