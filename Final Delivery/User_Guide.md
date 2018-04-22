@@ -4,12 +4,12 @@
 >Team Epidemics
 
 ### Team Members
-Aarsh Talati
-Ramesh Ramasubramanian
-Matthew Hull
-Charity Leschinski
-Eric Leschinski
-Scott Greiner
+* Aarsh Talati
+* Ramesh Ramasubramanian
+* Matthew Hull
+* Charity Leschinski
+* Eric Leschinski
+* Scott Greiner
 
 
 ## Table of Contents
