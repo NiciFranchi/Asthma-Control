@@ -45,6 +45,8 @@ Epidemics application runs locally with the default configuration. For installat
 The end user (a clinician, with a patient) is presented with the list of patients from which they can select one for whom the assessment will be performed. Selecting the *"Start Assessment"* icon in the row of the desired patient will launch the questionnaire. 
 >The questionnaire launched depends on the age of the selected patient as of the day that the questionnaire is being taken. Patients are grouped to either 0-4, 5-11, or 12+ years of age in accordance with the EPR-3 guidelines. Each age group receives different questions in their questionnaire.
 
+Clicking the filter icon will allow the end user to begin searching by patient name. Clicking it again will close the filter.
+
 The patient list page also contains controls for [editing patient](User_Guide.md#edit-patient-details) details,  [adding new patients](User_Guide.md#adding-patient) and [importing patients](User_Guide.md#Import-patient-from-FHIR).
 
 On this page the end user can view historical visit information by clicking the drop down arrow next to the patient's name, if present, and clicking *"Details"* on the visit they would like to review.
