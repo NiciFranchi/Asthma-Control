@@ -27,7 +27,7 @@ public class CarePlanApiController {
     @Autowired
     AppConfigBean appConfigBean;
 
-    @PostMapping(value = "/api/fhir/careplan", headers = {"content-type=application/json"}, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/api/fhir/careplan", headers = {"content-type=application/json"}, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.TEXT_PLAIN_VALUE)
     public String createPatientFhirResource(@Valid @RequestBody CarePlanDataContract carePlanDataContract) {
 
         String carePlanId;

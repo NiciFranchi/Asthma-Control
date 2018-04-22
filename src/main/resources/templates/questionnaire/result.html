@@ -176,7 +176,7 @@
         $(this).addClass('disabled');
         $('#fhirResourcePanel').removeClass('panel-default').addClass('panel-primary');
 
-        //transmitQuestionnaire();
+        transmitQuestionnaire();
         trasmitCarePlan();
     });
 
@@ -248,17 +248,17 @@
         $.ajax({
             type: 'POST',
             headers: {
+                Accept: "text/plain; charset=utf-8",
                 'Content-Type': 'application/json'
             },
             url: '/api/fhir/careplan',
             data: cp_serialized,
             contentType: 'application/json',
-            dataType: 'json',
+            dataType: 'text',
             success: function (data) {
-                console.log(data);
                 var carePlanElement = $('#carePlan');
                 carePlanElement.removeClass('disabled');
-                carePlanElement.children(0).attr('href', data[0]);
+                carePlanElement.children(0).attr('href', data);
                 carePlanElement.children(0).addClass('text-primary');
                 toastr.success('Care-Plan transmitted to FHIR');
             },
