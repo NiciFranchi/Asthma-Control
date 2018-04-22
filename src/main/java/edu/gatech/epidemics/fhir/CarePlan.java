@@ -1,8 +1,17 @@
 package edu.gatech.epidemics.fhir;
 
+import ca.uhn.fhir.context.FhirContext;
 import ca.uhn.fhir.rest.api.MethodOutcome;
-import org.springframework.stereotype.Service;
+import ca.uhn.fhir.rest.client.api.IGenericClient;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import edu.gatech.epidemics.AppConfigBean;
+import org.springframework.beans.factory.annotation.Autowired;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -10,16 +19,16 @@ import java.util.List;
  */
 public class CarePlan extends FhirBase{
     private String note;
-    private List<Activity> activities;
+    private List<Detail> details;
 
     public CarePlan(String baseUrl) {
         super(baseUrl);
     }
 
-    public CarePlan(String baseUrl, String author, String note, List<Activity> activities) {
+    public CarePlan(String baseUrl, String note, List<Detail> details) {
         super(baseUrl);
         this.note = note;
-        this.activities = activities;
+        this.details = details;
     }
 
     public String getNote() {
@@ -30,31 +39,32 @@ public class CarePlan extends FhirBase{
         this.note = note;
     }
 
-    public List<Activity> getActivities() {
-        return activities;
+    public List<Detail> getDetails() {
+        return details;
     }
 
-    public void setActivities(List<Activity> activities) {
-        this.activities = activities;
+    public void setDetails(List<Detail> details) {
+        this.details = details;
     }
 
     public org.hl7.fhir.dstu3.model.CarePlan getInstance(){
+        List<org.hl7.fhir.dstu3.model.CarePlan.CarePlanActivityComponent> carePlanActivityComponents= new ArrayList<>();
         org.hl7.fhir.dstu3.model.CarePlan.CarePlanActivityComponent carePlanActivityComponent;
         org.hl7.fhir.dstu3.model.CarePlan.CarePlanActivityDetailComponent carePlanActivityDetailComponent;
-        Detail detail;
-        for (Activity activity :
-                activities) {
-            detail = activity.getDetail();
+        for (Detail detail:
+                details) {
             carePlanActivityComponent = new org.hl7.fhir.dstu3.model.CarePlan.CarePlanActivityComponent();
             carePlanActivityDetailComponent= new org.hl7.fhir.dstu3.model.CarePlan.CarePlanActivityDetailComponent();
             carePlanActivityDetailComponent.setStatusReason(detail.getStatusReason());
             carePlanActivityDetailComponent.setDescription(detail.getDescription());
             carePlanActivityComponent.setDetail(carePlanActivityDetailComponent);
+            carePlanActivityComponents.add(carePlanActivityComponent);
         }
         org.hl7.fhir.dstu3.model.CarePlan carePlan = new org.hl7.fhir.dstu3.model.CarePlan();
         carePlan.setStatus(org.hl7.fhir.dstu3.model.CarePlan.CarePlanStatus.ACTIVE);
         carePlan.setIntent(org.hl7.fhir.dstu3.model.CarePlan.CarePlanIntent.PLAN);
         carePlan.addNote().setText(note);
+        carePlan.setActivity(carePlanActivityComponents);
         return carePlan;
     }
 

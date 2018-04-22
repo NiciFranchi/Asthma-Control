@@ -14,7 +14,7 @@ public abstract class FhirBase {
     public FhirBase(String baseUrl) {
         this.baseUrl = baseUrl;
         FhirContext ctx = FhirContext.forDstu3();
-        this.client = ctx.newRestfulGenericClient(baseUrl);;
+        this.client = ctx.newRestfulGenericClient(baseUrl);
     }
 
     public String getBaseUrl() {

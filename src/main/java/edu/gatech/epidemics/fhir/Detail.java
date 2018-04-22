@@ -1,14 +1,24 @@
 package edu.gatech.epidemics.fhir;
 
-import java.util.List;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+
+import java.io.Serializable;
 
 /**
  * @author atalati
  */
-public class Detail {
+@JsonDeserialize
+public class Detail implements Serializable {
     private String statusReason;
     private String description;
-    private List<String> performer;
+
+    public Detail() {
+    }
+
+    public Detail(String statusReason, String description) {
+        this.statusReason = statusReason;
+        this.description = description;
+    }
 
     public String getStatusReason() {
         return statusReason;
@@ -24,13 +34,5 @@ public class Detail {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public List<String> getPerformer() {
-        return performer;
-    }
-
-    public void setPerformer(List<String> performer) {
-        this.performer = performer;
     }
 }

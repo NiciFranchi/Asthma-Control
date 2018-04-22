@@ -222,16 +222,14 @@
             e.setAttribute("contentEditable", false);
         });
 
-        var activities = [];
+        var details = [];
 
         function setActivities(e, rating) {
             $.each(e.children(), function (index, item) {
-                var a = new Activity();
                 var d = new Detail();
                 d.statusReason = rating;
                 d.description = item.innerText;
-                a.Detail = d;
-                activities.push(a);
+                details.push(d);
             });
         }
 
@@ -239,16 +237,25 @@
         setActivities(riskActionTreatmentElement, riskAssessmentRating);
 
         var cp = new CarePlan();
-        cp.note = impairmentAssessmentRating + ' & ' + riskAssessmentRating;
-        cp.activities = activities;
-        console.log(cp);
+        var annotation = impairmentAssessmentRating + ' and ' + riskAssessmentRating;
+        annotation = annotation.replace(":","");
+        annotation = annotation.replace("*","");
+        cp.note = annotation;
+        cp.details = details;
+        var cp_serialized = JSON.stringify(cp);
+        console.log(cp_serialized);
 
         $.ajax({
             type: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
             url: '/api/fhir/careplan',
+            data: cp_serialized,
             contentType: 'application/json',
-            data: cp,
+            dataType: 'json',
             success: function (data) {
+                console.log(data);
                 var carePlanElement = $('#carePlan');
                 carePlanElement.removeClass('disabled');
                 carePlanElement.children(0).attr('href', data[0]);
@@ -257,6 +264,8 @@
             },
             error: function (xhr, status, err) {
                 toastr.error('Couldn\'t transmit Care-Plan to FHIR.');
+                console.log(xhr);
+                console.log(status);
                 console.log(err);
             }
         });
@@ -266,21 +275,14 @@
         // this.status = null; // code.active
         // this.intent = null; // code.plan
         // this.subject = null; // patientId
-        this.note = null; // "Impairment: assessment & Risk:assessment"
-        this.activities = [];
-    }
-
-    function Activity() {
-        // this.reference = null; // = Reference.Task
-        this.detail = {};
-
+        this.note; // "Impairment: assessment & Risk:assessment"
+        this.details = [];
     }
 
     function Detail() {
         // this.status = null; // not-started
-        this.statusReason = null; // "impairment" OR "risk"
-        this.description = null;
-        this.performer = []; // = [patientId]
+        this.statusReason; // "impairment" OR "risk"
+        this.description;
     }
 
 </script>
