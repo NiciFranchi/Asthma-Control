@@ -2,6 +2,8 @@
 >CDC, 
 >Georgia Tech, 
 >Team Epidemics
+
+### Team Members
 Aarsh Talati
 Ramesh Ramasubramanian
 Matthew Hull
