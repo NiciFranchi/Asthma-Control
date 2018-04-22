@@ -8,6 +8,7 @@
 <div class="container">
     <!--/*/ <th:block th:include="fragments/header :: header"></th:block> /*/-->
 
+
     <div class="container unselectable" id="questionsPage">
         <div id="topText" class="topTextContainer"></div>
         <div id="questions" class="questionsContainer"></div>
@@ -31,155 +32,166 @@
         </div>
     </div>
     <script type="text/javascript">
-      var visit;
-      var questions;
-      var questionNumber = 0;
 
-      $(document).ready(function () {
-        var urlParams = new URLSearchParams(location.search);
-        var patientId = parseInt(urlParams.get('person'), 10);
-        createVisit(patientId);
-      });
+        var visit;
+        var questions;
+        var questionNumber = 0;
 
-      var createVisit = function (patientId) {
-        visit = { patientId: patientId };
-        $.ajax({
-            type: 'POST',
-            headers:{
-                'Content-Type': 'application/json'
-            },
-            url: '/api/visits',
-            data: JSON.stringify(visit),
-            contentType: 'application/json',
-            dataType:'json',
-            success: function(response){
-                toastr.success('Visit created');
-                visit = response;
-                visit.responses = [];
-                getQuestions(patientId.toString());
-            },
-            error: function(xhr, status, err){
-                toastr.error('Couldn\'t create visit.');
-                console.log(xhr);
-                console.log(status);
-                console.log(err);
-                console.log(visit);
-          }
+        $(document).ready(function () {
+            var urlParams = new URLSearchParams(location.search);
+            var patientId = parseInt(urlParams.get('person'), 10);
+            createVisit(patientId);
         });
-      };
 
-      var getQuestions = function (patientId) {
-        $.get('/api/questions?patientId=' + patientId.toString(), function () {
-        }).done(function (data) {
-            questions = data;
-            var header = "<h2 id='questionTitle' class='text-center'>" +
-                          questions[0].ageGroup.description +
-                         " - Asthma Control Assessment</h2><br/>";
-            $('#topText').append(header);
-            askQuestion(0);
-        }).fail(function () {
-            toastr.error('Can\'t load questions.');
-            console.log(patientId.toString());
+        var createVisit = function (patientId) {
+            visit = {patientId: patientId};
+            $.ajax({
+                type: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                url: '/api/visits',
+                data: JSON.stringify(visit),
+                contentType: 'application/json',
+                dataType: 'json',
+                success: function (response) {
+                    toastr.success('Visit created');
+                    visit = response;
+                    visit.responses = [];
+                    getQuestions(patientId.toString());
+                },
+                error: function (xhr, status, err) {
+                    toastr.error('Couldn\'t create visit.');
+                    console.log(xhr);
+                    console.log(status);
+                    console.log(err);
+                    console.log(visit);
+                }
+            });
+        };
+
+        var getQuestions = function (patientId) {
+            $.get('/api/questions?patientId=' + patientId.toString(), function () {
+            }).done(function (data) {
+                questions = data;
+                var header = "<h2 id='questionTitle' class='text-center'>" +
+                    questions[0].ageGroup.description +
+                    " - Asthma Control Assessment</h2><br/>";
+                $('#topText').append(header);
+                askQuestion(0);
+            }).fail(function () {
+                toastr.error('Can\'t load questions.');
+                console.log(patientId.toString());
+            });
+        };
+
+        $("#btPreviousQuestion").click(function () {
+            questionNumber -= 1;
+            askQuestion();
         });
-      };
-      
-      $("#btPreviousQuestion").click(function () {
-        questionNumber -= 1;
-        askQuestion();
-      });
-      
-      $("#btNextQuestion").click(function () {
-        questionNumber += 1;
-        if (questionNumber === questions.length) {
-          submit();
-        } else {
-          askQuestion();
-        }
-      });
 
-      var askQuestion = function() {
-        var question = questions[questionNumber];
-        $('#btNextQuestion').prop('disabled', true);
-        if (questionNumber === 0) {
-          $('#btPreviousQuestion').prop('disabled', true);
-          $("#btPreviousQuestion").hide();
-        } else {
-          $("#btPreviousQuestion").show();
-          $('#btPreviousQuestion').prop('disabled', false);
-        }
-
-        if (questionNumber === questions.length-1) {
-          $('#btNextQuestion').text('Submit');
-        } else {
-          $('#btNextQuestion').text('Next');
-        }
-
-        var questionHtml = "<div class='question'>" +
-                           "<h3 class='questionText'>" + question.questionText + "</h3>" +
-                           "<div class='list-group answer-choices'>";
-        for (var i = 0; i < question.answerChoices.length; i++) {
-          questionHtml +=
-              "<button type='button' "
-            + "id = 'answer" + i.toString() + "' "
-            + "class='list-group-item answer-choice btnsQ' "
-            + "onClick='highlightAnswerChoice(" + i.toString() + ")'>" 
-                + question.answerChoices[i].answerText.toString()
-            + "</button>";
-        }
-        questionHtml += "</div>";
-        $('#questions').html(questionHtml);
-        $('#counter').text((questionNumber+1).toString() + '/' + questions.length.toString());
-        
-        if (visit.responses.length > questionNumber) {
-          var answerNumber = visit.responses[questionNumber].answer.answerNumber - 1;
-          $('.btnsQ').removeClass('active');
-          $('#answer' + answerNumber).addClass('active');
-          $('#btNextQuestion').prop('disabled', false);
-        }
-      };
-      
-      var highlightAnswerChoice = function (answerNumber) {
-        var question = questions[questionNumber];
-        var answer = question.answerChoices[answerNumber];
-        if (visit.responses.length <= questionNumber) {
-          visit.responses.push({ visitId: visit.id, question: question, answer: answer });
-        } else {
-          visit.responses[questionNumber].answer = answer;
-        }
-        // cosmetic
-        $('.btnsQ').removeClass('active');
-        $('#answer' + answerNumber).addClass('active');
-        $('#btNextQuestion').prop('disabled', false);
-      };
-      
-      var submit = function () {
-        $.ajax({
-            type: 'POST',
-            headers:{
-                'Content-Type': 'application/json'
-            },
-            url: '/api/visits',
-            data: JSON.stringify(visit),
-            contentType: 'application/json',
-            dataType:'json',
-            success: function(response){
-                toastr.success('Answers submitted');
-                redirect('questionnaire/result?visitId=' + visit.id.toString());
-            },
-            error: function(xhr, status, err){
-                toastr.error('Couldn\'t record response.');
-                console.log(status);
-                console.log(err);
-                console.log(visit);
-          }
+        $("#btNextQuestion").click(function () {
+            questionNumber += 1;
+            if (questionNumber === questions.length) {
+                submit();
+            } else {
+                askQuestion();
+            }
         });
-      };
-      
-      var redirect = function (url) {
-          var newUrl = getBaseUrl() + url;
-          console.log("newUrl: " + newUrl);
-          window.location.href = newUrl;
-      };
+
+        var askQuestion = function () {
+            var question = questions[questionNumber];
+            $('#btNextQuestion').prop('disabled', true);
+            if (questionNumber === 0) {
+                $('#btPreviousQuestion').prop('disabled', true);
+                $("#btPreviousQuestion").hide();
+            } else {
+                $("#btPreviousQuestion").show();
+                $('#btPreviousQuestion').prop('disabled', false);
+            }
+
+            if (questionNumber === questions.length - 1) {
+                $('#btNextQuestion').text('Submit');
+            } else {
+                $('#btNextQuestion').text('Next');
+            }
+
+            var questionHtml = "<div class='question'>" +
+                "<h3 class='questionText'>" + question.questionText + "</h3>" +
+                "<div class='list-group answer-choices'>" +
+                "<div class='container'></div>";
+            for (var i = 0; i < question.answerChoices.length; i++) {
+                questionHtml +=
+                    ("<div class=\"row radio\">" +
+                        "    <div>" +
+                        "      <input type=\"radio\" class=\"radioControl\" value=\"" + i.toString() + "\"  name=\"answer\" id=\"rdAnswer" + i.toString() + "\" style=\"margin-top: 1%;\" onClick=\"highlightAnswerChoice(" + i.toString() + ")\">" +
+                        "    </div>" +
+                        "    <div class=\"col-md-8\">" +
+                        "        <button type=\"button\" id=\"answer" + i.toString() + "\" class=\"list-group-item answer-choice btnsQ\" onClick=\"highlightAnswerChoice(" + i.toString() + ")\">" + question.answerChoices[i].answerText.toString() + "</button>" +
+                        "    </div>" +
+                        "</div>");
+            }
+
+            questionHtml += "</div>";
+            $('#questions').empty().append(questionHtml);
+            $('#counter').text((questionNumber + 1).toString() + '/' + questions.length.toString());
+
+            if (visit.responses.length > questionNumber) {
+                var answerNumber = visit.responses[questionNumber].answer.answerNumber - 1;
+                $('.btnsQ').removeClass('active');
+                $('#answer' + answerNumber).addClass('active');
+                $('#rdAnswer' + answerNumber).prop('checked', true);
+                $('#btNextQuestion').prop('disabled', false);
+            }
+        };
+
+        var highlightAnswerChoice = function (answerNumber) {
+            var question = questions[questionNumber];
+            var answer = question.answerChoices[answerNumber];
+            if (visit.responses.length <= questionNumber) {
+                visit.responses.push({visitId: visit.id, question: question, answer: answer});
+            } else {
+                visit.responses[questionNumber].answer = answer;
+            }
+            // cosmetic
+            $('.btnsQ').removeClass('active');
+            $.each($('input[type="radio"].radioControl'), function () {
+                $(this).prop('checked', false);
+            });
+            $('#rdAnswer' + answerNumber).prop('checked', true);
+            $('#answer' + answerNumber).addClass('active');
+
+            $('#btNextQuestion').prop('disabled', false);
+        };
+
+        var submit = function () {
+            $.ajax({
+                type: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                url: '/api/visits',
+                data: JSON.stringify(visit),
+                contentType: 'application/json',
+                dataType: 'json',
+                success: function (response) {
+                    toastr.success('Answers submitted');
+                    redirect('questionnaire/result?visitId=' + visit.id.toString());
+                },
+                error: function (xhr, status, err) {
+                    toastr.error('Couldn\'t record response.');
+                    console.log(status);
+                    console.log(err);
+                    console.log(visit);
+                }
+            });
+        };
+
+        var redirect = function (url) {
+            var newUrl = getBaseUrl() + url;
+            console.log("newUrl: " + newUrl);
+            window.location.href = newUrl;
+        };
     </script>
 </div>
 </body>
