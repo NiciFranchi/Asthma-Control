@@ -17,7 +17,8 @@ Asthma-Control
 https://github.gatech.edu/gt-hit-spring2018/Asthma-Control
 
 ### Final Video Presentation link
-Single Video - https://www.youtube.com/watch?v=JNu6-DdoZ5U
+Single Video - https://youtu.be/o10ktvpfmw4
+
 Play List - It has two videos that automatically play one after the other in hi-resolution
 https://www.youtube.com/watch?v=jWqyhEouY38&list=PLU4tk2wVnMLh4uZfXk0datWr9AQP3BQRr
 
